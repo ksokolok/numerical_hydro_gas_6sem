@@ -1,0 +1,61 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
+  <diagram name="Страница — 1" id="i08R5Wksdb5C_fVT9m9F">
+    <mxGraphModel dx="872" dy="553" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-1" value="Диффузия" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-2" value="Нужно получить решение: u(i, n)&lt;div&gt;для всех i, но&lt;/div&gt;&lt;div&gt;с n - по-интереснее&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="250" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-3" target="6ShL2qIBHkMFZpkM5JZE-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-3" value="На каждом n - свое решение" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="255" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-2" target="6ShL2qIBHkMFZpkM5JZE-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-5" target="6ShL2qIBHkMFZpkM5JZE-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-5" value="Но&lt;div&gt;не совсем&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="460" y="245" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-7" target="6ShL2qIBHkMFZpkM5JZE-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-7" value="Потому что с течением времени течение становится установившимся" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="255" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-8" value="Т.е. таким, что значения скорости в одном сечении (а в задаче рассматривается именно одно сечение)&lt;div&gt;не изменяются с течением времени&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="570" y="330" width="120" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-9" target="6ShL2qIBHkMFZpkM5JZE-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-9" value="Хотя это ведь еще зависит от градиента давления" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="255" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-12" value="Т.е. при некоторых A может не установится течение" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="255" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="6ShL2qIBHkMFZpkM5JZE-14" target="6ShL2qIBHkMFZpkM5JZE-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-14" value="Т.о. в программе не нужно фулл рассчитывать на условие остановки вычислений в виде проверки разности значений на временных слоях" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="865" y="330" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-15" value="Условия остановки:&lt;div&gt;1. Установившееся течение&lt;/div&gt;&lt;div&gt;2. Превышено количество шагов по времени&lt;/div&gt;&lt;div&gt;3. Превышено максимальное время&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="890" y="460" width="120" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="6ShL2qIBHkMFZpkM5JZE-17" value="Консервативная форма - и что?" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="460" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
