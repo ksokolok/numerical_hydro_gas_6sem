@@ -1,0 +1,136 @@
+% настройки polyglossia
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+
+% локализация
+\addto\captionsrussian{
+	\renewcommand{\figurename}{Рисунок}%
+	\renewcommand{\partname}{Глава}
+	\renewcommand{\contentsname}{\centerline{Содержание}}
+	\renewcommand{\listingscaption}{Листинг}
+}
+
+% основной шрифт документа
+\setmainfont{CMU Serif}
+\newfontfamily\cyrillicfont{CMU Serif}[Script=Cyrillic]
+
+% перечень использованных источников
+\addbibresource{refs.bib}
+
+\numberwithin{equation}{section}
+
+% настройка полей
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+\geometry{left=2cm}
+\geometry{right=2cm}
+\geometry{bindingoffset=0cm}
+
+% настройка ссылок и метаданных документа
+\hypersetup{unicode=true,colorlinks=true,linkcolor=red,citecolor=green,filecolor=magenta,urlcolor=cyan,
+	pdftitle={\docname},
+	pdfauthor={\studentname},
+	pdfsubject={\subject},
+	pdfcreator={\studentname},
+	pdfproducer={Overleaf},
+	pdfkeywords={\subject}
+}
+
+% настройка подсветки кода и окружения для листингов
+\usemintedstyle{colorful}
+\newenvironment{code}{\captionsetup{type=listing}}{}
+
+% шрифт для листингов с лигатурами
+\setmonofont{FiraCode-Regular.otf}[
+	SizeFeatures={Size=10},
+	Path = templates/,
+	Contextuals=Alternate
+]
+
+% оформления подписи рисунка
+\captionsetup[figure]{labelsep = period}
+
+
+
+% подпись таблицы
+%\DeclareCaptionFormat{hfillstart}{\hfill#1#2#3\par}
+%\captionsetup[table]{format=hfillstart,labelsep=newline,justification=centering,skip=-10pt,textfont=bf}
+
+
+% путь к каталогу с рисунками
+\graphicspath{{fig/}}
+
+% Внесение titlepage в учёт счётчика страниц
+\makeatletter
+\renewenvironment{titlepage} {
+	\thispagestyle{empty}
+}
+\makeatother
+
+%\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\titlelabel{\thetitle.\quad}
+
+% для удобного конспектирования математики
+\mathtoolsset{showonlyrefs=false}
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Утверждение}
+\theoremstyle{definition}
+\newtheorem{corollary}{Следствие}[theorem]
+\newtheorem{problem}{Задача}[section]
+\theoremstyle{remark}
+\newtheorem*{nonum}{Решение}
+
+% настоящее матожидание
+\newcommand{\MExpect}{\mathsf{M}}
+
+% объявили оператор!
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+% перенос знаков в формулах (по Львовскому)
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{} {\hbox{$\mathsurround=0pt #1$}}{}}
+
+
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, 
+minimum width=3cm, 
+minimum height=1cm,
+text centered, 
+draw=black, 
+%fill=red!30
+]
+
+\tikzstyle{io} = [trapezium, 
+trapezium stretches=true, % A later addition
+trapezium left angle=70, 
+trapezium right angle=110, 
+minimum width=3cm, 
+minimum height=1cm, text centered, 
+draw=black,
+%fill=blue!30
+]
+
+\tikzstyle{process} = [rectangle, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+text width=3cm, 
+draw=black, 
+%fill=orange!30
+]
+
+\tikzstyle{decision} = [diamond, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+draw=black, 
+%fill=green!30
+]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+\captionsetup[code]{position=top}
+
