@@ -1,4 +1,9 @@
+\section{Формулировка задания}
+
+Реализация всех алгоритмов осуществляется на языке программирования \texttt{Fortran}. Обработка результатов проводится с использованием библиотек \texttt{numpy} и \texttt{matplotlib.pyplot} для языка программирования \texttt{Python}.
+
 \section{Одномерное уравнение диффузии}
+
 
 В декартовых координатах:
 \begin{equation} \label{diffusion_cartesian}
@@ -7,9 +12,119 @@
 
 В цилиндрических координатах:
 \begin{equation} \label{diffusion_cilinder}
-    \dfrac{\partial \left( ru \right)}{\partial t} - \dfrac{\partial}{\partial r} \left(  \right)
+    \dfrac{\partial \left( ru \right)}{\partial t} - 
+    \nu \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) = 0
 \end{equation}
 
+\subsection{Явная центральная схема}
+
+Дискретизация одномерного уравнения диффузии (\ref{diffusion_cartesian}) по явной центральной разностной схеме, или схеме ВВЦП, позволяет записать алгебраический аналог уравнения:
+
+\begin{equation} \label{ftcs_given}
+	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - \nu \dfrac{u_{j+1}^n - 2u_j^n + u_{j-1}^n}{\Delta x^2} = 0, \ \ \ \Delta t \le \dfrac{\Delta x^2}{2a}
+\end{equation}
+
+Из уравнения (\ref{ftcs_given}) ясно, что данная схема строится на трех соседних узлах $j-1$, $j$, $j+1$ временного слоя $n$, а единственный неизвестный узел находится на временном слое $n+1$ напротив центрального узла $j$. С учетом упомянутых обстоятельств шаблон схемы будет выглядеть так, как показано на Рис.~\ref{ftcs_stencil}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{fig/Шаблон_ВВЦП.jpeg}
+	\caption{Шаблон явной разностной схемы}
+	\label{ftcs_stencil}
+\end{figure}
+
+
+
+Также из уравнения (\ref{ftcs_given}) ясно, что производная по времени заменена аппроксимацией с разностью вперед, а производная по пространству — центрированной аппроксимацией.
+Поскольку далее будет рассматриваться задача с уравнением диффузии в форме (\ref{diffusion_cilinder}), то необходимо выполнить дискретизацию конкретно для этой формы уравнения.
+
+Аппроксимация производной по времени с разностью вперед запишется как
+\begin{equation} \label{ftcs_time_approximation}
+	\left[ \dfrac{\partial (ru)}{\partial t} \right]_j^n =
+	r_j \left[ \dfrac{\partial u}{\partial t} \right]_j^n \approx r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t}	
+\end{equation}
+
+Центрированная аппроксимация пространственной производной на трех узлах запишется как
+\begin{equation} \label{ftcs_space_approximation}
+	\left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) \right]_j^n \approx
+	\left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^n - u_j^n}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^n - u_{j-1}^n}{\Delta r^2} \right)
+\end{equation}
+
+Собирая вместе обе аппроксимации, получаем итоговую явную схему:
+
+\begin{equation} \label{ftcs_final}
+	r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t}	 -
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^n - u_j^n}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^n - u_{j-1}^n}{\Delta r^2} \right) \right] = 0
+\end{equation}
+
+\subsubsection{Определение порядка точности}
+
+Для определения порядка точности следует в конечно-разностных аналогах производных заменить значения сеточной функции $u$ разложениями точного решения $\overline{u}$ в ряд Тейлора в окрестностях соответствующих узлов. Порядок первого члена разложения, оставшегося после комбинирования всех слагаемых, является порядком точности схемы по исследуемой координате.
+
+Для производной по времени:
+\begin{equation*}
+	\overline{u}_j^{n+1} = \overline{u}_j^n + \Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n +
+	\dfrac{\Delta t^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n +
+	\dfrac{\Delta t^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial t^4} \right]_j^n + \dots
+\end{equation*}
+
+\begin{equation} \label{ftcs_accurancy_time}
+\begin{split}
+	\dfrac{\overline{u}_j^{n+1} - \overline{u}_j^n}{\Delta t} &=
+	\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n +
+	\dfrac{\Delta t^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n +
+	\dfrac{\Delta t^3}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial t^4} \right]_j^n + \dots = \\
+	&= 
+	\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + O(\Delta t)
+\end{split}
+\end{equation}
+
+Для производной по пространству:
+\begin{equation*}
+	\overline{u}_{j+1}^n = \overline{u}_j^n + \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + \dfrac{\Delta r^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n +
+	\dfrac{\Delta r^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{\Delta r^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots
+\end{equation*}
+
+\begin{equation*}
+	\overline{u}_{j-1}^n = \overline{u}_j^n - \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + \dfrac{\Delta r^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n -
+	\dfrac{\Delta r^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{\Delta r^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots
+\end{equation*}
+
+\begin{equation*}
+	\dfrac{\overline{u}_{j+1}^n - \overline{u}_j^n}{\Delta r^2} =
+	\dfrac{1}{\Delta r} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + \dfrac{1}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n +
+	\dfrac{\Delta r}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{\Delta r^2}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots
+\end{equation*}
+
+\begin{equation*}
+	\dfrac{\overline{u}_j^n - \overline{u}_{j-1}^n}{\Delta r^2} =
+	\dfrac{1}{\Delta r} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n - \dfrac{1}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n +
+	\dfrac{\Delta r}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n -
+	\dfrac{\Delta r^2}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots
+\end{equation*}
+
+\begin{equation} \label{ftcs_accurancy_space}
+\begin{split}
+	&\left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^n - u_j^n}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^n - u_{j-1}^n}{\Delta r^2} \right) = \\
+	&= r_j \left( \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \dfrac{\Delta r^2}{12} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots \right) + 
+	\dfrac{\Delta r}{2} \left( \dfrac{2}{\Delta r} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + 
+	\dfrac{\Delta r}{3} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n  + \dots \right) = \\
+	&= r_j \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^2) = 
+	\left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) \right]_j^n + O(\Delta r^2)
+\end{split}
+\end{equation}
+
+Таким образом, схема ВВЦП имеет первый порядок точности по времени и второй порядок по пространству.
+
+\subsubsection{Исследование устойчивости по Нейману}
+
+\subsection{Двухшаговая схема Алена-Чена}
 
 \subsection{Описание математической модели}
 Параболическое
@@ -21,7 +136,7 @@
 \subsection{Описание метода конечных разностей}
 
 
-\subsection{Задача: Разгон жидкости в цилиндрической трубе}
+\subsection{Задача о разгоне жидкости в цилиндрической трубе}
 
 \begin{figure}[H]
     \centering
@@ -143,3 +258,8 @@ u_i^{n+1} =
 \end{equation} 
 
 
+
+
+\section{Одномерное уравнение конвекции}
+
+\section{Невязкое уравнение Бюргерса}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  27 SEP 2026 18:33
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  28 SEP 2026 04:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2040,17 +2040,51 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout2 = `content.aux'.
 
  (./content.tex
+
+LaTeX Font Warning: Font shape `TU/FiraCode-Regular.otf(0)/m/n' in size <12> no
+t available
+(Font)              size <10> substituted on input line 3.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'FiraCode-Regular.otf(2)' created for font
+(fontspec)             'FiraCode-Regular.otf' with options
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=Word
+Space,SizeFeatures={Size=10},Path
+(fontspec)             = templates/,Contextuals=Alternate,Script=Cyrillic].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10>"[templates/FiraCode-Regular.otf]/OT:script=cyrl;lan
+guage=dflt;+calt;"
+
+
+LaTeX Font Warning: Font shape `TU/FiraCode-Regular.otf(2)/m/n' in size <12> no
+t available
+(Font)              size <10> substituted on input line 3.
+
+
+Overfull \hbox (13.31978pt too wide) in paragraph at lines 3--4
+\TU/CMUSerif(2)/m/n/12 Обработка результатов проводится с использованием библио
+тек \TU/FiraCode-Regular.otf(2)/m/n/10 numpy \TU/CMUSerif(2)/m/n/12 и \TU/FiraC
+ode-Regular.otf(2)/m/n/10 matplotlib.pyplot
+ []
+
+File: fig/Шаблон_ВВЦП.jpeg Graphic file (type bmp)
+<fig/Шаблон_ВВЦП.jpeg>
+[3
+
+
+
+] [4]
 File: fig/Рисунок_к_задаче.png Graphic file (type bmp)
 <fig/Рисунок_к_задаче.png>
- [3
-
-
-
-]) [4]
+ [5]) [6]
 \openout2 = `templates/bibpage.aux'.
 
-
-(./templates/bibpage.tex
+ (./templates/bibpage.tex
 
 LaTeX Warning: Empty bibliography on input line 2.
 
@@ -2059,7 +2093,7 @@ LaTeX Warning: Empty bibliography on input line 2.
 Package caption Warning: Unused \captionsetup[sub] on input line 51.
 See the caption package documentation for explanation.
 
-runsystem(latexminted cleantemp  --timestamp 20260927183306 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20260928041734 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
 (./main.aux (./templates/titlepage.aux) (./templates/tocpage.aux)
@@ -2070,21 +2104,25 @@ L3 programming layer <2026-01-19>
  ***********
 
 
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 2.0pt have occurred.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 60B5EDA40CC3C9B8D3AC753184FC999C;1684.
+(rerunfilecheck)             Checksum: 161E3829E9785654DC5EE0CEF2AFB6A6;3616.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48766 strings out of 468167
- 994675 string characters out of 5436503
- 2228524 words of memory out of 5000000
- 76786 multiletter control sequences out of 15000+600000
- 631422 words of font info for 94 fonts, out of 8000000 for 9000
+ 48812 strings out of 468167
+ 995937 string characters out of 5436503
+ 2249981 words of memory out of 5000000
+ 76824 multiletter control sequences out of 15000+600000
+ 631454 words of font info for 98 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 91i,9n,109p,693b,4050s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,19n,109p,693b,4050s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (4 pages).
+Output written on main.pdf (6 pages).
