@@ -6,8 +6,9 @@
 \contentsline {subsubsection}{\numberline {2.1.2}Исследование устойчивости по Нейману}{5}{subsubsection.2.1.2}%
 \contentsline {subsection}{\numberline {2.2}Двухшаговая схема Алена-Чена}{7}{subsection.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.1}Определение порядка точности}{8}{subsubsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{11}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{12}{section.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{12}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{12}{section.5}%
+\contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{12}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Дискретизация уравнения}{12}{subsubsection.2.3.1}%
+\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{14}{section.3}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{14}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{14}{section.5}%
 \contentsfinish 

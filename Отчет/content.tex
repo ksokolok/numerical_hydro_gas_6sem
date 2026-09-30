@@ -232,7 +232,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 Левая часть неравенства представляет собой функцию линейную по переменной $q$. Для узлов $j \ge 1$ коэффициент при $q$ больше 1, следовательно максимум функции достигается на правом конце интервала для $q$. Учитывая, что $q = \sin^2 \left( \dfrac{k_m \Delta r}{2} \right)$, максимум достигается при $q=1$.
 
-Таким образом, устойчивость схемы ВВЦП по Нейману достигается при 
+Таким образом, для внутренних узлов устойчивость схемы ВВЦП по Нейману достигается при 
 
 \begin{align} \label{ftcs_CFL}
 	 s = \nu \dfrac{\Delta t}{\Delta x^2} \le \dfrac{1}{2}
@@ -461,7 +461,12 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 Из \eqref{alen-chen_accuracy} видно, что невязка содержит слагаемое, которое не стремится к нулю при $\Delta t, \Delta r \to 0$ при $s = \text{const}$. При $s \to 0$ множитель $ \dfrac{4s^2}{(1+2s)^2} $ приблизительно равен $4s^2$, и он неизбежно вносит вклад в невязку, т.е. оценка порядка точности для схемы Алена-Чена имеет вид $O\left(\Delta t + \Delta r^2 + s^2 \right) = O\left(\Delta t + \Delta r^2 + \dfrac{\Delta t^2}{\Delta r^4} \right)$. Условие $s \to 0$, т.е. $\dfrac{\Delta t}{\Delta r^2} \to 0$ можно рассматривать как условие согласованности схемы.
 
+
+\newpage
+
 \subsection{Задача о разгоне жидкости в цилиндрической трубе}
+
+Рассматривается течение вязкой жидкости по трубе круглого сечения. До момента $t=0$ жидкость покоилась, после чего начинает действовать постоянный продольный градиент давления $\partial p/ \partial z$, приводя жидкость в движение. За счет вязкости течение постепенно становится установившимся. Требуется с помощью численного моделирования найти распределение продольной компоненты скорости $u$ по радиусу трубы в любой момент времени $t \ge 0$.
 
 \begin{figure}[H]
     \centering
@@ -470,14 +475,107 @@ $\xi = N - D$. Поскольку разностная схема линейна
     \label{fig:diffusion_task_fig}
 \end{figure}
 
-Течение описывается уравнением
+Течение описывается одномерным уравнением диффузии в цилиндрических координатах. Консервативная (дивергентная) форма
 \begin{equation} \label{tast_eq}
-    \dfrac{\partial \left( ru \right)}{\partial t} - \dfrac{\partial}{\partial r} \left( r \nu \dfrac{\partial u}{\partial r} \right) - \dfrac{r}{\rho} \dfrac{\partial p}{\partial z} = 0
+    \dfrac{\partial \left( ru \right)}{\partial t} - \nu \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) - \dfrac{r}{\rho} \dfrac{\partial p}{\partial z} = 0.
 \end{equation}
 
-\subsubsection*{Двухшаговая схема Алена-Чена}
+На оси трубы ставится граничное условие Неймана:
+\begin{equation} \label{Boundaries 1}
+	\left[ \dfrac{\partial u}{\partial r} \right]_{r=0} = 0.
+\end{equation}
+
+На боковой стенке ставится условие прилипания
+\begin{equation} \label{Boundaries 2}
+	\left. u \right|_{r = r_w} = 0.
+\end{equation}
+
+В начальный момент времени скорость равна нулю:
+\begin{equation} \label{Initials}
+	\left. u \right|_{t=0} = 0
+\end{equation}
+
+Параметрами задачи являются
+\begin{itemize}
+	\item $A = \dfrac{1}{\rho} \dfrac{\partial p}{\partial z},$ [$\text{м/с}^2$] — ускорение, вызванное силовым воздействием на
+	жидкость;
+	\item $\nu$, [$\text{м}^2/\text{с}$] — коэффициент кинематической
+	вязкости;
+	\item $r_w$, [м] — радиус трубы.
+\end{itemize}
+
+\subsubsection{Дискретизация уравнения}
+
+Будем искать решение на равномерной сетке узлов со следующими обозначениями:
+\begin{equation} \label{mesh}
+	r_j = j \Delta r, \qquad j = 0, 1, \dots, N_r
+\end{equation}
+
+Дискретизация уравнения \eqref{tast_eq} по схеме ВВЦП проводится с использованием схемы \eqref{ftcs_final} с добавленной неоднородностью:
+
+\begin{equation} \label{task_ftcs}
+	r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t}	 -
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^n - u_j^n}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^n - u_{j-1}^n}{\Delta r^2} \right) \right] = r_jA,
+\end{equation}
+или, выражая явно искомую величину
+\begin{equation} \label{task_ftcs2}
+	u_j^{n+1} = u_j^n + \nu \dfrac{\Delta t}{\Delta r^2} \left[ \left( 1 + \dfrac{\Delta r}{2 r_j} \right)u_{j+1}^n - 2u_j^n + \left( 1 - \dfrac{\Delta r}{2 r_j} \right)u_{j-1}^n \right] + A\Delta t
+\end{equation}
+
+Данная схема справедлива только для внутренних узлов: $j = 1, 2, \dots, N_r - 1$.
+
+Из граничного условия \eqref{Boundaries 2} следует значение искомой функции для узла $j = N_r$:
+\begin{equation}
+	u_{N_r}^{n+1} = 0
+\end{equation}
+
+Для выявления значения искомой функции в узле $j = 0$ проведем следующие рассуждения.
+
+Аппроксимация граничного условия на оси \eqref{Boundaries 1} центральной разностью по двум узлам:
+\begin{equation}
+	\dfrac{u_1^n - u_{-1}^n}{2\Delta r} = 0 \qquad \Rightarrow \qquad u_1 = u_{-1}
+\end{equation}
+
+Аппроксимация второй производной на оси центральной разностью по трем узлам:
+\begin{equation} \label{approximation3_r=0}
+	\dfrac{u_1^n - 2u_0^n + u_{-1}^n}{\Delta r^2} = 2\dfrac{u_1^n - u_0^n}{\Delta r^2}
+\end{equation}
+
+Перепишем уравнение \eqref{tast_eq} в недивергентной форме и разделим на $r$ для $r>0$:
+\begin{equation}
+	\dfrac{\partial u}{\partial t} - \nu \left( \dfrac{\partial^2 u}{\partial r^2} + \dfrac{1}{r} \dfrac{\partial u}{\partial r} \right) = A.
+\end{equation}
+Устремим $r$ к нулю. Учтем, что $\lim_{r \to 0} \left( \dfrac{1}{r} \dfrac{\partial u}{\partial r} \right) = \left. \dfrac{\partial^2 u}{\partial r^2} \right|_{r=0}$. Тогда
+
+\begin{equation} \label{eq_for_j=0}
+	\dfrac{\partial u}{\partial t} - 2\nu \left. \dfrac{\partial^2 u}{\partial r^2} \right|_{r=0} = A.
+\end{equation}
+
+Дискретизируем \eqref{eq_for_j=0} по схеме ВВЦП, используя \eqref{approximation3_r=0}:
+\begin{equation}
+	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - 4 \nu \dfrac{u_1^n - u_0^n}{\Delta r^2} = A 
+\end{equation}
+
+Отсюда получаем разностную схему для скорости на оси трубы:
+
+\begin{equation}
+	u_0^{n+1} = u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \left( u_1^n - u_0^n \right) + A\Delta t
+\end{equation}
+
+Поскольку для аппроксимации граничного условия на оси использовалась центральная конечная разность второго порядка точности, то следует ожидать от схемы сохранения точности $O(\Delta t + \Delta r^2)$.
+
+Итак, дискретизация поставленной задачи по схеме ВВЦП представляет собой систему
 
 
+\begin{equation}
+\begin{cases}
+	u_0^{n+1} = u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \left( u_1^n - u_0^n \right) + A\Delta t \\
+	u_j^{n+1} = u_j^n + \nu \dfrac{\Delta t}{\Delta r^2} \left[ \left( 1 + \dfrac{\Delta r}{2 r_j} \right)u_{j+1}^n - 2u_j^n + \left( 1 - \dfrac{\Delta r}{2 r_j} \right)u_{j-1}^n \right] + A\Delta t
+	\\
+	u_{N_r}^{n+1} = 0
+\end{cases}
+\end{equation}
 
 \section{Одномерное уравнение конвекции}
 
