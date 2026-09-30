@@ -124,25 +124,350 @@
 
 \subsubsection{Исследование устойчивости по Нейману}
 
+Пусть $D$ — точное решение разностного уравнения (\ref{ftcs_final}), а $N$ — решение, полученное на ЭВМ с конечной мантиссой. Ошибка округления
+$\xi = N - D$. Поскольку разностная схема линейна, а $N$ и $D$
+удовлетворяют одной и той же схеме, ошибка $\xi$ удовлетворяет тому же
+разностному уравнению, что и сама искомая функция:
+
+\begin{equation} \label{ftcs_error}
+	r_j \dfrac{\xi_j^{n+1} - \xi_j^n}{\Delta t}	 -
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{\xi_{j+1}^n - \xi_j^n}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{\xi_{j}^n - \xi_{j-1}^n}{\Delta r^2} \right) \right] = 0
+\end{equation}
+
+
+Идея метода Неймана для оценки устойчивости схемы сводится к разложению ошибки на временном слое в ряд Фурье (\ref{fourier}) и проверке на затухание или возрастание отдельных компонент ряда при переходе на следующий временной слой. 
+
+\begin{equation} \label{fourier}
+	\xi (r, t) = \sum_{m=1}^M b_m(t) \exp(ik_m r),  \ \ \ k_m = m \dfrac{\pi}{L}, \ \ \ L = M \Delta r
+\end{equation}
+
+Из линейности вычислительного алгоритма следует достаточность рассмотрения ошибки, обусловленного только одним членом ряда Фурье:
+
+\begin{equation} \label{fourier_one_mode}
+	\xi_m (r_j, t^n) = (g)^n \exp (ik_mr_j), \ \ \ r_j = j \Delta r,
+\end{equation}
+где $(g)^n$ — коэффициент перехода, возведенный в степень $n$.
+
+Очевидно, что 
+\begin{equation} \label{g}
+	g = \dfrac{\xi_j^{n+1}}{\xi_j^n}.
+\end{equation}
+
+Ошибки округления будут оставаться ограниченными при переходе на следующий временной слой, если $|g| \le 1$.
+
+Подставим (\ref{fourier_one_mode}) для соответствующих узлов в уравнение (\ref{ftcs_error}). Получим
+
+\begin{equation} \label{derivation_g_ftcs}
+\begin{split}
+	&r_j \dfrac{\left[ (g)^{n+1} - (g)^n \right] \exp (ik_mr_j)}{\Delta t} - \\ 
+	& -\nu 
+	\biggl[ r_j 
+	\dfrac{(g)^n\exp (ik_mr_j) \cdot \exp(ik_m\Delta r) - 2(g)^n\exp (ik_mr_j) + (g)^n \exp (i k_m r_j) \cdot \exp(-ik_m\Delta r)}{\Delta r^2} + \\
+	& + \dfrac{\Delta r}{2} \dfrac{(g)^n \exp (ik_m r_j) \cdot \exp (i k_m \Delta r) - (g)^n \exp (i k_m r_j) \cdot \exp (-ik_m\Delta r) }{\Delta r^2} \biggl] = 0
+\end{split}
+\end{equation}
+
+Сокращаем на $(g)^n$ и $\exp(ik_mr_j)$:
+
+\begin{equation} \label{derivation_g_ftcs_2}
+\begin{split}
+	& r_j \dfrac{g - 1}{\Delta t} - \nu \biggl[ r_j \dfrac{\exp (ik_m\Delta r) + \exp (-ik_m \Delta r) - 2}{\Delta r^2} + \dfrac{\Delta r}{2} \dfrac{\exp (ik_m\Delta r) - \exp (-ik_m \Delta r)}{\Delta r^2}\biggr] = 0
+\end{split}
+\end{equation}
+
+Учитывая равенства
+\begin{align}
+	&\exp (i\beta) + \exp (-i\beta) = 2\cos \beta \\
+	&\exp (i\beta) - \exp (-i\beta) = 2 i \sin \beta,
+\end{align}
+можем переписать
+\begin{equation}
+	r_j \dfrac{g-1}{\Delta t} - \nu \biggl[ 2r_j \dfrac{\cos (k_m\Delta r) - 1}{\Delta r^2} + \dfrac{i \sin (k_m \Delta r)}{\Delta r} \biggr] = 0
+\end{equation}
+
+Далее умножим на $\dfrac{\Delta t}{r_j}$ и используем равенство
+\begin{equation}
+	1 - \cos \beta = 2 \sin^2 \dfrac{\beta}{2}.
+\end{equation}
+
+Получим
+\begin{equation}
+	g = 1 + \dfrac{\nu \Delta t}{r_j} \biggl[ - 4r_j \dfrac{\sin^2 \left( \dfrac{k_m \Delta r}{2}\right)}{\Delta r^2} + \dfrac{i \sin (k_m \Delta r)}{\Delta r} \biggr]
+\end{equation}
+
+Введя обозначение $s = \nu \dfrac{\Delta t}{\Delta r^2}$, получаем
+
+\begin{equation} \label{g_final}
+	g = 1 - 4s\sin^2 \left( \dfrac{k_m\Delta r}{2} \right) + is\dfrac{\Delta r}{r_j}\sin (k_m\Delta r) .
+\end{equation}
+
+Получили комплексный коэффициент перехода $g$.
+
+Для анализа устойчивости схемы рассмотрим неравенство $|g| \le 1$:
+
+\begin{equation} \label{g_inequality}
+	|g| = \sqrt{
+	\left( 1 - 4s \sin^2 \left( \dfrac{k_m\Delta r}{2} \right) \right)^2 + \left( s \frac{\Delta r}{r_j} \sin (k_m \Delta r)\right)^2
+	} \le 1
+\end{equation}
+
+Учтем, что $\dfrac{\Delta r}{r_j} = \dfrac{\Delta r}{j\Delta r} = \dfrac{1}{j}$. Введем обозначение $q = \sin^2 \left( \dfrac{k_m \Delta r}{2} \right)$. Тогда по формуле синуса двойного угла:
+\begin{equation*}
+	\sin^2 (k_m \Delta r) = 4q(1-q).
+\end{equation*}
+
+Неравенство (\ref{g_inequality}) можно переписать в виде:
+\begin{equation}
+	- 8sq + 16s^2q^2 + 4 s^2 q(1-q)j^{-2} \le 0 
+\end{equation}
+
+Далее разделим на $4sq$:
+\begin{equation}
+\begin{split}
+	&s\left( 4q + (1-q) j^{-2} \right) \le 2 \\
+	&s\left( \left( 4 - j^{-2} \right)q + j^{-2} \right) \le 2
+\end{split}
+\end{equation}
+
+Левая часть неравенства представляет собой функцию линейную по переменной $q$. Для узлов $j \ge 1$ коэффициент при $q$ больше 1, следовательно максимум функции достигается на правом конце интервала для $q$. Учитывая, что $q = \sin^2 \left( \dfrac{k_m \Delta r}{2} \right)$, максимум достигается при $q=1$.
+
+Таким образом, устойчивость схемы ВВЦП по Нейману достигается при 
+
+\begin{align} \label{ftcs_CFL}
+	 s = \nu \dfrac{\Delta t}{\Delta x^2} \le \dfrac{1}{2}
+\end{align}
+
 \subsection{Двухшаговая схема Алена-Чена}
 
-\subsection{Описание математической модели}
-Параболическое
+Двухшаговая схема Алена-Чена дискретизирует одномерное уравнение диффузии (\ref{diffusion_cartesian}) следующим образом:
+\begin{align} \label{alen-chen_cartesian_1}
+	&\dfrac{\tilde{u}_j^{n+1}-u_j^n}{\Delta t} - \nu \dfrac{u_{j+1}^n - 2 \tilde{u}_j^{n+1} + u_{j-1}^n}{\Delta x^2} = 0 \\
+	\label{alen-chen_cartesian_2}
+	&\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - \nu \dfrac{\tilde{u}_{j+1}^{n+1} - 2u_j^{n+1} + \tilde{u}_{j-1}^{n+1}}{\Delta x^2} = 0
+\end{align}
 
-\subsection{Описание начальных и граничных условий}
-Течение Куэтта
+На первом шаге, предикторе (\ref{alen-chen_cartesian_1}), единственным неизвестным значением является промежуточное значение искомой функции в узле $j$ на новом временном слое $n+1$: $\tilde{u}_j^{n+1}$. Производная по пространству заменяется центрированной аппроксимацией на трех соседних узлах $j-1$, $j$, $j+1$, однако значение в центральном узле берется с неизвестного временного слоя. Производная по времени аппроксимируется конечной разностью вперед.
 
-"Ступенька"
-\subsection{Описание метода конечных разностей}
+На втором шаге, корректоре (\ref{alen-chen_cartesian_2}), единственным неизвестным значением является значение искомой функции в узле $j$ на новом временном слое $n+1$. Аппроксимации производных аналогичны аппроксимациям в предикторе, но в узлах $j-1$ и $j+1$ взяты промежуточные значения на новом временном слое, найденные на предыдущем шаге: $\tilde{u}_{j-1}^{n+1}$ и $\tilde{u}_{j+1}^{n+1}$.
 
+Учитывая описанные особенности схемы, можно построить шаблоны для предиктора и корректора:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/Шаблон_Алена-Чена_Предиктор.jpeg}
+		\caption{}
+		\label{fig:alen-chen_predictor_stencil}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/Шаблон_Алена-Чена_Корректор2.jpg}
+		\caption{}
+		\label{fig:alen-chen_corrector_stencil}
+	\end{subfigure}
+	\caption{Шаблоны предиктора (a) и корректора (b) для двухшаговой схемы Алена-Чена}
+	\label{fig:alen-chen_stencils}
+\end{figure}
+
+Поскольку для вычисления $u_j^{n+1}$ необходимы известные значения $\tilde{u}_{j-1}^{n+1}$ и $\tilde{u}_{j+1}^{n+1}$, каждое из которых требует расчета на трех узлах, то общий шаблон, объединяющий первый и второй шаг, подразумевает использование пяти соседних узлов $j-2$, $j-1$, $j$, $j+1$, $j+2$ на известном временном слое $n$ для расчета значения $u_j^{n+1}$. Шаблон, иллюстрирующий данное утверждение, изображен на Рис.~\ref{fig:Alen-Chen_common_stencil}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{fig/Общий_Шаблон_Алена-Чена.jpeg}
+	\caption{Общий шаблон для двухшаговой схемы Алена-Чена}
+	\label{fig:Alen-Chen_common_stencil}
+\end{figure}
+
+Как и при рассмотрении явной центральной схемы, применим рассматриваемую схему к одномерному уравнению диффузии в цилиндрических координатах (\ref{diffusion_cilinder}). 
+
+Аппроксимация производной по времени на первом шаге:
+\begin{equation} \label{alen-chen_time_approximation_predictor}
+	\left[ \dfrac{\partial (ru)}{\partial t} \right]_j^n =
+	r_j \left[ \dfrac{\partial u}{\partial t} \right]_j^n \approx r_j \dfrac{\tilde{u}_j^{n+1} - u_j^n}{\Delta t}	
+\end{equation}
+
+Аппроксимация производной по пространству на первом шаге:
+\begin{equation} \label{alen-chen_space_approximation_predictor}
+	\left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) \right]_j^n \approx
+	\left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^{n} - \tilde{u}_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j}^{n+1} - u_{j-1}^{n}}{\Delta r^2} \right)
+\end{equation}
+
+Аппроксимация производной по времени на втором шаге:
+\begin{equation} \label{alen-chen_time_approximation_corrector}
+	\left[ \dfrac{\partial (ru)}{\partial t} \right]_j^n =
+	r_j \left[ \dfrac{\partial u}{\partial t} \right]_j^n \approx r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t}	
+\end{equation}
+
+Аппроксимация производной по пространству на втором шаге:
+\begin{equation} \label{alen-chen_space_approximation_corrector}
+	\left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial u}{\partial r} \right) \right]_j^n \approx
+	\left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j+1}^{n+1} - u_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^{n+1} - \tilde{u}_{j-1}^{n+1}}{\Delta r^2} \right)
+\end{equation}
+
+Таким образом, итоговая схема имеет вид:
+\begin{align} \label{alen-chen_final_predictor}
+	&r_j \dfrac{\tilde{u}_j^{n+1} - u_j^n}{\Delta t}	-
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^{n} - \tilde{u}_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j}^{n+1} - u_{j-1}^{n}}{\Delta r^2} \right) \right] = 0 \\
+	\label{alen-chen_final_corrector}
+	&r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t} -
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j+1}^{n+1} - u_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^{n+1} - \tilde{u}_{j-1}^{n+1}}{\Delta r^2} \right) \right] = 0
+\end{align}
+
+
+
+
+
+
+
+% Фрагмент для вставки в раздел 2.2 (после формул (2.31)--(2.32)).
+% Требуются: amsmath, babel/russian (как в остальном отчёте).
+
+\subsubsection{Определение порядка точности}
+
+Для оценки порядка точности схемы Алена-Чена следует использовать тот же метод подстановки разложений в ряд Тейлора, что и для схемы ВВЦП, но сразу для шага корректора, предварительно выразив промежуточные значения через шаг предиктора. При этом разностная схема будет использовать пять узлов по пространству.
+
+Введем обозначения $s=\nu \dfrac{\Delta t}{\Delta r^2}$, $\alpha_j=1-\dfrac{\Delta r}{2r_j}$ и $\beta_j=1+\dfrac{\Delta r}{2r_j}$, и перепишем схему (\ref{alen-chen_final_predictor}) - (\ref{alen-chen_final_corrector}) в виде:
+\begin{align} \label{alen-chen_comfy_predictor}
+	&\tilde{u}_j^{n+1} =
+	\left( 1 + 2s \right)^{-1} \left( u_j^n + s \left[ \beta_j u_{j+1}^n + \alpha_j u_{j-1}^n \right] \right) \\
+	\label{alen-chen_comfy_corrector}
+	&u_j^{n+1} = \left( 1 + 2s \right)^{-1} \left( u_j^n + s \left[ \beta_j \tilde{u}_{j+1}^{n+1} + \alpha_j \tilde{u}_{j-1}^{n+1} \right] \right)
+\end{align}
+
+Подставляя в (\ref{alen-chen_comfy_corrector}) значения $\tilde u_{j-1}^{n+1}$ и $\tilde u_{j+1}^{n+1}$, вычисленные по \eqref{alen-chen_comfy_predictor}
+в узлах $j-1$ и $j+1$, получаем формулу на пяти узлах $j-2$, $j-1$, $j$, $j+1$ $j+2$ слоя $n$:
+
+\begin{equation} \label{alen-chen_united_1}
+\begin{split}
+	u_j^{n+1} = (1+2s)^{-2} \biggl[
+	(1+2s)u_j^n + s \beta_j \biggl(
+	u_{j+1}^n &+ s\beta_{j+1} u_{j+2}^n + s \alpha_{j+1} u_j^n \biggr) + \\
+	&+ s \alpha_j \left( u_{j-1}^n + s \beta_{j-1} u_j^n + s \alpha_{j-1} u_{j-2}^n \right)
+	\biggr]
+\end{split}
+\end{equation}
+
+Приводим подобные слагаемые и получаем
+
+\begin{equation} \label{alen-chen_united}
+\begin{split}
+	u_j^{n+1} = (1+2s)^{-2} \biggl[ s^2 \beta_j \beta_{j+1} u_{j+2}^n &+ s \beta_j u_{j+1}^n + \left( 1 + 2s + s^2 \left( \alpha_{j+1}\beta_j + \alpha_j \beta_{j-1} \right) \right) u_j^n + \\
+	&+ s \alpha_j u_{j-1}^n + s^2 \alpha_{j-1} \alpha_j u_{j-2}^n \biggr]
+\end{split}
+\end{equation}
+
+Приведем разложения в ряд Тейлора в узле $j$:
+
+\begin{equation} \label{taylor}
+\begin{split}
+	&\overline{u}_j^{n+1} = \overline{u}_j^n + \Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n +
+	\dfrac{\Delta t^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n +
+	\dfrac{\Delta t^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial t^4} \right]_j^n + \dots \\
+	&\overline{u}_{j+2}^n = \overline{u}_j^n + 2\Delta r 
+	\left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n +
+	2 \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \dfrac{4}{3}\Delta r^3
+	\left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n + \dfrac{2}{3}\Delta r^4 
+	\left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots \\
+	&\overline{u}_{j+1}^n = \overline{u}_j^n + \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + \dfrac{\Delta r^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n +
+	\dfrac{\Delta r^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{\Delta r^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots \\
+	&\overline{u}_{j-1}^n = \overline{u}_j^n - \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + \dfrac{\Delta r^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n -
+	\dfrac{\Delta r^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{\Delta r^4}{24} \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots \\
+	&\overline{u}_{j-2}^n = \overline{u}_j^n - 2\Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + 2\Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n -
+	\dfrac{4}{3}\Delta r^3 \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n +
+	\dfrac{2}{3}\Delta r^4 \left[ \dfrac{\partial^4 \overline{u}}{\partial r^4} \right]_j^n + \dots
+\end{split}
+\end{equation}
+
+Подставим разложения \eqref{taylor} в \eqref{alen-chen_united}.
+Так как первое слагаемое во всех разложениях одно и то же, то вокруг него в правой части \eqref{alen-chen_united} можно собрать подобные слагаемые. При этом сумма всех коэффициентов с учетом $\alpha_j + \beta_j = 2$ равна $(1 + 2s)^2$. Таким образом, величину $u_j^n$ можно перенести в левую часть:
+
+\begin{equation} \label{taylor_s}
+\begin{split}
+	\left( 1 + 2s \right)^2 \left( \overline{u}_j^{n+1} - \overline{u}_j^n \right) &= s^2 \biggl( \beta_j \beta_{j+1} \left( \overline{u}_{j+2}^n - \overline{u}_j^n \right) + \alpha_{j-1} \alpha_j \left(  \overline{u}_{j-2}^n - \overline{u}_j^n \right) \biggr) + \\
+	& + s \biggl( \beta_j \left( \overline{u}_{j+1}^n - \overline{u}_j^n \right)+  \alpha_j \left( \overline{u}_{j-1}^n - \overline{u}_j^n \right) \biggr) 
+\end{split}
+\end{equation}
+
+\begin{equation} \label{s^2}
+\begin{split}
+	&\beta_j \beta_{j+1} \left( \overline{u}_{j+2}^n - \overline{u}_j^n \right) + \alpha_{j-1} \alpha_j \left(  \overline{u}_{j-2}^n - \overline{u}_j^n \right) = \\
+	&+ \beta_j \beta_{j+1} \biggl( 2\Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + 2 \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2}  \right]_j^n + \dfrac{4}{3} \Delta r^3 \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n + O(\Delta r^4) \biggr) + \\
+	&+ \alpha_{j-1} \alpha_j \biggl( -2\Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + 2 \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2}  \right]_j^n - \dfrac{4}{3} \Delta r^3 \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n + O(\Delta r^4)  \biggr) = \\
+	&= 2 \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n \left( \beta_j \beta_{j+1} - \alpha_{j-1} \alpha_j \right) + 2 \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n \left( \beta_j \beta_{j+1} + \alpha_{j-1} \alpha_j \right) + \\
+	&+ \dfrac{4}{3} \Delta r^3 \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n \left( \beta_j \beta_{j+1} - \alpha_{j-1} \alpha_j \right) + O(\Delta r^4)
+\end{split}
+\end{equation}
+
+\begin{equation} \label{bb-aa}
+\begin{split}
+	\beta_j \beta_{j+1} - \alpha_{j-1} \alpha_j &= 1 + \dfrac{\Delta r}{2(r_j + \Delta r)} + \dfrac{\Delta r}{2 r_j} + \dfrac{\Delta r^2}{4 r_j (r_j + \Delta r)} - \\
+	&-1 + \dfrac{\Delta r}{2(r_j - \Delta r)} + \dfrac{\Delta r}{2r_j} - \dfrac{\Delta r^2}{4r_j (r_j - \Delta r)} = \\
+	&= \dfrac{\Delta r}{r_j} + \dfrac{r_j \Delta r}{r_j^2 - \Delta r^2} - \dfrac{\Delta r^3}{2r_j(r_j^2 - \Delta r^2)} = 
+	\dfrac{\Delta r (4r_j^2 - 3 \Delta r^2)}{2r_j(r_j^2 - \Delta r^2)} = \\
+	& = \dfrac{4 r_j}{2(r_j^2 - \Delta r^2)} \Delta r + O(\Delta r^3) = \dfrac{2\Delta r}{r_j} \cdot \dfrac{1}{1+\frac{\Delta r^2}{r_j^2}} + O(\Delta r^3) = \\
+	& = \dfrac{2\Delta r}{r_j} \left( 1 + \dfrac{\Delta r^2}{r_j^2} + \dots \right) + O(\Delta r^3) = \dfrac{2\Delta r}{r_j} + O(\Delta r^3)
+\end{split}
+\end{equation}
+
+\begin{equation} \label{bb+aa}
+\begin{split}
+	\beta_j \beta_{j+1} + \alpha_{j-1} \alpha_j &= 1 + \dfrac{\Delta r}{2(r_j + \Delta r)} + \dfrac{\Delta r}{2 r_j} + \dfrac{\Delta r^2}{4 r_j (r_j + \Delta r)} + \\
+	&+1 - \dfrac{\Delta r}{2(r_j - \Delta r)} - \dfrac{\Delta r}{2r_j} + \dfrac{\Delta r^2}{4r_j (r_j - \Delta r)} = \\
+	&= 2 - \dfrac{\Delta r^2}{r_j^2 - \Delta r^2} + \dfrac{\Delta r^2}{2(r_j^2 - \Delta r^2)} = 2 - \dfrac{\Delta r^2}{2(r_j^2 - \Delta r^2)} = 2 + O(\Delta r^2)
+\end{split}	
+\end{equation}
+
+\begin{equation} \label{s}
+\begin{split}
+	&\beta_j \left( \overline{u}_{j+1} - \overline{u}_j^n \right) + \alpha_j \left( \overline{u}_{j-1} - \overline{u}_j^n \right) = \beta_j \overline{u}_{j+1}^n + \alpha_j \overline{u}_{j-1}^n - (\alpha_j + \beta_j) \overline{u}_j^n = \\
+	&= \left( 1 + \dfrac{\Delta r}{2r_j} \right) \overline{u}_{j+1}^n + \left( 1 - \dfrac{\Delta r}{2r_j} \right) u_{j-1}^n - 2\overline{u}_j^n = \overline{u}_{j+1}^n - 2\overline{u}_j^n + \overline{u}_{j-1}^n + \dfrac{\Delta r}{2 r_j} \left( \overline{u}_{j+1}^n - \overline{u}_{j-1}^n \right) = \\
+	&= \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \dfrac{\Delta r^2}{r_j} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^4)
+\end{split}
+\end{equation}
+
+
+
+
+С учетом выкладок \eqref{s^2} - \eqref{s}, продолжим преобразование уравнения \eqref{taylor_s}:
+\begin{equation}
+\begin{split}
+	\left(1 + 2s\right)^2 \left( \overline{u}_j^{n+1} - \overline{u}_j^n \right) &= 
+	s^2 \biggl[ 2 \Delta r \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n \cdot \left( \dfrac{2\Delta r}{r_j} + O(\Delta r^3) \right) + \\
+	& + 2 \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n \cdot \left( 2 + O(\Delta r^2) \right) + \\
+	& + \dfrac{4}{3}\Delta r^3 \left[ \dfrac{\partial^3 \overline{u}}{\partial r^3} \right]_j^n \cdot \left( \dfrac{2 \Delta r}{r_j}  + O(\Delta r^3) \right) \biggr] + \\
+	&+ s\left( \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \dfrac{\Delta r^2}{r_j} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^4) \right) \\
+	\left(1 + 2s\right)^2 \left( \overline{u}_j^{n+1} - \overline{u}_j^n \right) &= s^2 \biggl[ \dfrac{4\Delta r^2}{r_j} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + 4\Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + O(\Delta r^4) \biggr] + \\
+	& + s \left( \Delta r^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \dfrac{\Delta r^2}{r_j} \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^4) \right) \\
+	r_j\Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + O(\Delta t^2) &= \dfrac{4s^2 \Delta r^2}{(1+2s)^2} 
+	\left( r_j \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^2) \right) + \\
+	&+ \dfrac{\nu \Delta t}{(1+2s)^2} \left(  r_j \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^2) \right) \\
+	r_j\Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + O(\Delta t^2) &= \left( 1 - \dfrac{4s^2}{(1+2s)^2} \right) \nu \Delta t \left( r_j \left[ \dfrac{\partial^2 \overline{u}}{\partial r^2} \right]_j^n + \left[ \dfrac{\partial \overline{u}}{\partial r} \right]_j^n + O(\Delta r^2) \right)
+\end{split}
+\end{equation}
+
+Поделив на $\Delta t$, наконец, получаем:
+\begin{equation} \label{alen-chen_accuracy}
+	\left[ \dfrac{\partial (r\overline{u})}{\partial t} \right]_j^n - \nu \left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial \overline{u}}{\partial r} \right) \right]_j^n + O(\Delta t) + O(\Delta r^2) + \nu \dfrac{4s^2}{(1+2s)^2} \left[ \dfrac{\partial}{\partial r} \left( r \dfrac{\partial \overline{u}}{\partial r} \right) \right]_j^n = 0
+\end{equation}
+
+Из \eqref{alen-chen_accuracy} видно, что невязка содержит слагаемое, которое не стремится к нулю при $\Delta t, \Delta r \to 0$ при $s = \text{const}$. При $s \to 0$ множитель $ \dfrac{4s^2}{(1+2s)^2} $ приблизительно равен $4s^2$, и он неизбежно вносит вклад в невязку, т.е. оценка порядка точности для схемы Алена-Чена имеет вид $O\left(\Delta t + \Delta r^2 + s^2 \right) = O\left(\Delta t + \Delta r^2 + \dfrac{\Delta t^2}{\Delta r^4} \right)$. Условие $s \to 0$, т.е. $\dfrac{\Delta t}{\Delta r^2} \to 0$ можно рассматривать как условие согласованности схемы.
 
 \subsection{Задача о разгоне жидкости в цилиндрической трубе}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{fig/Рисунок_к_задаче.png}
-    \caption{}
-    \label{fig:task_fig}
+    \caption{Рисунок к задаче о разгоне жидкости в цилиндрической трубе}
+    \label{fig:diffusion_task_fig}
 \end{figure}
 
 Течение описывается уравнением
@@ -150,116 +475,12 @@
     \dfrac{\partial \left( ru \right)}{\partial t} - \dfrac{\partial}{\partial r} \left( r \nu \dfrac{\partial u}{\partial r} \right) - \dfrac{r}{\rho} \dfrac{\partial p}{\partial z} = 0
 \end{equation}
 
-Переход от консервативной (дивергентной) формы уравнения к обычной не является тождественным преобразованием, потому что 
-
-Оператор Лапласа 
-
-\begin{equation} \label{taskEquation}
-\frac{\partial (ru)}{\partial t} - \frac{\partial}{\partial r} \left( r \nu \frac{\partial u}{\partial r} \right) - \frac{r}{\rho} \frac{\partial p}{\partial z} = 0
-\end{equation}
-
-\subsubsection*{Явная центральная схема}
-
-\begin{equation} \label{taskFTCSderivation}
-\begin{aligned}
-r_i \frac{u_i^{n+1} - u_i^n}{\Delta t} - 
-\nu \left(
-r_{i+0.5} \frac{u_{i+1}^n - u_i^n}{\Delta r^2} -
-r_{i-0.5} \frac{u_i^n - u_{i-1}^n}{\Delta^2}
-\right) = Ar_i \\
-\frac{r_i}{\Delta t} u_i^{n+1} = \frac{r_i}{\Delta t} u_i^n + 
-\nu \frac{r_{i+0.5}}{\Delta r^2} u_{i+1}^n -
-\nu \frac{r_{i+0.5}}{\Delta r^2} u_i^n - 
-\nu \frac{r_{i-0.5}}{\Delta r^2} u_i^n +
-\nu \frac{r_{i-0.5}}{\Delta r^2} u_{i-1}^n + Ar_i
-\end{aligned}
-\end{equation}
-
-Введя следующее обозначение:
-\begin{equation} \label{taskFTCS_briefly}
-s = \nu \frac{\Delta t}{\Delta r^2 r_i},
-\end{equation}
-можем записать удобную для программной реализации формулу:
-\begin{equation} \label{taskFTCS}
-u_i^{n+1} = s\cdot r_{i-0.5}\cdot u_{i-1}^n -
-s\left(r_{i-0.5} + r_{i+0.5} - \frac{1}{s}\right) u_i^n +
-s \cdot r_{i+0.5} \cdot u_{i+1}^n + A\cdot \Delta t
-\end{equation}
-
 \subsubsection*{Двухшаговая схема Алена-Чена}
-
-
-Предиктор:
-\begin{equation} \label{taskPredictor}
-\begin{aligned}
-r_i \frac{\Tilde{u}_i^{n+1} - u_i^n}{\Delta t} - 
-\nu \left(r_{i+0.5} 
-\frac{u_{i+1}^{n} - \Tilde{u}_i^{n+1}}{\Delta r^2} - r_{i-0.5} \frac{\Tilde{u}_i^{n+1} - 
-u_{i-1}^{n}}{\Delta r^2} 
-\right) = Ar_i \\
-\left( 
-\nu \frac{r_{i-0.5}}{\Delta r^2} +
-\frac{r_i}{\Delta t} +
-\nu \frac{r_{i+0.5}}{\Delta r^2}
- \right)
-\Tilde{u}_i^{n+1} =
-\nu \frac{r_{i-0.5}}{\Delta r^2} u_{i-1}^n +
-\frac{r_i}{\Delta t} u_i^n + 
-\nu \frac{r_{i+0.5}}{\Delta r^2} u_{i+1}^n + Ar_i
-\end{aligned}
-\end{equation}
-
-Введя следующие обозначения
-\begin{equation} \label{taskDefinitions}
-s_1 = 
-\nu \frac{r_{i-0.5}}{\Delta r^2}, \;
-s_2 = 
-\frac{r_i}{\Delta t}, \;
-s_3 =
-\nu \frac{r_{i+0.5}}{\Delta r^2}, \;
-s_4 = (s_1 + s_2 + s_3)^{-1},
-\end{equation}
-можем записать предиктор в компактной форме:
-\begin{equation}
-\label{taskShortPredictor}
-\Tilde{u}_i^{n+1} = 
-(s_1 u_{i-1}^n +
- s_2 u_i^n + 
- s_3 u_{i+1}^n + Ar_i) \cdot s_4
-\end{equation}
-
-Аналогичные выкладки для корректора:
-\begin{equation} \label{taskPredictor}
-\begin{aligned}
-r_i \frac{u_i^{n+1} - u_i^n}{\Delta t} - \nu 
-\left(r_{i+0.5} \frac{\Tilde{u}_{i+1}^{n+1} - u_i^{n+1}}{\Delta r^2} - r_{i-0.5} \frac{u_i^{n+1} - 
-\Tilde{u}_{i-1}^{n+1}}{\Delta r^2} 
-\right) = Ar_i \\
-\left( 
-\nu \frac{r_{i-0.5}}{\Delta r^2} +
-\frac{r_i}{\Delta t} +
-\nu \frac{r_{i+0.5}}{\Delta r^2}
- \right)
-u_i^{n+1} =
-\nu \frac{r_{i-0.5}}{\Delta r^2} \Tilde{u}_{i-1}^{n+1} +
-\frac{r_i}{\Delta t} u_i^n + 
-\nu \frac{r_{i+0.5}}{\Delta r^2} \Tilde{u}_{i+1}^{n+1} + Ar_i
-\end{aligned}
-\end{equation}
-
-
-
-\begin{equation}
-\label{taskShortCorrector}
-u_i^{n+1} = 
-(s_1 \Tilde{u}_{i-1}^{n+1} +
- s_2 u_i^n + 
- s_3 \Tilde{u}_{i+1}^{n+1} + Ar_i) \cdot s_4
-\end{equation} 
-
 
 
 
 \section{Одномерное уравнение конвекции}
 
 \section{Невязкое уравнение Бюргерса}
+
+\section{Выводы }

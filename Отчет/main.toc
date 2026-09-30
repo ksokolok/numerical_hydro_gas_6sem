@@ -4,11 +4,10 @@
 \contentsline {subsection}{\numberline {2.1}Явная центральная схема}{3}{subsection.2.1}%
 \contentsline {subsubsection}{\numberline {2.1.1}Определение порядка точности}{4}{subsubsection.2.1.1}%
 \contentsline {subsubsection}{\numberline {2.1.2}Исследование устойчивости по Нейману}{5}{subsubsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.2}Двухшаговая схема Алена-Чена}{5}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Описание математической модели}{5}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Описание начальных и граничных условий}{5}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Описание метода конечных разностей}{5}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Задача о разгоне жидкости в цилиндрической трубе}{5}{subsection.2.6}%
-\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{6}{section.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{6}{section.4}%
+\contentsline {subsection}{\numberline {2.2}Двухшаговая схема Алена-Чена}{7}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Определение порядка точности}{8}{subsubsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{11}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{12}{section.3}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{12}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{12}{section.5}%
 \contentsfinish 
