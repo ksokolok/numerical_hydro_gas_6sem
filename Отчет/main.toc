@@ -8,7 +8,10 @@
 \contentsline {subsubsection}{\numberline {2.2.1}Определение порядка точности}{8}{subsubsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{12}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Дискретизация уравнения}{12}{subsubsection.2.3.1}%
-\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{14}{section.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{14}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{14}{section.5}%
+\contentsline {subsubsection}{\numberline {2.3.2}Анализ решения}{15}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Анализ свойств разностных схемы}{17}{subsubsection.2.3.3}%
+\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{17}{section.3}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{17}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{17}{section.5}%
+\contentsline {section}{Список литературы}{18}{section.5}%
 \contentsfinish 

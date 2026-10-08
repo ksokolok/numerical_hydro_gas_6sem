@@ -16,5 +16,44 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{ntvy/global//global/global/global}
+    \entry{loitsyansky1978}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=c37055a920694d88388f7c1dd7b30154}{%
+           family={Лойцянский},
+           familyi={Л\bibinitperiod},
+           given={Л.\bibnamedelimi Г.},
+           giveni={Л\bibinitperiod\bibinitdelim Г\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {russian}%
+      }
+      \list{location}{1}{%
+        {Москва}%
+      }
+      \list{publisher}{1}{%
+        {Наука}%
+      }
+      \strng{namehash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{fullhash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{fullhashraw}{c37055a920694d88388f7c1dd7b30154}
+      \strng{bibnamehash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{authorbibnamehash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{authornamehash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{authorfullhash}{c37055a920694d88388f7c1dd7b30154}
+      \strng{authorfullhashraw}{c37055a920694d88388f7c1dd7b30154}
+      \field{sortinit}{Л}
+      \field{sortinithash}{408c91708504c4d55e9c1a703c852f82}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{7-е изд.}
+      \field{pagetotal}{736}
+      \field{title}{Механика жидкости и газа}
+      \field{year}{1978}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

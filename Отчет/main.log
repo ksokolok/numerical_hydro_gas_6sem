@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  30 SEP 2026 07:19
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  8 OCT 2026 15:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2090,19 +2090,26 @@ File: fig/Общий_Шаблон_Алена-Чена.jpeg Graphic file (type bm
  [7] [8] [9] [10] [11]
 File: fig/Рисунок_к_задаче.png Graphic file (type bmp)
 <fig/Рисунок_к_задаче.png>
- [12]) [13] [14]
+ [12] [13] [14]
+File: fig/ftcs_snapshots.png Graphic file (type bmp)
+<fig/ftcs_snapshots.png>
+ [15]
+File: fig/ftcs_umax(A).png Graphic file (type bmp)
+<fig/ftcs_umax(A).png>
+ [16]) [17]
 \openout2 = `templates/bibpage.aux'.
 
- (./templates/bibpage.tex
 
-LaTeX Warning: Empty bibliography on input line 2.
+(./templates/bibpage.tex) [18
 
-)
-runsystem(latexminted cleantemp  --timestamp 20260930071949 FAD58DE7366495DB465
+
+
+]
+runsystem(latexminted cleantemp  --timestamp 20261008151035 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
- (./main.aux (./templates/titlepage.aux) (./templates/tocpage.aux)
-(./content.aux) (./templates/bibpage.aux))
+ (./main.aux (./templates/titlepage.aux)
+(./templates/tocpage.aux) (./content.aux) (./templates/bibpage.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -2113,18 +2120,18 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 2.0pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1D3F2D9FE9423970F8B96B925000DFEF;3270.
+(rerunfilecheck)             Checksum: 8A568B76D943B1E19362C8140A47B6F9;3946.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 48900 strings out of 468167
- 998423 string characters out of 5436503
- 2271915 words of memory out of 5000000
- 76902 multiletter control sequences out of 15000+600000
- 631502 words of font info for 104 fonts, out of 8000000 for 9000
+ 49161 strings out of 468167
+ 1004004 string characters out of 5436503
+ 2274350 words of memory out of 5000000
+ 77160 multiletter control sequences out of 15000+600000
+ 631510 words of font info for 105 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 91i,19n,109p,693b,4050s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,19n,109p,693b,5040s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (14 pages).
+Output written on main.pdf (18 pages).

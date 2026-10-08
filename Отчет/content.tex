@@ -554,7 +554,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 Дискретизируем \eqref{eq_for_j=0} по схеме ВВЦП, используя \eqref{approximation3_r=0}:
 \begin{equation}
-	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - 4 \nu \dfrac{u_1^n - u_0^n}{\Delta r^2} = A 
+	\dfrac{u_0^{n+1} - u_0^n}{\Delta t} - 4 \nu \dfrac{u_1^n - u_0^n}{\Delta r^2} = A 
 \end{equation}
 
 Отсюда получаем разностную схему для скорости на оси трубы:
@@ -567,8 +567,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 Итак, дискретизация поставленной задачи по схеме ВВЦП представляет собой систему
 
-
-\begin{equation}
+\begin{equation} \label{ftcs_num_final}
 \begin{cases}
 	u_0^{n+1} = u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \left( u_1^n - u_0^n \right) + A\Delta t \\
 	u_j^{n+1} = u_j^n + \nu \dfrac{\Delta t}{\Delta r^2} \left[ \left( 1 + \dfrac{\Delta r}{2 r_j} \right)u_{j+1}^n - 2u_j^n + \left( 1 - \dfrac{\Delta r}{2 r_j} \right)u_{j-1}^n \right] + A\Delta t
@@ -576,6 +575,114 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	u_{N_r}^{n+1} = 0
 \end{cases}
 \end{equation}
+
+
+
+
+
+
+
+Дискретизация уравнения \eqref{tast_eq} по двухшаговой схеме Алена-Чена проводится с использованием системы \eqref{alen-chen_final_predictor} - \eqref{alen-chen_final_corrector} с добавленной неоднородностью:
+\begin{align} \label{alen-chen_task_predictor}
+	&r_j \dfrac{\tilde{u}_j^{n+1} - u_j^n}{\Delta t}	-
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j+1}^{n} - \tilde{u}_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j}^{n+1} - u_{j-1}^{n}}{\Delta r^2} \right) \right] = r_jA \\
+	\label{alen-chen_task_corrector}
+	&r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t} -
+	\nu \left[ \left(r_j + \dfrac{\Delta r}{2}\right) \left( \dfrac{\tilde{u}_{j+1}^{n+1} - u_j^{n+1}}{\Delta r^2} \right) -
+	\left(r_j - \dfrac{\Delta r}{2}\right) \left( \dfrac{u_{j}^{n+1} - \tilde{u}_{j-1}^{n+1}}{\Delta r^2} \right) \right] = r_jA
+\end{align}
+или
+\begin{align}
+	&\tilde{u}_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2}
+	\left( \left( 1 + \dfrac{1}{2j} \right) u_{j+1}^n + \left( 1 - \dfrac{1}{2j} \right) u_{j-1}^n \right)  + A\Delta t  \right)\\
+	&u_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2}
+	\left( \left( 1 + \dfrac{1}{2j} \right) \tilde{u}_{j+1}^{n+1} + \left( 1 - \dfrac{1}{2j} \right) \tilde{u}_{j-1}^{n+1} \right)  + A \Delta t \right)
+\end{align}
+
+Эти алгебраические уравнения справедливы лишь для внутренних узлов. 
+На узле $j=N_r$, согласно условию Дирихле \eqref{Boundaries 1}, справедливы равенства
+\begin{align}
+	& \tilde{u}_j^{n+1} = 0 \\
+	& u_j^{n+1} = 0
+\end{align}
+
+Чтобы записать уравнения для узла $j=0$ применим схему Алена-Чена к уравнению \eqref{eq_for_j=0}:
+
+\begin{align}
+	&\dfrac{\tilde{u}_0^{n+1} - u_0^n}{\Delta t} - 4 \nu \dfrac{u_{1}^n - \tilde{u}_0^{n+1}}{\Delta r^2} = A \\
+	&\dfrac{u_0^{n+1} - u_0^n}{\Delta t} - 4 \nu \dfrac{\tilde{u}_1^{n+1} - u_0^{n+1}}{\Delta r^2} = A
+\end{align}
+или
+\begin{align}
+	&\tilde{u}_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} u_1^n + A \Delta t \right) \\
+	&u_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \tilde{u}_1^{n+1} + A\Delta t \right)
+\end{align}
+
+Таким образом, дискретизация поставленной задачи по двухшаговой схеме Алена-Чена представляет собой две системы: \eqref{alen-chen_num_final_1} (для первого шага) и \eqref{alen-chen_num_final_2} (для второго шага).
+
+\begin{equation} \label{alen-chen_num_final_1}
+	\begin{cases}
+		\tilde{u}_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} u_1^n + A \Delta t \right) \\
+		\tilde{u}_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2} 
+		\left( \left( 1 + \dfrac{1}{2j} \right) u_{j+1}^n + \left( 1 - \dfrac{1}{2j} \right) u_{j-1}^n \right)  + A\Delta t  \right)\\
+		\tilde{u}_{N_r}^{n+1} = 0 \\
+	\end{cases}
+\end{equation}
+
+\begin{equation} \label{alen-chen_num_final_2}
+	\begin{cases}
+		u_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \tilde{u}_1^{n+1} + A\Delta t \right) \\
+		u_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2}
+		\left( \left( 1 + \dfrac{1}{2j} \right) \tilde{u}_{j+1}^{n+1} + \left( 1 - \dfrac{1}{2j} \right) \tilde{u}_{j-1}^{n+1} \right)  + A \Delta t \right)\\
+		u_{N_r}^{n+1} = 0 \\
+	\end{cases}
+\end{equation}
+
+\subsubsection{Анализ решения}
+
+На Рис.~\ref{ftcs_snapshots} представлены численные решения, полученные по схема ВВЦП \eqref{ftcs_num_final}, в разные моменты времени. Параметры, участвующие в расчете приведены в Табл.~\ref{tab:parameters_1}. Видно, что профиль скорости постепенно принимает определенный вид с максимумом на оси $r=0$, равным $u_\text{max} = 0.25$. Этот профиль характеризует область установившегося течения.
+
+Аналитическое выражение формы профиля установившегося течения Пуазейля, согласно \cite{loitsyansky1978}, выглядит так
+
+\begin{equation} \label{eq:exact_solution}
+	\dfrac{A}{4\nu} \left( r_w^2 - r^2 \right)
+\end{equation}
+
+Максимум, очевидно, достигается на оси, т.е. при $r=0$, и в рассматриваемом случае равен 0.25, что в точности соответствует полученному значению.
+
+\begin{table}[H] 
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\parbox{0cm}{\rule{0pt}{1cm}}$A$ & $r_w$ & $N_r$ & Time & VNM & $\nu$ \\
+		\hline
+		\parbox{0cm}{\rule{0pt}{1cm}}1 & 1 & 100 & 1 & 0.3 & 1.0 \\
+		\hline
+	\end{tabular}
+	\caption{Параметры, участвующие в расчете}
+	\label{tab:parameters_1}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{fig/ftcs_snapshots.png}
+	\caption{Развитие профиля скорости во времени (решение по схеме ВВЦП)}
+	\label{ftcs_snapshots}
+\end{figure}
+
+На Рис.~\ref{fig:ftcs_umax(A)} представлена зависимость решения на оси цилиндра, т.е. $V_\text{max}$, от приложенного градиента давления. Линейный характер зависимости 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{fig/ftcs_umax(A).png}
+	\caption{Зависимость скорости на оси цилиндра от ускорения $A$ (решение по схеме ВВЦП)}
+	\label{fig:ftcs_umax(A)}
+\end{figure}
+
+\subsubsection{Анализ свойств разностных схемы}
+
+
 
 \section{Одномерное уравнение конвекции}
 
