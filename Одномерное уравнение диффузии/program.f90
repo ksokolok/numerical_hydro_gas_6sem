@@ -36,7 +36,4 @@ NA = 100
 call FTCS_Cylinder_A(r, u, rw, Nr, Nt, VNM, Time, A1, A2, NA, nu,&
 									'umax(A).plt')
 
-! Исследование влияния шага по времени на решение (ВВЦП)
-
-
 end program

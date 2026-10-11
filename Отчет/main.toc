@@ -6,12 +6,17 @@
 \contentsline {subsubsection}{\numberline {2.1.2}Исследование устойчивости по Нейману}{5}{subsubsection.2.1.2}%
 \contentsline {subsection}{\numberline {2.2}Двухшаговая схема Алена-Чена}{7}{subsection.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.1}Определение порядка точности}{8}{subsubsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{12}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Дискретизация уравнения}{12}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}Анализ решения}{15}{subsubsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.3}Анализ свойств разностных схемы}{17}{subsubsection.2.3.3}%
-\contentsline {section}{\numberline {3}Одномерное уравнение конвекции}{17}{section.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{17}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{17}{section.5}%
-\contentsline {section}{Список литературы}{18}{section.5}%
+\contentsline {subsubsection}{\numberline {2.2.2}Анализ устойчивости по Нейману}{11}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.3}Задача о разгоне жидкости в цилиндрической трубе}{16}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Постановка задачи}{16}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Дискретизация уравнения}{16}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Анализ решения}{19}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схемы}{21}{subsubsection.2.3.4}%
+\contentsline {section}{\numberline {3}Одномерное уравнение переноса}{23}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{23}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{23}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Задача переноса синусоидных сигналов}{23}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{23}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{23}{section.5}%
+\contentsline {section}{Список литературы}{24}{section.5}%
 \contentsfinish 

@@ -462,9 +462,157 @@ $\xi = N - D$. Поскольку разностная схема линейна
 Из \eqref{alen-chen_accuracy} видно, что невязка содержит слагаемое, которое не стремится к нулю при $\Delta t, \Delta r \to 0$ при $s = \text{const}$. При $s \to 0$ множитель $ \dfrac{4s^2}{(1+2s)^2} $ приблизительно равен $4s^2$, и он неизбежно вносит вклад в невязку, т.е. оценка порядка точности для схемы Алена-Чена имеет вид $O\left(\Delta t + \Delta r^2 + s^2 \right) = O\left(\Delta t + \Delta r^2 + \dfrac{\Delta t^2}{\Delta r^4} \right)$. Условие $s \to 0$, т.е. $\dfrac{\Delta t}{\Delta r^2} \to 0$ можно рассматривать как условие согласованности схемы.
 
 
+
+\subsubsection{Анализ устойчивости по Нейману}
+
+Как и для схемы ВВЦП, подставим ошибку округления $\xi$ в качестве неизвестной величины в дискретное уравнение по исследуемой схеме. Воспользуемся формой \eqref{alen-chen_united} по пяти узлам. Тогда
+
+\begin{equation} \label{eq:alen-chen_xi}
+\begin{split}
+	\xi_j^{n+1} = (1+2s)^{-2} \biggl[ s^2 \beta_j \beta_{j+1} \xi_{j+2}^n &+ s \beta_j \xi_{j+1}^n + \left( 1 + 2s + s^2 \left( \alpha_{j+1}\beta_j + \alpha_j \beta_{j-1} \right) \right) \xi_j^n + \\
+	&+ s \alpha_j \xi_{j-1}^n + s^2 \alpha_{j-1} \alpha_j \xi_{j-2}^n \biggr]
+\end{split}
+\end{equation}
+
+Далее, раскладывая $\xi$ в ряд Фурье и принимая в рассмотрение только одну моду $\xi_m$, можно переписать уравнение в виде:
+
+\begin{equation} \label{eq:alen-chen_g_eq}
+\begin{split}
+	(g)^{n+1} \exp(i k_m r_j) = &\biggl[ s^2 \beta_j \beta_{j+1} (g)^n \exp(i k_m r_j) \exp(2i k_m \Delta r) + \\
+	& + s \beta_j (g)^n \exp(i k_m r_j) \exp(i k_m \Delta r) + \\ & + \left( 1 + 2s + s^2 \left( \alpha_{j+1}\beta_j + \alpha_j \beta_{j-1} \right) \right) (g)^n \exp(i k_m r_j) + \\
+	& + s \alpha_j (g)^n \exp(i k_m r_j) \exp(- i k_m \Delta r) + \\
+	& +  s^2 \alpha_{j-1} \alpha_j (g)^n \exp(i k_m r_j) \exp(-2i k_m \Delta r) \biggr] \cdot (1+2s)^{-2} 
+\end{split}
+\end{equation}
+
+Поделив на $(g)^n \exp(i k_m r_j)$, получаем
+\begin{equation}
+\begin{split}
+	g = &\biggl[ s^2 \beta_j \beta_{j+1} \exp(2i k_m \Delta r) + \\
+	& + s \beta_j \exp(i k_m \Delta r) + \\ 
+	& + \left( 1 + 2s + s^2 \left( \alpha_{j+1}\beta_j + \alpha_j \beta_{j-1} \right) \right) + \\
+	& + s \alpha_j \exp(- i k_m \Delta r) + \\
+	& +  s^2 \alpha_{j-1} \alpha_j  \exp(-2i k_m \Delta r) \biggr] \cdot (1+2s)^{-2} 
+\end{split}	
+\end{equation}
+
+Перепишем выражение, используя формулы Эйлера:
+\begin{equation} \label{eq:alen-chen_euler}
+\begin{split}
+	&\exp(i \phi) = \cos{\phi} + i \sin{\phi} \\
+	&\exp(- i \phi) = \cos{\phi} - i \sin{\phi} \\
+\end{split}
+\end{equation}
+
+Дополнительно группируя слагаемые, получим:
+\begin{equation}
+	\begin{split}
+		g = &\biggl[ s^2 (\beta_j \beta_{j+1} + \alpha_{j-1} \alpha_j ) \cos{(2 k_m \Delta r)} + s (\beta_j + \alpha_j) \cos{(k_m \Delta r)} + 1 + 2s + s^2(\alpha_{j+1} \beta_j + \alpha_j \beta_{j-1}) + \\
+		& + i s^2 (\beta_j \beta_{j+1} - \alpha_{j-1} \alpha_j) \sin{(2 k_m \Delta r)} + i s (\beta_j - \alpha_j) \sin{(k_m \Delta r)}
+		\biggr] \cdot (1+2s)^{-2} 
+	\end{split}	
+\end{equation}
+
+Приведем выражения для переменных коэффициентов с учетом $\dfrac{\Delta r}{r_j} = \dfrac{\Delta r}{j \Delta r} = \dfrac{1}{j}$, $\alpha_j = 1 - \dfrac{\Delta r}{2 r_j} = 1 - \dfrac{1}{2j}$ и $\beta_j = 1 + \dfrac{\Delta r}{2 r_j} = 1 + \dfrac{1}{2j}$. 
+
+\begin{align}
+	&\beta_j \beta_{j+1} + \alpha_{j-1} \alpha_j = 2 - \dfrac{\Delta r^2}{2 (r_j^2 - \Delta r^2)} = 2 - \dfrac{1}{2(j^2 - 1)} \\
+	&\beta_j \beta_{j+1} - \alpha_{j-1} \alpha_j = \dfrac{\Delta r (4 r_j^2 - 3 \Delta r^2)}{2 r_j (r_j^2 - \Delta r^2)} = \dfrac{4j^2 - 3}{2j(j^2 - 1)} \\
+	&\alpha_{j+1} \beta_j + \alpha_j \beta_{j-1} = 2 + \dfrac{\Delta r^2}{2(r_j^2 - \Delta r^2)} = 2 + \dfrac{1}{2(j^2 - 1)} \\
+	&\beta_j + \alpha_j = 2 \\
+	&\beta_j - \alpha_j = \dfrac{\Delta r}{r_j} = \dfrac{1}{j}
+\end{align}
+
+Таким образом, итоговое выражение для коэффициента перехода $g$ можно записать как
+	\begin{equation} \label{eq:alen-chen_g}
+	\begin{split}
+		g = &\biggl[ s^2 \left( 2 - \dfrac{1}{2(j^2 - 1)} \right) \cos{(2 k_m \Delta r)} + 2s \cos{(k_m \Delta r)} + 1 + 2s + s^2 \left( 2 + \dfrac{1}{2(j^2 - 1)} \right) + \\
+		& + i \left( s^2 \dfrac{4j^2 - 3}{2j(j^2 - 1)} \sin{(2 k_m \Delta r)} + \dfrac{s}{j} \sin{(k_m \Delta r)}\right)
+		 \biggr] \cdot (1+2s)^{-2} 
+	\end{split}
+	\end{equation}
+
+Исследуем устойчивость схемы с помощью неравенства $|g| \le 1$. Рассмотрим предельный случай $j \to \infty$. Ясно, что в этом случае мнимое слагаемое в $g$ обращается в ноль, а коэффициенты при косинусах принимают постоянные значения:
+
+\begin{equation} \label{eq:alen-chen_j_to_infty}
+\begin{split}
+	g &= \left( 2s^2 \cos{(2 k_m \Delta r)} + 2s \cos{(k_m \Delta r)} + 1 + 2s + 2s^2 \right) \cdot (1+2s)^{-2} = \\
+	& = \left( 4s^2 \cos^2\ (k_m \Delta r) + 2s \cos{(k_m \Delta r)} + 1 + 2s \right) \cdot (1+2s)^{-2} = \\
+	& = (4 s^2 q^2 + 2sq + 1 + 2s) \cdot (1+2s)^{-2}
+\end{split}
+\end{equation}
+
+Получили полином второй степени относительно $q = \cos{(k_m \Delta r)}$. Поскольку коэффициент при старшей степени $4s^2$ положительный, то максимум достигается на концах интервала $q \in [-1,\ 1]$.  Подстановка $q = \pm 1$ в \eqref{eq:alen-chen_j_to_infty} дает коэффициент переноса:
+
+\begin{align}
+	& g = 1, &q = 1 \\
+	& g = \dfrac{4s^2 + 1}{4s^2 + 4s + 1}, &q = -1
+\end{align}
+
+Ясно, что при любом $s$ выполняется неравенство $|g| \le 1$. Таким образом, схема Алена-Чена безусловно устойчива при $j \to \infty$, т.е. в узлах достаточно отдаленных от оси $r = 0$.
+
+
+Теперь рассмотрим предельный случай для узла, наиболее приближенного к оси $r=0$, который допустимо подставить в схему, а именно — узел $j = 2$.
+
+Выражение для коэффициента перехода \eqref{eq:alen-chen_g} при $j=2$ принимает вид:
+
+\begin{equation} \label{eq:alen-chen_g_j2}
+\begin{split}
+	g = &\left[ \dfrac{11}{6} s^2 \cos{(2 k_m \Delta r)} + 2s \cos{(k_m \Delta r)} + 1 + 2s + \dfrac{13}{6} s^2 + \right. \\
+	&\left. + i \left(\dfrac{13}{12} s^2  \sin{(2 k_m \Delta r)} + \dfrac{s}{2} \sin{(k_m \Delta r)}\right) \right] \cdot (1+2s)^{-2}
+\end{split}
+\end{equation}
+
+Тогда
+
+\begin{equation} \label{eq:|g|^2_ac}
+\begin{split}
+	|g|^2 = &\left[ \left( \dfrac{11}{6} s^2 \cos{(2 k_m \Delta r)} + 2s \cos{(k_m \Delta r)} + 1 + 2s + \dfrac{13}{6} s^2\right)^2 + \right. \\
+	&\left. + \left(\dfrac{13}{12} s^2  \sin{(2 k_m \Delta r)} + \dfrac{s}{2} \sin{(k_m \Delta r)}\right)^2 \right] \cdot (1+2s)^{-4}
+\end{split}
+\end{equation}
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{fig/diffusion_Stability_Large_Rainbow.png}
+	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ в узле $j=2$}
+	\label{fig:alen-chen_j=2_g}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/diffusion_Stability_j=100_Large_Rainbow.png}
+		\caption{$j=100$}
+		\label{fig:alen-chen_j=100_g}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/diffusion_Stability_j=1000_Large_Rainbow.png}
+		\caption{$j=1000$}
+		\label{fig:alen-chen_j=1000_g}
+	\end{subfigure}
+	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ в узлах $j=100$ и $j=1000$}
+	\label{fig:alen-chen_j=100,1000}
+\end{figure}
+
+
+На Рис.~\ref{fig:alen-chen_j=2_g} представлено распределение модуля коэффициента перехода по \eqref{eq:|g|^2_ac}, т.е. в узле $j=2$. Все значения $|g|$ не превышают 1, что говорит о безусловной устойчивости схемы Алена-Чена в узле $j=2$. Поскольку все переменные коэффициенты в \eqref{eq:alen-chen_g} монотонно убывают с ростом $j$, а в пределе $j \to \infty$ схема, как было показано выше, также является безусловно устойчивой, то тот же вывод справедлив для всех узлов $j \ge 2$.
+
+Распределения $|g|$ в узлах, отдаленных от оси $r=0$, как видно из Рис.~\ref{fig:alen-chen_j=100,1000}, подобны распределению в $j=2$. Для согласованности схемы, как было показано в анализе точности, требуется условие $s \to 0$. Однако малым числам $s$ соответствуют медленные затухания $|g| \approx 0.99$.
+
+
+
+
 \newpage
 
 \subsection{Задача о разгоне жидкости в цилиндрической трубе}
+
+\subsubsection{Постановка задачи}
 
 Рассматривается течение вязкой жидкости по трубе круглого сечения. До момента $t=0$ жидкость покоилась, после чего начинает действовать постоянный продольный градиент давления $\partial p/ \partial z$, приводя жидкость в движение. За счет вязкости течение постепенно становится установившимся. Требуется с помощью численного моделирования найти распределение продольной компоненты скорости $u$ по радиусу трубы в любой момент времени $t \ge 0$.
 
@@ -511,7 +659,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	r_j = j \Delta r, \qquad j = 0, 1, \dots, N_r
 \end{equation}
 
-Дискретизация уравнения \eqref{tast_eq} по схеме ВВЦП проводится с использованием схемы \eqref{ftcs_final} с добавленной неоднородностью:
+Дискретизация уравнения \eqref{tast_eq} по схеме ВВЦП проводится с использованием разностного уравнения \eqref{ftcs_final} с добавленной неоднородностью:
 
 \begin{equation} \label{task_ftcs}
 	r_j \dfrac{u_j^{n+1} - u_j^n}{\Delta t}	 -
@@ -625,7 +773,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\begin{cases}
 		\tilde{u}_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} u_1^n + A \Delta t \right) \\
 		\tilde{u}_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2} 
-		\left( \left( 1 + \dfrac{1}{2j} \right) u_{j+1}^n + \left( 1 - \dfrac{1}{2j} \right) u_{j-1}^n \right)  + A\Delta t  \right)\\
+		\left( \left( 1 + \dfrac{\Delta r}{2 r_j} \right) u_{j+1}^n + \left( 1 - \dfrac{\Delta r}{2 r_j} \right) u_{j-1}^n \right)  + A\Delta t  \right)\\
 		\tilde{u}_{N_r}^{n+1} = 0 \\
 	\end{cases}
 \end{equation}
@@ -634,44 +782,46 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\begin{cases}
 		u_0^{n+1} = \left( 1 + 4 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_0^n + 4 \nu \dfrac{\Delta t}{\Delta r^2} \tilde{u}_1^{n+1} + A\Delta t \right) \\
 		u_j^{n+1} = \left( 1 + 2 \nu \dfrac{\Delta t}{\Delta r^2} \right)^{-1} \left( u_j^n + \nu \dfrac{\Delta t}{\Delta r^2}
-		\left( \left( 1 + \dfrac{1}{2j} \right) \tilde{u}_{j+1}^{n+1} + \left( 1 - \dfrac{1}{2j} \right) \tilde{u}_{j-1}^{n+1} \right)  + A \Delta t \right)\\
+		\left( \left( 1 + \dfrac{\Delta r}{2 r_j} \right) \tilde{u}_{j+1}^{n+1} + \left( 1 - \dfrac{\Delta r}{2 r_j} \right) \tilde{u}_{j-1}^{n+1} \right)  + A \Delta t \right)\\
 		u_{N_r}^{n+1} = 0 \\
 	\end{cases}
 \end{equation}
 
 \subsubsection{Анализ решения}
 
-На Рис.~\ref{ftcs_snapshots} представлены численные решения, полученные по схема ВВЦП \eqref{ftcs_num_final}, в разные моменты времени. Параметры, участвующие в расчете приведены в Табл.~\ref{tab:parameters_1}. Видно, что профиль скорости постепенно принимает определенный вид с максимумом на оси $r=0$, равным $u_\text{max} = 0.25$. Этот профиль характеризует область установившегося течения.
+На Рис.~\ref{fig:ftcs_snapshots} представлены численные решения, полученные по схеме ВВЦП \eqref{ftcs_num_final}, в разные моменты времени. Параметры, участвующие в расчете приведены в Табл.~\ref{tab:parameters_1}. Видно, что профиль скорости постепенно принимает определенный вид с максимумом $u_\text{max} = 0.25$ на оси $r=0$. Этот профиль характеризует область установившегося течения.
 
-Аналитическое выражение формы профиля установившегося течения Пуазейля, согласно \cite{loitsyansky1978}, выглядит так
+Аналитическое выражение формы профиля установившегося течения Пуазейля, согласно \cite{loitsyansky1978}, выглядит так:	
 
 \begin{equation} \label{eq:exact_solution}
-	\dfrac{A}{4\nu} \left( r_w^2 - r^2 \right)
+	u = \dfrac{A}{4\nu} \left( r_w^2 - r^2 \right)
 \end{equation}
 
-Максимум, очевидно, достигается на оси, т.е. при $r=0$, и в рассматриваемом случае равен 0.25, что в точности соответствует полученному значению.
+Максимум, очевидно, достигается на оси, т.е. при $r=0$, и в рассматриваемом случае равен 0.25, что в точности соответствует полученному численному значению.
 
 \begin{table}[H] 
 	\centering
-	\begin{tabular}{|c|c|c|c|c|c|}
+	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		\parbox{0cm}{\rule{0pt}{1cm}}$A$ & $r_w$ & $N_r$ & Time & VNM & $\nu$ \\
+		\parbox{0cm}{\rule{0pt}{1cm}}$A$ & $r_w$ & $N_r$ & VNM & $\nu$ \\
 		\hline
-		\parbox{0cm}{\rule{0pt}{1cm}}1 & 1 & 100 & 1 & 0.3 & 1.0 \\
+		\parbox{0cm}{\rule{0pt}{1cm}}1 & 1 & 100 & 0.3 & 1.0 \\
 		\hline
 	\end{tabular}
 	\caption{Параметры, участвующие в расчете}
 	\label{tab:parameters_1}
 \end{table}
 
+Примем за момент времени $t'$, при котором течение можно считать установившимся, момент достижения скорости на оси значения $0.98 u_\text{max} = 0.245$. Тогда, из анализа Рис.~\ref{fig:ftcs_snapshots}, находим $t' = 0.7$.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{fig/ftcs_snapshots.png}
 	\caption{Развитие профиля скорости во времени (решение по схеме ВВЦП)}
-	\label{ftcs_snapshots}
+	\label{fig:ftcs_snapshots}
 \end{figure}
 
-На Рис.~\ref{fig:ftcs_umax(A)} представлена зависимость решения на оси цилиндра, т.е. $V_\text{max}$, от приложенного градиента давления. Линейный характер зависимости 
+На Рис.~\ref{fig:ftcs_umax(A)} представлена зависимость решения на оси цилиндра, т.е. $V_\text{max}$, от приложенного градиента давления. Линейный характер зависимости соответствует аналитической формуле \eqref{eq:exact_solution}.
 
 \begin{figure}[H]
 	\centering
@@ -682,9 +832,91 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 \subsubsection{Анализ свойств разностных схемы}
 
+На Рис.~\ref{fig:FTCS_t} представлена зависимость максимальной ошибки решения от числа фон Неймана для схемы ВВЦП при фиксированном шаге по пространству $h=0.01$, т.е. число фон Неймана однозначно определяет шаг по времени. Сходящееся решение удалось получить только при $\text{VNM} \le 0.41$. Такое чуть более строгое условие устойчивости, чем полученное из анализа фон Неймана $\text{VNM} \le 0.5$ можно объяснить тем, что для аппроксимации скорости в граничном узле $j=0$ использовалось другое уравнение. 
+Для момента времени $t=0.1$ ошибка вычисляется через разность с эталонным решением, посчитанным по схеме Алена-Чена с числом фон Неймана VNM = $1e-5$. При $t=0.7, 5.0$ для расчета ошибки используется аналитическое выражение \eqref{eq:exact_solution} для установившегося течения.
+Видим, что первый порядок точности по времени для схемы ВВЦП при $t = 0.1$ подтверждается на всем исследуемом диапазоне: $\text{VNM} \in [10^{-4}, 0.4]$, $\left( \Delta t \in [2 \cdot 10^{-8}, 4 \cdot 10^{-5}] \right)$. Однако при $t=0.7, 5.0$ уменьшение шага по времени не сопровождается уменьшением максимальной разности решения с аналитическим решением. Это связано с тем, что решение в эти моменты не зависит от времени (установившееся течение). При $t=0.7$ относительно заметная разность порядка $10^{-3}$ обусловлена физическим остатком от переходного процесса. Рост ошибки при $t=5.0$ является следствием накопления ошибок округления.
 
 
-\section{Одномерное уравнение конвекции}
+На Рис.~\ref{fig:Alen-Chen_t} представлены аналогичные графики для схемы Алена-Чена. Для моментов времени $t=0.7, 5.0$ можно сделать те же выводы, что и схемы ВВЦП. Однако график при $t=0.1$ не соответствует первому порядку точности по времени. Это связано с тем, что слагаемое $O(s^2)$ на исследуемом интервале вносит больший вклад, чем слагаемое $O(\Delta t)$.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/FTCS_t=0.1.png}
+		\caption{$t = 0.1$}
+		\label{fig:FTCS_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/FTCS_t=0.7, 5.0.png}
+		\caption{$t=0.7, 5.0$}
+		\label{fig:FTCS_t=0.7, 5.0}
+	\end{subfigure}
+	\caption{Схема ВВЦП: зависимость максимальной ошибки решения от шага по времени при $h= 0.01$}
+	\label{fig:FTCS_t}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/Alen-Chen_t=0.1.png}
+		\caption{$t = 0.1$}
+		\label{fig:Alen-Chen_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/Alen-Chen_t=0.7, 5.0.png}
+		\caption{$t=0.7, 5.0$}
+		\label{fig:Alen-Chen_t=0.7, 5.0}
+	\end{subfigure}
+	\caption{Схема Алена-Чена: зависимость максимальной ошибки решения от шага по времени при $h= 0.01$}
+	\label{fig:Alen-Chen_t}
+\end{figure}
+
+
+
+На Рис.~\ref{fig:mon_points} представлены графики зависимости невязки решения $|u^{(h)} - u^{(h/2)}|$ от шага по пространству $h$ при фиксированном шаге по времени $\Delta t = 10^{-8}$ в точках мониторинга в момент времени $t=0.1$ (неустановившееся течение). Точки мониторинга выбраны следующие: $r_1 = 0.1r_w$, $r_2 = 0.5r_w$, $r_3 = 0.9r_w$. Видим, что обе схемы демонстрируют второй порядок точности по пространству, как и было выведено выше. Впрочем, стоит ожидать, что дальнейшее измельчение сетки для схемы Алена-Чена обернется изменением зависимости из-за роста слагаемого $O\left( s^2 \right)$ в невязке схемы. 
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/FTCS_mon_points_t=0.1.png}
+		\caption{Схема ВВЦП}
+		\label{fig:FTCS_mon_points_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/Alen-Chen_mon_points_t=0.png}
+		\caption{Схема Алена-Чена}
+		\label{fig:Alen-Chen_mon_points_t=0.1}
+	\end{subfigure}
+	\caption{Точки мониторинга: зависимость невязки от шага по пространству при шаге по времени $\Delta t = 10^{-8}$}
+	\label{fig:mon_points}
+\end{figure}
+
+
+\section{Одномерное уравнение переноса}
+
+\begin{equation} \label{eq:convection_main}
+	\dfrac{\partial u}{\partial t} + c \dfrac{\partial u}{\partial x} = 0
+\end{equation}
+
+\subsection{Явная противопоточная схема}
+
+\subsection{Схема Лакса-Вендроффа как двухшаговая схема}
+
+\begin{align}
+&\dfrac{u_{i+1/2}^{n+1/2} - 0.5 \left( u_{i+1}^n + u_i^n \right)}{\Delta t / 2} + c \dfrac{u_{i+1}^n - u_i^n}{\Delta x} = 0 \\
+&\dfrac{u_i^{n+1} - u_i^n}{\Delta t} + c \dfrac{u_{i+1/2}^{n+1/2} - u_{i-1/2}^{n+1/2}}{\Delta x} = 0
+\end{align}
+
+\subsection{Задача переноса синусоидных сигналов}
 
 \section{Невязкое уравнение Бюргерса}
 

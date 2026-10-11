@@ -1,22 +1,22 @@
-[1] Config.pm:328> INFO - This is Biber 2.21
-[1] Config.pm:331> INFO - Logfile is 'main.blg'
-[301] biber-MSWIN64:342> INFO - === 
-[414] Biber.pm:421> INFO - Reading 'main.bcf'
-[711] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
-[744] Biber.pm:4487> INFO - Processing section 0
-[772] Biber.pm:4678> INFO - Looking for bibtex file 'refs.bib' for section 0
-[829] bibtex.pm:1713> INFO - LaTeX decoding ...
-[842] bibtex.pm:1519> INFO - Found BibTeX data source 'refs.bib'
-[945] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
-[945] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[946] Biber.pm:4307> INFO - Sorting list 'ntvy/global//global/global/global' of type 'entry' with template 'ntvy' and locale 'ru-RU'
-[946] Biber.pm:4313> INFO - No sort tailoring available for locale 'ru-RU'
-[948] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[949] bbl.pm:779> INFO - Output to main.bbl
-[950] Biber.pm:132> WARN - Field 'heading' in sorting template is not a sortable field
-[950] Biber.pm:132> WARN - Field 'sortvolume' in sorting template is not a sortable field
-[950] Biber.pm:132> WARN - Field 'internalsortvolume' in sorting template is not a sortable field
-[950] Biber.pm:132> WARN - Field 'internalsortbook' in sorting template is not a sortable field
-[950] Biber.pm:132> WARN - Field 'internalsortpart' in sorting template is not a sortable field
-[950] Biber.pm:132> WARN - Field 'internalsortissue' in sorting template is not a sortable field
-[950] Biber.pm:134> INFO - WARNINGS: 6
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'main.blg'
+[287] biber-MSWIN64:342> INFO - === 
+[400] Biber.pm:421> INFO - Reading 'main.bcf'
+[695] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
+[729] Biber.pm:4487> INFO - Processing section 0
+[754] Biber.pm:4678> INFO - Looking for bibtex file 'refs.bib' for section 0
+[819] bibtex.pm:1713> INFO - LaTeX decoding ...
+[831] bibtex.pm:1519> INFO - Found BibTeX data source 'refs.bib'
+[926] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[927] UCollate.pm:68> INFO - Overriding locale 'ru-RU' defaults 'variable = shifted' with 'variable = non-ignorable'
+[927] Biber.pm:4307> INFO - Sorting list 'ntvy/global//global/global/global' of type 'entry' with template 'ntvy' and locale 'ru-RU'
+[927] Biber.pm:4313> INFO - No sort tailoring available for locale 'ru-RU'
+[929] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[930] bbl.pm:779> INFO - Output to main.bbl
+[931] Biber.pm:132> WARN - Field 'heading' in sorting template is not a sortable field
+[931] Biber.pm:132> WARN - Field 'sortvolume' in sorting template is not a sortable field
+[931] Biber.pm:132> WARN - Field 'internalsortvolume' in sorting template is not a sortable field
+[931] Biber.pm:132> WARN - Field 'internalsortbook' in sorting template is not a sortable field
+[931] Biber.pm:132> WARN - Field 'internalsortpart' in sorting template is not a sortable field
+[932] Biber.pm:132> WARN - Field 'internalsortissue' in sorting template is not a sortable field
+[932] Biber.pm:134> INFO - WARNINGS: 6

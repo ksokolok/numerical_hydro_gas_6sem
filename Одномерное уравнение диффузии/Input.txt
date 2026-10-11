@@ -1,7 +1,7 @@
-1	 ! A
-1        ! rw
-100      ! Nr
-1        ! Time
-0.3      ! VNM
-1      ! nu
-1	 ! scheme 
+1	 		! A
+1       	! rw
+100      	! Nr
+1        	! Time
+0.41    	! VNM
+1     		! nu
+1	 		! scheme 
