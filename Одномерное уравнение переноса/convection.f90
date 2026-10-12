@@ -5,7 +5,28 @@ real*8, parameter :: pi = acos(-1.d0)
 
 contains
 
+subroutine Exact_Solution(x, u, Nx, Nt, CFL, c, m, L, b0, b1)
+    real*8, allocatable, intent(inout) :: x(:), u(:)
+    real*8, intent(in) :: CFL, c, L, b0, b1
+    real*8 :: k, dt, h, Time
+    integer, intent(in) :: Nx, Nt, m
+    integer :: j
 
+    if (allocated(x)) deallocate(x)
+    if (allocated(u)) deallocate(u)
+    allocate(x(1:Nx), u(1:Nx))
+
+    k = dble(m) * pi / L
+    h = L / (Nx - 1)
+    dt = CFL * h / c
+    Time = dt * Nt
+
+    x(1) = 0.d0
+    do j = 2, Nx
+        x(j) = x(j-1) + h
+    end do
+    u(1:Nx) = b0 + b1 * sin(k * (x(1:Nx) - c * Time) )
+end subroutine
 
 subroutine Upwind(x, u, Nx, Nt, CFL, c, m, L, b0, b1)
     real*8, allocatable, intent(inout) :: x(:), u(:)
