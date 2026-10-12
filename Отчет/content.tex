@@ -901,20 +901,99 @@ $\xi = N - D$. Поскольку разностная схема линейна
 \end{figure}
 
 
+\newpage
 \section{Одномерное уравнение переноса}
 
 \begin{equation} \label{eq:convection_main}
-	\dfrac{\partial u}{\partial t} + c \dfrac{\partial u}{\partial x} = 0
+	\dfrac{\partial u}{\partial t} + c \dfrac{\partial u}{\partial x} = 0,
 \end{equation}
+где $c$ — скорость переноса.
+
+Общее решение уравнения \eqref{eq:convection_main} можно записать в виде
+\begin{equation} \label{eq:convection_common_solution}
+	u(x, t) = F(x - ct),
+\end{equation}
+где начальное условие задается выражением
+\begin{equation} \label{eq:convection_common_initial}
+	u(x, 0) = F(x),
+\end{equation}
+где $F(x)$ — известная функция.
 
 \subsection{Явная противопоточная схема}
+При $c > 0$:
+\begin{equation} \label{eq:upwind_start_c>0}
+	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} + c \dfrac{u_j^n - u_{j-1}^n}{\Delta x} = 0
+\end{equation}
+
+В явном виде:
+\begin{equation} \label{eq:upwind_explicit_c>0}
+	u_j^{n+1} = (1 - C) u_j^n + Cu_{j-1}^n,
+\end{equation}
+где $C = c\dfrac{\Delta t}{\Delta x}$ — число Куранта.
+
+При $c < 0$:
+\begin{equation} \label{eq:upwind_start_c<0}
+	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} + c \dfrac{u_{j+1}^n - u_{j}^n}{\Delta x} = 0
+\end{equation}
+
+В явном виде:
+
+\begin{equation}
+	u_j^{n+1} = (1 + C) u_j^n - Cu_{j+1}^n	
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.43\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/upwind_c_gt_0_stencil.png}
+		\caption{$c>0$}
+		\label{fig:upwind_stencil_c>0}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.43\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/upwind_c_lt_0_stencil.png}
+		\caption{$c<0$}
+		\label{fig:upwind_c_lt_0_stencil}
+	\end{subfigure}
+	\caption{Шаблоны для явной противопоточной схемы}
+	\label{fig:upwind_stencils}
+\end{figure}
 
 \subsection{Схема Лакса-Вендроффа как двухшаговая схема}
 
-\begin{align}
-&\dfrac{u_{i+1/2}^{n+1/2} - 0.5 \left( u_{i+1}^n + u_i^n \right)}{\Delta t / 2} + c \dfrac{u_{i+1}^n - u_i^n}{\Delta x} = 0 \\
-&\dfrac{u_i^{n+1} - u_i^n}{\Delta t} + c \dfrac{u_{i+1/2}^{n+1/2} - u_{i-1/2}^{n+1/2}}{\Delta x} = 0
+\begin{align} \label{eq:lax-wendroff_start_1}
+&\dfrac{u_{j+1/2}^{n+1/2} - 0.5 \left( u_{j+1}^n + u_j^n \right)}{\Delta t / 2} + c \dfrac{u_{j+1}^n - u_j^n}{\Delta x} = 0 \\
+\label{eq:lax-wendroff_start_2}
+&\dfrac{u_j^{n+1} - u_j^n}{\Delta t} + c \dfrac{u_{j+1/2}^{n+1/2} - u_{j-1/2}^{n+1/2}}{\Delta x} = 0
 \end{align}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/lax_wendroff_first_step_stencil.png}
+		\caption{Первый шаг}
+		\label{fig:lax_wendroff_first_step_stencil}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/lax_wendroff_second_step_stencil.png}
+		\caption{Второй шаг}
+		\label{fig:lax_wendroff_second_step_stencil.png}
+	\end{subfigure}
+	\caption{Шаблоны двухшаговой схемы Лакса-Вендроффа}
+	\label{fig:lax_wendroff_stencils}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{fig/lax_wendroff_entire_stencil.png}
+	\caption{Общий шаблон для двухшаговой схемы Лакса-Вендроффа}
+	\label{fig:lax_wendroff_entire_stencil}
+\end{figure}
 
 \subsection{Задача переноса синусоидных сигналов}
 

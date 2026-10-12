@@ -12,11 +12,11 @@
 \contentsline {subsubsection}{\numberline {2.3.2}Дискретизация уравнения}{16}{subsubsection.2.3.2}%
 \contentsline {subsubsection}{\numberline {2.3.3}Анализ решения}{19}{subsubsection.2.3.3}%
 \contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схемы}{21}{subsubsection.2.3.4}%
-\contentsline {section}{\numberline {3}Одномерное уравнение переноса}{23}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{23}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{23}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Задача переноса синусоидных сигналов}{23}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{23}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{23}{section.5}%
-\contentsline {section}{Список литературы}{24}{section.5}%
+\contentsline {section}{\numberline {3}Одномерное уравнение переноса}{24}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{24}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{25}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Задача переноса синусоидных сигналов}{25}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{25}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{25}{section.5}%
+\contentsline {section}{Список литературы}{26}{section.5}%
 \contentsfinish 

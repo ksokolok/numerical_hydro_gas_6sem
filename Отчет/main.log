@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  12 OCT 2026 00:39
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  12 OCT 2026 04:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2131,16 +2131,28 @@ File: fig/FTCS_mon_points_t=0.1.png Graphic file (type bmp)
 <fig/FTCS_mon_points_t=0.1.png>
 File: fig/Alen-Chen_mon_points_t=0.png Graphic file (type bmp)
 <fig/Alen-Chen_mon_points_t=0.png>
- [22]) [23]
+ [22] [23]
+File: fig/upwind_c_gt_0_stencil.png Graphic file (type bmp)
+<fig/upwind_c_gt_0_stencil.png>
+File: fig/upwind_c_lt_0_stencil.png Graphic file (type bmp)
+<fig/upwind_c_lt_0_stencil.png>
+ [24]
+File: fig/lax_wendroff_first_step_stencil.png Graphic file (type bmp)
+<fig/lax_wendroff_first_step_stencil.png>
+File: fig/lax_wendroff_second_step_stencil.png Graphic file (type bmp)
+<fig/lax_wendroff_second_step_stencil.png>
+File: fig/lax_wendroff_entire_stencil.png Graphic file (type bmp)
+<fig/lax_wendroff_entire_stencil.png>
+) [25]
 \openout2 = `templates/bibpage.aux'.
 
 
-(./templates/bibpage.tex) [24
+(./templates/bibpage.tex) [26
 
 
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20261012003915 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20261012040737 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
  (./main.aux (./templates/titlepage.aux)
@@ -2161,12 +2173,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 49294 strings out of 468167
- 1008427 string characters out of 5436503
- 2277592 words of memory out of 5000000
- 77276 multiletter control sequences out of 15000+600000
+ 49357 strings out of 468167
+ 1010729 string characters out of 5436503
+ 2278613 words of memory out of 5000000
+ 77334 multiletter control sequences out of 15000+600000
  633448 words of font info for 119 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  91i,19n,109p,693b,5040s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (24 pages).
+Output written on main.pdf (26 pages).
