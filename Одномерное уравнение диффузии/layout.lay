@@ -1,10 +1,12 @@
 #!MC 1410
-$!VarSet |LFDSFN1| = '"MonPoints_t=0.10.plt"'
-$!VarSet |LFDSVL1| = '"h" "VNM" "d r=0.1rw" "d r=0.5rw" "d r=0.9rw"'
-$!VarSet |LFDSFN2| = '"snapshots.plt"'
-$!VarSet |LFDSVL2| = '"r" "u"'
-$!VarSet |LFDSFN3| = '"umax(A).plt"'
-$!VarSet |LFDSVL3| = '"u_max" "A"'
+$!VarSet |LFDSFN1| = '"Output.txt"'
+$!VarSet |LFDSVL1| = '"i" "r" "u"'
+$!VarSet |LFDSFN2| = '"umax(A).plt"'
+$!VarSet |LFDSVL2| = '"u_max" "A"'
+$!VarSet |LFDSFN3| = '"MonPoints_t=0.10.plt"'
+$!VarSet |LFDSVL3| = '"h" "VNM" "d r=0.1rw" "d r=0.5rw" "d r=0.9rw"'
+$!VarSet |LFDSFN4| = '"snapshots.plt"'
+$!VarSet |LFDSVL4| = '"r" "u"'
 $!SetStyleBase Factory
 $!GlobalPaper 
   PaperSizeInfo
@@ -22,10 +24,10 @@ $!GlobalPaper
 $!SetAuxData 
   AuxDataLocation = Layout
   Name = 'UI.FirstPageOffset'
-  ValueString = '1'
+  ValueString = '3'
 ### Page Number 1 ###
 $!Page 
-  Name = 'MonPoints'
+  Name = 'Untitled'
   PaperAttributes
     {
     BackgroundColor = White
@@ -56,6 +58,306 @@ $!ReadDataSet  '|LFDSFN1|'
   VarNameList = '|LFDSVL1|'
 $!RemoveVar |LFDSVL1|
 $!RemoveVar |LFDSFN1|
+$!FrameLayout 
+  ShowBorder = No
+  ShowHeader = No
+  HeaderColor = Red
+  XYPos
+    {
+    X = 1
+    Y = 0.25
+    }
+  Width = 9
+  Height = 8
+$!ThreeDAxis 
+  AspectRatioLimit = 25
+  BoxAspectRatioLimit = 25
+$!PlotType  = XYLine
+$!FrameName  = 'Frame 001'
+$!GlobalTime 
+  SolutionTime = 0
+$!DeleteLineMaps 
+$!ActiveLineMaps  =  [1]
+$!GlobalLinePlot 
+  DataLabels
+    {
+    DistanceSkip = 5
+    }
+  Legend
+    {
+    XYPos
+      {
+      X = 95
+      }
+    }
+$!LineMap  [1]
+  Name = '&DV&'
+  Assign
+    {
+    Zone = 1
+    XAxisVar = 2
+    YAxisVar = 3
+    }
+  Lines
+    {
+    Color = Red
+    LineThickness = 0.4
+    }
+  Symbols
+    {
+    Color = Red
+    FillColor = Red
+    }
+  BarCharts
+    {
+    Color = Red
+    FillColor = Red
+    }
+  ErrorBars
+    {
+    Color = Red
+    }
+$!LineMap  [2]
+  Name = '&DV&'
+  Assign
+    {
+    Zone = 1
+    XAxisVar = 2
+    YAxisVar = 3
+    }
+  Lines
+    {
+    Color = Green
+    }
+  Symbols
+    {
+    Color = Green
+    FillColor = Green
+    }
+  BarCharts
+    {
+    Color = Green
+    FillColor = Green
+    }
+  ErrorBars
+    {
+    Color = Green
+    }
+$!XYLineAxis 
+  DepXToYRatio = 1
+$!XYLineAxis 
+  XDetail 1
+    {
+    CoordScale = Linear
+    RangeMin = 0
+    RangeMax = 0.98009801907539362276
+    GRSpacing = 0.2
+    Gridlines
+      {
+      Show = Yes
+      }
+    MinorGridlines
+      {
+      Show = Yes
+      }
+    }
+$!XYLineAxis 
+  YDetail 1
+    {
+    CoordScale = Log
+    RangeMin = 0.009878526441752910614
+    RangeMax = 31703410.023999013007
+    GRSpacing = 5000000
+    Gridlines
+      {
+      Show = Yes
+      }
+    MinorGridlines
+      {
+      Show = Yes
+      }
+    }
+$!AttachText 
+  AnchorPos
+    {
+    X = 73.82297551789074
+    Y = 85.0635593220339
+    }
+  TextShape
+    {
+    IsBold = No
+    }
+  Box
+    {
+    BoxType = Filled
+    Margin = 40
+    }
+  Text = 'VNM = 0.415'
+$!FrameControl ActivateByNumber
+  Frame = 1
+### Page Number 2 ###
+$!PageControl Create
+$!Page 
+  Name = 'umax(A)'
+  PaperAttributes
+    {
+    BackgroundColor = White
+    IsTransparent = Yes
+    OrientPortrait = No
+    ShowGrid = Yes
+    ShowRuler = No
+    ShowPaper = No
+    PaperSize = Letter
+    RulerSpacing = OneInch
+    PaperGridSpacing = HalfInch
+    RegionInWorkArea
+      {
+      X1 = 1
+      Y1 = 0.25
+      X2 = 10
+      Y2 = 8.25
+      }
+    }
+### Frame Number 1, Page Number 2 ###
+$!ReadDataSet  '|LFDSFN2|'
+  InitialPlotType = XYLine
+  IncludeText = No
+  IncludeGeom = No
+  ResetStyle = No
+  AssignStrandIDs = Yes
+  VarLoadMode = ByName
+  VarNameList = '|LFDSVL2|'
+$!RemoveVar |LFDSVL2|
+$!RemoveVar |LFDSFN2|
+$!FrameLayout 
+  ShowBorder = No
+  ShowHeader = No
+  HeaderColor = Red
+  XYPos
+    {
+    X = 1
+    Y = 0.25
+    }
+  Width = 9
+  Height = 8
+$!ThreeDAxis 
+  AspectRatioLimit = 25
+  BoxAspectRatioLimit = 25
+$!PlotType  = XYLine
+$!FrameName  = 'Frame 001'
+$!GlobalTime 
+  SolutionTime = 0
+$!DeleteLineMaps 
+$!ActiveLineMaps  =  [1]
+$!GlobalLinePlot 
+  DataLabels
+    {
+    DistanceSkip = 5
+    }
+  Legend
+    {
+    XYPos
+      {
+      X = 95
+      }
+    }
+$!LineMap  [1]
+  Name = '&ZN&'
+  Assign
+    {
+    Zone = 1
+    XAxisVar = 2
+    YAxisVar = 1
+    }
+  Lines
+    {
+    Color = Red
+    LineThickness = 0.4
+    }
+  Symbols
+    {
+    Color = Red
+    FillColor = Red
+    }
+  BarCharts
+    {
+    Color = Red
+    FillColor = Red
+    }
+  ErrorBars
+    {
+    Color = Red
+    }
+$!XYLineAxis 
+  DepXToYRatio = 1
+$!XYLineAxis 
+  XDetail 1
+    {
+    CoordScale = Linear
+    RangeMin = 1
+    RangeMax = 10.000899999999999679
+    GRSpacing = 2
+    Gridlines
+      {
+      Show = Yes
+      }
+    MinorGridlines
+      {
+      Show = Yes
+      }
+    }
+$!XYLineAxis 
+  YDetail 1
+    {
+    CoordScale = Linear
+    RangeMin = 0
+    RangeMax = 2.5001473530471325368
+    GRSpacing = 0.5
+    Gridlines
+      {
+      Show = Yes
+      }
+    MinorGridlines
+      {
+      Show = Yes
+      }
+    }
+$!FrameControl ActivateByNumber
+  Frame = 1
+### Page Number 3 ###
+$!PageControl Create
+$!Page 
+  Name = 'MonPoints'
+  PaperAttributes
+    {
+    BackgroundColor = White
+    IsTransparent = Yes
+    OrientPortrait = No
+    ShowGrid = Yes
+    ShowRuler = No
+    ShowPaper = No
+    PaperSize = Letter
+    RulerSpacing = OneInch
+    PaperGridSpacing = HalfInch
+    RegionInWorkArea
+      {
+      X1 = 1
+      Y1 = 0.25
+      X2 = 10
+      Y2 = 8.25
+      }
+    }
+### Frame Number 1, Page Number 3 ###
+$!ReadDataSet  '|LFDSFN3|'
+  InitialPlotType = XYLine
+  IncludeText = No
+  IncludeGeom = No
+  ResetStyle = No
+  AssignStrandIDs = Yes
+  VarLoadMode = ByName
+  VarNameList = '|LFDSVL3|'
+$!RemoveVar |LFDSVL3|
+$!RemoveVar |LFDSFN3|
 $!AlterData 
   IgnoreDivideByZero = Yes
   Equation = '{O(h^2)} = {h}**2'
@@ -372,7 +674,7 @@ $!LinePlotLayers
   ShowSymbols = Yes
 $!FrameControl ActivateByNumber
   Frame = 1
-### Page Number 2 ###
+### Page Number 4 ###
 $!PageControl Create
 $!Page 
   Name = 'snapshots'
@@ -395,17 +697,17 @@ $!Page
       Y2 = 8.25
       }
     }
-### Frame Number 1, Page Number 2 ###
-$!ReadDataSet  '|LFDSFN2|'
+### Frame Number 1, Page Number 4 ###
+$!ReadDataSet  '|LFDSFN4|'
   InitialPlotType = XYLine
   IncludeText = No
   IncludeGeom = No
   ResetStyle = No
   AssignStrandIDs = Yes
   VarLoadMode = ByName
-  VarNameList = '|LFDSVL2|'
-$!RemoveVar |LFDSVL2|
-$!RemoveVar |LFDSFN2|
+  VarNameList = '|LFDSVL4|'
+$!RemoveVar |LFDSVL4|
+$!RemoveVar |LFDSFN4|
 $!FrameLayout 
   ShowBorder = No
   ShowHeader = No
@@ -787,135 +1089,6 @@ $!XYLineAxis
       {
       TitleMode = UseText
       Text = 'r, м'
-      }
-    }
-$!FrameControl ActivateByNumber
-  Frame = 1
-### Page Number 3 ###
-$!PageControl Create
-$!Page 
-  Name = 'umax(A)'
-  PaperAttributes
-    {
-    BackgroundColor = White
-    IsTransparent = Yes
-    OrientPortrait = No
-    ShowGrid = Yes
-    ShowRuler = No
-    ShowPaper = No
-    PaperSize = Letter
-    RulerSpacing = OneInch
-    PaperGridSpacing = HalfInch
-    RegionInWorkArea
-      {
-      X1 = 1
-      Y1 = 0.25
-      X2 = 10
-      Y2 = 8.25
-      }
-    }
-### Frame Number 1, Page Number 3 ###
-$!ReadDataSet  '|LFDSFN3|'
-  InitialPlotType = XYLine
-  IncludeText = No
-  IncludeGeom = No
-  ResetStyle = No
-  AssignStrandIDs = Yes
-  VarLoadMode = ByName
-  VarNameList = '|LFDSVL3|'
-$!RemoveVar |LFDSVL3|
-$!RemoveVar |LFDSFN3|
-$!FrameLayout 
-  ShowBorder = No
-  ShowHeader = No
-  HeaderColor = Red
-  XYPos
-    {
-    X = 1
-    Y = 0.25
-    }
-  Width = 9
-  Height = 8
-$!ThreeDAxis 
-  AspectRatioLimit = 25
-  BoxAspectRatioLimit = 25
-$!PlotType  = XYLine
-$!FrameName  = 'Frame 001'
-$!GlobalTime 
-  SolutionTime = 0
-$!DeleteLineMaps 
-$!ActiveLineMaps  =  [1]
-$!GlobalLinePlot 
-  DataLabels
-    {
-    DistanceSkip = 5
-    }
-  Legend
-    {
-    XYPos
-      {
-      X = 95
-      }
-    }
-$!LineMap  [1]
-  Name = '&ZN&'
-  Assign
-    {
-    Zone = 1
-    XAxisVar = 2
-    YAxisVar = 1
-    }
-  Lines
-    {
-    Color = Red
-    LineThickness = 0.4
-    }
-  Symbols
-    {
-    Color = Red
-    FillColor = Red
-    }
-  BarCharts
-    {
-    Color = Red
-    FillColor = Red
-    }
-  ErrorBars
-    {
-    Color = Red
-    }
-$!XYLineAxis 
-  DepXToYRatio = 1
-$!XYLineAxis 
-  XDetail 1
-    {
-    CoordScale = Linear
-    RangeMin = 1
-    RangeMax = 10.000899999999999679
-    GRSpacing = 2
-    Gridlines
-      {
-      Show = Yes
-      }
-    MinorGridlines
-      {
-      Show = Yes
-      }
-    }
-$!XYLineAxis 
-  YDetail 1
-    {
-    CoordScale = Linear
-    RangeMin = 0
-    RangeMax = 2.5001473530471325368
-    GRSpacing = 0.5
-    Gridlines
-      {
-      Show = Yes
-      }
-    MinorGridlines
-      {
-      Show = Yes
       }
     }
 $!FrameControl ActivateByNumber

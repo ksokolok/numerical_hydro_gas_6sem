@@ -3,12 +3,12 @@ program main
 use diffusion
 implicit none
 
-integer 			:: IO = 12
-integer 			:: Nr, Nt, j, n, ISCHEME
+integer             :: IO = 12
+integer             :: Nr, Nt
 real*8, allocatable :: r(:), u(:)
-real*8 				:: A, rw, VNM, Time, nu
-real*8				:: A1, A2
-integer				:: NA
+real*8              :: A, rw, VNM, Time, nu
+real*8              :: A1, A2
+integer             :: NA
 
 open(IO, file="Input.txt")
 read(IO, *) A
@@ -17,7 +17,6 @@ read(IO, *) Nr
 read(IO, *) Time
 read(IO, *) VNM
 read(IO, *) nu
-read(IO, *) ISCHEME
 close(IO)
 
 ! Получение решения (ВВЦП)
