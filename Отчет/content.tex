@@ -21,7 +21,7 @@
 Дискретизация одномерного уравнения диффузии (\ref{diffusion_cartesian}) по явной центральной разностной схеме, или схеме ВВЦП, позволяет записать алгебраический аналог уравнения:
 
 \begin{equation} \label{ftcs_given}
-	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - \nu \dfrac{u_{j+1}^n - 2u_j^n + u_{j-1}^n}{\Delta x^2} = 0, \ \ \ \Delta t \le \dfrac{\Delta x^2}{2a}
+	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} - \nu \dfrac{u_{j+1}^n - 2u_j^n + u_{j-1}^n}{\Delta x^2} = 0 %, \ \ \ \Delta t \le \dfrac{\Delta x^2}{2a}
 \end{equation}
 
 Из уравнения (\ref{ftcs_given}) ясно, что данная схема строится на трех соседних узлах $j-1$, $j$, $j+1$ временного слоя $n$, а единственный неизвестный узел находится на временном слое $n+1$ напротив центрального узла $j$. С учетом упомянутых обстоятельств шаблон схемы будет выглядеть так, как показано на Рис.~\ref{ftcs_stencil}.
@@ -61,7 +61,7 @@
 
 \subsubsection{Определение порядка точности}
 
-Для определения порядка точности следует в конечно-разностных аналогах производных заменить значения сеточной функции $u$ разложениями точного решения $\overline{u}$ в ряд Тейлора в окрестностях соответствующих узлов. Порядок первого члена разложения, оставшегося после комбинирования всех слагаемых, является порядком точности схемы по исследуемой координате.
+Для определения порядка точности следует в дискретном алгебраическом уравнении заменить значения сеточной функции $u$ разложениями точного решения $\overline{u}$ в ряд Тейлора в окрестностях соответствующих узлов. Порядок первого члена разложения, оставшегося после комбинирования всех слагаемых, является порядком точности схемы по исследуемой координате.
 
 Для производной по времени:
 \begin{equation*}
@@ -830,7 +830,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\label{fig:ftcs_umax(A)}
 \end{figure}
 
-\subsubsection{Анализ свойств разностных схемы}
+\subsubsection{Анализ свойств разностных схем}
 
 На Рис.~\ref{fig:FTCS_t} представлена зависимость максимальной ошибки решения от числа фон Неймана для схемы ВВЦП при фиксированном шаге по пространству $h=0.01$, т.е. число фон Неймана однозначно определяет шаг по времени. Сходящееся решение удалось получить только при $\text{VNM} \le 0.41$. Такое чуть более строгое условие устойчивости, чем полученное из анализа фон Неймана $\text{VNM} \le 0.5$ можно объяснить тем, что для аппроксимации скорости в граничном узле $j=0$ использовалось другое уравнение. 
 Для момента времени $t=0.1$ ошибка вычисляется через разность с эталонным решением, посчитанным по схеме Алена-Чена с числом фон Неймана VNM = $1e-5$. При $t=0.7, 5.0$ для расчета ошибки используется аналитическое выражение \eqref{eq:exact_solution} для установившегося течения.
@@ -901,8 +901,30 @@ $\xi = N - D$. Поскольку разностная схема линейна
 \end{figure}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \newpage
 \section{Одномерное уравнение переноса}
+
+Уравнение описывает перенос начального профиля какой-либо величины вдоль координатной оси без изменения его формы.
 
 \begin{equation} \label{eq:convection_main}
 	\dfrac{\partial u}{\partial t} + c \dfrac{\partial u}{\partial x} = 0,
@@ -920,6 +942,9 @@ $\xi = N - D$. Поскольку разностная схема линейна
 где $F(x)$ — известная функция.
 
 \subsection{Явная противопоточная схема}
+
+Аппроксимация уравнения \eqref{eq:convection_main} по явной противопоточной схеме выглядит различно для $c>0$  и  $c<0$.
+
 При $c > 0$:
 \begin{equation} \label{eq:upwind_start_c>0}
 	\dfrac{u_j^{n+1} - u_j^n}{\Delta t} + c \dfrac{u_j^n - u_{j-1}^n}{\Delta x} = 0
@@ -929,7 +954,11 @@ $\xi = N - D$. Поскольку разностная схема линейна
 \begin{equation} \label{eq:upwind_explicit_c>0}
 	u_j^{n+1} = (1 - C) u_j^n + Cu_{j-1}^n,
 \end{equation}
-где $C = c\dfrac{\Delta t}{\Delta x}$ — число Куранта.
+или
+\begin{equation} \label{eq:upwind_explicit_c>0_v2}
+	u_j^{n+1} = u_j^n - C(u_j^n - u_{j-1}^n),
+\end{equation}
+где $C = |c|\dfrac{\Delta t}{\Delta x}$ — число Куранта.
 
 При $c < 0$:
 \begin{equation} \label{eq:upwind_start_c<0}
@@ -938,9 +967,15 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 В явном виде:
 
-\begin{equation}
-	u_j^{n+1} = (1 + C) u_j^n - Cu_{j+1}^n	
+\begin{equation} \label{eq:upwind_explicit_c<0}
+	u_j^{n+1} = (1 - C) u_j^n + Cu_{j+1}^n	
 \end{equation}
+или
+\begin{equation} \label{eq:upwind_explicit_c<0_v2}
+	u_j^{n+1} = u_j^n + C (u_{j+1}^n - u_j^n)
+\end{equation}
+
+Аппроксимация производной по времени осуществляется по двум узлам с разностью вперед, аппроксимация пространственной производной — во двум узлах с разностью против потока. Шаблоны для случаев $c<0$ и $c>0$ представлены на Рис.~\ref{fig:upwind_stencils}.
 
 \begin{figure}[H]
 	\centering
@@ -961,12 +996,138 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\label{fig:upwind_stencils}
 \end{figure}
 
+Дальнейшие выкладки проводятся для $c>0$, т.е. для \eqref{eq:upwind_start_c>0}.
+
+\subsubsection{Определение порядка точности}
+Разложения точного решения $\overline{u}$ в ряд Тейлора в окрестности узла $(j, n)$:
+
+
+\begin{equation*}
+	\overline{u}_j^{n+1} = \overline{u}_j^n + \Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n + O(\Delta t^3)
+\end{equation*}
+
+\begin{equation*}
+	\overline{u}_{j-1}^n = \overline{u}_j^n - \Delta x \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta x^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + O(\Delta x^3)
+\end{equation*}
+
+
+Подстановкой разложений в разностное уравнение \eqref{eq:upwind_start_c>0} получаем
+
+\begin{equation} \label{upwind_du/dt}
+	\begin{split}
+		\dfrac{\overline{u}_j^{n+1} - \overline{u}_j^n}{\Delta t} + c \dfrac{\overline{u}_j^{n} - \overline{u}_{j-1}^n}{\Delta x} &=
+		\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n +
+		O(\Delta t^2) + \\
+		&+  
+		c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n - c \dfrac{\Delta x}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + O(\Delta x^2) = \\
+		&= \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + O(\Delta t + \Delta x)
+	\end{split}
+\end{equation}
+
+Таким образом, явная противопоточная схема имеет первый порядок точности по времени и пространству.
+
+Из исходного уравнения \eqref{eq:convection_main} следует:
+\begin{equation} \label{convection_consequence}
+	\dfrac{\partial^2 \overline{u}}{\partial t^2} = c^2 \dfrac{\partial^2 \overline{u}}{\partial x^2}
+\end{equation}
+
+Тогда \eqref{upwind_du/dt} можно переписать как 
+\begin{equation} \label{upwind_du/dt_2}
+\begin{split}
+	\dfrac{\overline{u}_j^{n+1} - \overline{u}_j^n}{\Delta t} + c \dfrac{\overline{u}_j^{n} - \overline{u}_{j-1}^n}{\Delta x} &= 
+	\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n - \dfrac{1}{2} c  \Delta x (1 - C) \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + O(\Delta t^2 + \Delta x^2)
+\end{split}
+\end{equation}
+
+Согласно выражению \eqref{upwind_du/dt_2} разностное уравнение по явной противопоточной схеме имеет в невязке искусственную диффузию с коэффициентом $0.5 c \Delta x (1 - C)$. Это обусловливает диссипативные свойства схемы, т.е. имеет место затухание амплитуд решения.
+
+\subsubsection{Исследование устойчивости по Нейману}
+
+Запишем конечно-разностное уравнение \eqref{eq:upwind_explicit_c>0} для ошибки округления $\xi$.
+
+\begin{equation} \label{upwind_neuman: eq_xi}
+	\xi_j^{n+1} = (1 - C) \xi_j^n + C \xi_{j-1}^n
+\end{equation}
+
+Разложим ошибку округления $\xi$ в ряд Фурье и рассмотрим одну моду $\xi_m (x_j, t^n) = (g)^n \exp (i k_m x_j)$.
+
+Уравнение запишется в виде
+
+\begin{equation} \label{upwind_neuman: eq_g_1}
+	(g)^{n+1} \exp{(i k_m x_j)} = (1 - C) (g)^n \exp{(i k_m x_j)} +  C (g)^n \exp{(i k_m x_j)} \cdot \exp{(-i k_m \Delta x)}
+\end{equation}
+
+Делим на $(g)^n \exp{(i k_m x_j)}$
+
+\begin{equation} \label{upwind_neuman: eq_g_2}
+	g = 1 - C +  C \exp{(-i k_m \Delta x)}
+\end{equation}
+
+Применяем формулу Эйлера $\exp{i \beta} = \cos \beta - i \sin \beta$:
+
+\begin{equation} \label{upwind_neuman: eq_g_final}
+	g = 1 - C(1 - \cos (k_m \Delta x)) - i C \sin (k_m \Delta x)
+\end{equation}
+
+Получили выражение для коэффициента перехода $g$, отражающего отношение значения $\xi$ на временном слое $n+1$ к значению на слое $n$.
+
+Для явной противопоточной схемы коэффициент перехода является комплексным. Модуль $|g|$ характеризует диссипативные свойства разностной схемы, т.е. затухание амплитуды при переходе на новый временной слой. Аргумент $\text{arg }g$ характеризует дисперсионные свойства, т.е. отклонение по фазе.
+
+\begin{equation} \label{upwind_|g|}
+|g| = \sqrt{\left( 1 - C(1 - \cos{(k_m \Delta x)}) \right)^2 + (C \sin{(k_m \Delta x)})^2}
+\end{equation}
+
+\begin{equation} \label{upwind_arg_g}
+	\arg g = \arctan \dfrac{\text{Im} g}{\text{Re } g} = \arctan \left( - \dfrac{C \sin{(k_m \Delta x)}}{1 - C(1 - \cos(k_m \Delta x))} \right)
+\end{equation}
+
+Для устойчивости схемы достаточно выполнение неравенства $|g| \le 1$ ($|g|^2 \le 1$) для всех значений $k_m \Delta x$.
+
+\begin{equation} \label{upwind_|g|^2}
+\begin{split}
+	|g|^2 &= 1 - 2C(1 - \cos{(k_m \Delta x)}) + C^2 (1 - \cos{k_m \Delta x})^2 + C^2 \sin^2{(k_m \Delta x)} = \\
+	&= 1 - 2C (1 - \cos{(k_m \Delta x)}) + C^2 (1 - 2 \cos{(k_m \Delta x)} + \cos^2{(k_m \Delta x)}) + C^2 \sin^2{(k_m \Delta x)} = \\
+	&= 1 - 2C(1 - \cos{(k-m \Delta x)}) + 2C^2 (1 - \cos{(k-m \Delta x)}) = \\
+	&= 1 + 2C(C-1)(1 - \cos{(k_m\Delta x)})
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	&|g|^2 \le 1 \\
+	&2C(C-1)(1 - \cos{(k_m\Delta x)}) \le 0 \\
+	&C-1 \le 0
+\end{split}
+\end{equation}
+
+Таким образом, условие устойчивости явной противопоточной схемы записывается как
+\begin{equation} \label{upwind_C<=1}
+	|c| \dfrac{\Delta t}{\Delta x} \le 1
+\end{equation}
+
+На Рис.~\ref{fig:convection_|g|} - \ref{fig:convection_|g|_2D} представлена поверхность диссипации — зависимость модуля коэффициента усиления \eqref{upwind_|g|} от числа Куранта $C$ и фазы $k_m \Delta x$.
+
+
+
+
+
+
+
 \subsection{Схема Лакса-Вендроффа как двухшаговая схема}
 
 \begin{align} \label{eq:lax-wendroff_start_1}
 &\dfrac{u_{j+1/2}^{n+1/2} - 0.5 \left( u_{j+1}^n + u_j^n \right)}{\Delta t / 2} + c \dfrac{u_{j+1}^n - u_j^n}{\Delta x} = 0 \\
 \label{eq:lax-wendroff_start_2}
 &\dfrac{u_j^{n+1} - u_j^n}{\Delta t} + c \dfrac{u_{j+1/2}^{n+1/2} - u_{j-1/2}^{n+1/2}}{\Delta x} = 0
+\end{align}
+
+В явном виде:
+\begin{align} \label{eq:lax-wendroff_start_3}
+	u_{j+1/2}^{n+1/2} &= \dfrac{1}{2}\left( u_{j+1}^n + u_j^n \right) - \dfrac{c}{2} \dfrac{\Delta t}{\Delta x} \left( u_{j+1}^n - u_j^n \right) \\
+	\label{eq:lax-wendroff_start_4}
+	& =\dfrac{1}{2} \left( 1 - c \dfrac{\Delta t}{\Delta x} \right) u_{j+1}^n + \dfrac{1}{2} \left( 1 + c \dfrac{\Delta t}{\Delta x} \right) u_j^n \\
+	\label{eq:lax-wendroff_start_5}
+	u_j^{n+1} &= u_j^n - c \dfrac{\Delta t}{\Delta x} \left( u_{j+1/2}^{n+1/2} - u_{j-1/2}^{n+1/2}\right)
 \end{align}
 
 \begin{figure}[H]
@@ -995,7 +1156,185 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\label{fig:lax_wendroff_entire_stencil}
 \end{figure}
 
-\subsection{Задача переноса синусоидных сигналов}
+\subsection{Определение порядка точности}
+
+Перепишем двухшаговую схему \eqref{eq:lax-wendroff_start_3} - \eqref{eq:lax-wendroff_start_5} в одно выражение, явно выразив искомое значение $u_j^{n+1}$:
+
+\begin{equation} \label{eq:lax_wendroff_united_accuracy}
+	u_j^{n+1} = (1 - C^2) u_j^n - \dfrac{1}{2} C (u_{j+1}^n - u_{j-1}^n) + \dfrac{1}{2} C^2 (u_{j+1}^n + u_{j-1}^n)
+\end{equation}
+
+Разложения точного решения $\overline{u}$ в ряд Тейлора в окрестности узла $(j, n)$:
+
+\begin{equation*}
+	\overline{u}_j^{n+1} = \overline{u}_j^n + \Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n
+	+ \dfrac{\Delta t^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n
+	+ O(\Delta t^4)
+\end{equation*}
+
+\begin{equation*}
+	\overline{u}_{j+1}^n = \overline{u}_j^n + \Delta x \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta x^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + \dfrac{\Delta x^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n
+	+ O(\Delta x^4)
+\end{equation*}
+
+\begin{equation*}
+	\overline{u}_{j-1}^n = \overline{u}_j^n - \Delta x \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta x^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n -
+	\dfrac{\Delta x^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n 
+	+ O(\Delta x^4)
+\end{equation*}
+
+
+Подстановкой разложений в разностное уравнение \eqref{eq:lax_wendroff_united_accuracy} получаем
+
+\begin{equation}
+\begin{split}
+	&\overline{u}_j^n + \Delta t \left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + \dfrac{\Delta t^2}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n + \dfrac{\Delta t^3}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n + O(\Delta t^4) = \\
+	&=\overline{u}_j^n - C^2 \overline{u}_j^n - \dfrac{1}{2} C
+	\left( 2 \Delta x \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta x^3}{3} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n + O(\Delta x^5) \right) + \\
+	&+ C^2 \overline{u}_j^n + \dfrac{1}{2} C^2 \Delta x^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + C^2 \cdot O(\Delta x^4)
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	&\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta t}{2} \left[ \dfrac{\partial^2 \overline{u}}{\partial t^2} \right]_j^n + \dfrac{\Delta t^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n + O(\Delta t^3) = \\
+	&=- c \dfrac{\Delta x^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n + \dfrac{\Delta t}{2} c^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + O(\Delta x^3)
+\end{split}
+\end{equation}
+
+Далее используем \eqref{convection_consequence}:
+
+\begin{equation}
+\begin{split}
+	&\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta t}{2} c^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + \dfrac{\Delta t^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n + O(\Delta t^3) = \\
+	&=- c \dfrac{\Delta x^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n + \dfrac{\Delta t}{2} c^2 \left[ \dfrac{\partial^2 \overline{u}}{\partial x^2} \right]_j^n + O(\Delta x^3)
+\end{split}
+\end{equation}
+
+Наконец, можем записать:
+\begin{equation} \label{lax-wendroff_accurancy}
+	\left[ \dfrac{\partial \overline{u}}{\partial t} \right]_j^n + c \left[ \dfrac{\partial \overline{u}}{\partial x} \right]_j^n + \dfrac{\Delta t^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial t^3} \right]_j^n +
+	c \dfrac{\Delta x^2}{6} \left[ \dfrac{\partial^3 \overline{u}}{\partial x^3} \right]_j^n + O(\Delta t^3 + \Delta x^3) = 0
+\end{equation}
+
+Таким образом, схема Лакса-Вендроффа имеет второй порядок точности по времени и пространству. Нечетный (третий) порядок производной при главных слагаемых невязки свидетельствует о наличии у схемы Лакса-Вендроффа дисперсионных свойств.
+
+\subsubsection{Исследование устойчивости по Нейману}
+
+Конечно-разностное уравнение \eqref{eq:lax_wendroff_united_accuracy} для ошибки округления $\xi$ запишется как
+
+\begin{equation}
+	\xi_j^{n+1} = (1 - C^2) \xi_j^n - \dfrac{1}{2} C (\xi_{j+1}^n - \xi_{j-1}^n) + \dfrac{1}{2} C^2 (\xi_{j+1}^n + \xi_{j-1}^n)
+\end{equation}
+
+Как и прежде, раскладываем ошибку округления в ряд Фурье и рассматриваем одну моду $\xi_m (x_j, t^n)$. При $\xi_j^n = (g)^n \exp{(i k_m x_j)}$ получаем 
+
+\begin{equation}
+	g = (1 - C^2) - \dfrac{1}{2} C \left( \exp{(i k_m \Delta x)} - \exp{(-i k_m \Delta x)} \right) + \dfrac{1}{2} C^2 \left( \exp{(i k_m \Delta x)} + \exp{(-i k_m \Delta x)} \right)
+\end{equation}	
+
+Используем формулы Эйлера
+\begin{equation*}
+	\begin{split}
+		&\exp(i \phi) = \cos{\phi} + i \sin{\phi} \\
+		&\exp(- i \phi) = \cos{\phi} - i \sin{\phi} \\
+	\end{split}
+\end{equation*}
+
+Тогда
+
+\begin{equation} \label{lax-wendroff_g}
+	g = 1 + C^2 (\cos{(k_m \Delta x) - 1)} - i C \sin{k_m \Delta x}
+\end{equation}
+
+Получили комплексный коэффициент перехода для схемы Лакса-Вендроффа.
+
+Для устойчивости схемы необходимо и достаточно выполнение неравенства $|g|^2 \le 1$.
+
+Преобразуем выражение для $|g|^2$:
+
+\begin{equation} \label{lax-wendroff_|g|^2}
+\begin{split}
+	|g|^2 &= (1 + C^2 (\cos{(k_m \Delta x)} - 1))^2 + (-C \sin{(k_m \Delta x)})^2 = \\
+	&= 1 + 2C^2 (\cos{(k_m \Delta x)} - 1) + C^4 (\cos{(k_m \Delta x)} - 1)^2 + C^2 \sin^2{(k_m \Delta x)} = \\
+	&= 1 + 2C^2 \cos{(k_m \Delta x)} - 2C^2 + C^4 \cos^2{(k_m \Delta x)} - 2C^4 \cos:2{(k_m \Delta x)} +\\
+	&\ \ \ + C^4 + C^2 - C^2 \cos{(k_m \Delta x)} = \\
+	&= 1 - C^2 (1-C^2) (1 - \cos{(k_m \Delta x)})^2
+\end{split}
+\end{equation}
+
+Тогда условие устойчивости $|g|^2 \le 1$ эквивалентно условию 
+\begin{equation} \label{lax-wendroff_Courant_condition}
+	C = |c| \dfrac{\Delta t}{\Delta x} \le 1
+\end{equation}
+
+
+
+\subsection{Анализ диссипативных и дисперсионных свойств схем}
+
+На Рис.~\ref{dissipation_surfaces} - \ref{dissipation_surfaces_2D} представлены поверхности диссипации для рассматриваемых схем, т.е. зависимости модуля коэффициента перехода от фазы $k_m \Delta x$ и числа Куранта CFL. Диссипация проявляется в области, где $|g|$ заметно меньше единицы. Видим, что диапазон гармоник, в котором схема Лакса-Вендроффа не проявляет диссипативных свойств (область, где $|g| \approx 1$), шире, чем в явной противопоточной схеме.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_dissipation_surface.png}
+		\caption{Явная противопоточная схема}
+		\label{upwind_dissipation_surface} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_lax-wendroff_dissipation_surface.png}
+		\caption{Схема Лакса-Вендроффа}
+		\label{lax-wendroff_dissipation_surface} 
+	\end{subfigure}
+	\caption{Поверхности диссипации}
+	\label{dissipation_surfaces}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_dissipation_surface_2D.png}
+		\caption{Явная противопоточная схема}
+		\label{upwind_dissipation_surface_2D} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_lax-wendroff_dissipation_surface_2D.png}
+		\caption{Схема Лакса-Вендроффа}
+		\label{lax-wendroff_dissipation_surface_2D} 
+	\end{subfigure}
+	\caption{2D-поверхности диссипации}
+	\label{dissipation_surfaces_2D}
+\end{figure}
+
+Для анализа дисперсионных свойств получим выражение для точного коэффициента перехода $g_\text{ex}$. Пусть начальный профиль \eqref{eq:convection_common_initial} имеет вид одной гармоники
+\begin{equation}
+	u(x, 0) = \exp{(i k_m x)}
+\end{equation}
+Тогда точное решение запишется в виде
+\begin{equation}
+	u(x, t) = \exp{(i k_m x)} \exp{(-i k_m c t)},
+\end{equation}
+т.е. за время $t$ гармоника умножается на 
+\begin{equation}
+	g_\text{ex} = \exp{(-i k_m c t)} = \exp{(-i k_m \Delta x C)},
+\end{equation}
+где $k_m \Delta x$ — фаза, $C$ — число Куранта. Очевидно, что
+
+\begin{align}
+	&|g_\text{ex}| = 1 \\
+	&\arg g_\text{ex} = - k_m \Delta x C
+\end{align}
+
+
+\subsection{Задача переноса синусоидного сигнала}
+
+\subsection{Задача переноса ступенчатого сигнала}
 
 \section{Невязкое уравнение Бюргерса}
 

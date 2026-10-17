@@ -11,12 +11,18 @@
 \contentsline {subsubsection}{\numberline {2.3.1}Постановка задачи}{16}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Дискретизация уравнения}{16}{subsubsection.2.3.2}%
 \contentsline {subsubsection}{\numberline {2.3.3}Анализ решения}{19}{subsubsection.2.3.3}%
-\contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схемы}{21}{subsubsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схем}{21}{subsubsection.2.3.4}%
 \contentsline {section}{\numberline {3}Одномерное уравнение переноса}{24}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{24}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{25}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Задача переноса синусоидных сигналов}{25}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{25}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{25}{section.5}%
-\contentsline {section}{Список литературы}{26}{section.5}%
+\contentsline {subsubsection}{\numberline {3.1.1}Определение порядка точности}{25}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Исследование устойчивости по Нейману}{26}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{27}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Определение порядка точности}{28}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Исследование устойчивости по Нейману}{29}{subsubsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.4}Анализ диссипативных и дисперсионных свойств схем}{30}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Задача переноса синусоидного сигнала}{31}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{31}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{31}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{31}{section.5}%
+\contentsline {section}{Список литературы}{32}{section.5}%
 \contentsfinish 

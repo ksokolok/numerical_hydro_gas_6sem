@@ -116,7 +116,7 @@
 \def\@LN@column{1}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Зависимость скорости на оси цилиндра от ускорения $A$ (решение по схеме ВВЦП)}}{21}{figure.caption.9}\protected@file@percent }
 \newlabel{fig:ftcs_umax(A)}{{8}{21}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Зависимость скорости на оси цилиндра от ускорения $A$ (решение по схеме ВВЦП)}{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схемы}{21}{subsubsection.2.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.4}Анализ свойств разностных схем}{21}{subsubsection.2.3.4}\protected@file@percent }
 \def\@LN@column{1}
 \newlabel{fig:FTCS_t=0.1}{{9a}{22}{$t = 0.1$}{figure.caption.10}{}}
 \newlabel{sub@fig:FTCS_t=0.1}{{a}{22}{$t = 0.1$}{figure.caption.10}{}}
@@ -145,30 +145,76 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{24}{subsection.3.1}\protected@file@percent }
 \newlabel{eq:upwind_start_c>0}{{3.4}{24}{Явная противопоточная схема}{equation.3.4}{}}
 \newlabel{eq:upwind_explicit_c>0}{{3.5}{24}{Явная противопоточная схема}{equation.3.5}{}}
-\newlabel{eq:upwind_start_c<0}{{3.6}{24}{Явная противопоточная схема}{equation.3.6}{}}
-\newlabel{fig:upwind_stencil_c>0}{{12a}{24}{$c>0$}{figure.caption.13}{}}
-\newlabel{sub@fig:upwind_stencil_c>0}{{a}{24}{$c>0$}{figure.caption.13}{}}
-\newlabel{fig:upwind_c_lt_0_stencil}{{12b}{24}{$c<0$}{figure.caption.13}{}}
-\newlabel{sub@fig:upwind_c_lt_0_stencil}{{b}{24}{$c<0$}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Шаблоны для явной противопоточной схемы}}{24}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:upwind_stencils}{{12}{24}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Шаблоны для явной противопоточной схемы}{figure.caption.13}{}}
+\newlabel{eq:upwind_explicit_c>0_v2}{{3.6}{24}{Явная противопоточная схема}{equation.3.6}{}}
+\newlabel{eq:upwind_start_c<0}{{3.7}{24}{Явная противопоточная схема}{equation.3.7}{}}
+\newlabel{eq:upwind_explicit_c<0}{{3.8}{24}{Явная противопоточная схема}{equation.3.8}{}}
+\newlabel{eq:upwind_explicit_c<0_v2}{{3.9}{24}{Явная противопоточная схема}{equation.3.9}{}}
 \def\@LN@column{1}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{25}{subsection.3.2}\protected@file@percent }
-\newlabel{eq:lax-wendroff_start_1}{{3.8}{25}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.8}{}}
-\newlabel{eq:lax-wendroff_start_2}{{3.9}{25}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.9}{}}
-\newlabel{fig:lax_wendroff_first_step_stencil}{{13a}{25}{Первый шаг}{figure.caption.14}{}}
-\newlabel{sub@fig:lax_wendroff_first_step_stencil}{{a}{25}{Первый шаг}{figure.caption.14}{}}
-\newlabel{fig:lax_wendroff_second_step_stencil.png}{{13b}{25}{Второй шаг}{figure.caption.14}{}}
-\newlabel{sub@fig:lax_wendroff_second_step_stencil.png}{{b}{25}{Второй шаг}{figure.caption.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Шаблоны двухшаговой схемы Лакса-Вендроффа}}{25}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:lax_wendroff_stencils}{{13}{25}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Шаблоны двухшаговой схемы Лакса-Вендроффа}{figure.caption.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Общий шаблон для двухшаговой схемы Лакса-Вендроффа}}{25}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:lax_wendroff_entire_stencil}{{14}{25}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Общий шаблон для двухшаговой схемы Лакса-Вендроффа}{figure.caption.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Задача переноса синусоидных сигналов}{25}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{25}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Выводы }{25}{section.5}\protected@file@percent }
+\newlabel{fig:upwind_stencil_c>0}{{12a}{25}{$c>0$}{figure.caption.13}{}}
+\newlabel{sub@fig:upwind_stencil_c>0}{{a}{25}{$c>0$}{figure.caption.13}{}}
+\newlabel{fig:upwind_c_lt_0_stencil}{{12b}{25}{$c<0$}{figure.caption.13}{}}
+\newlabel{sub@fig:upwind_c_lt_0_stencil}{{b}{25}{$c<0$}{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Шаблоны для явной противопоточной схемы}}{25}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:upwind_stencils}{{12}{25}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Шаблоны для явной противопоточной схемы}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Определение порядка точности}{25}{subsubsection.3.1.1}\protected@file@percent }
+\newlabel{upwind_du/dt}{{3.10}{25}{Определение порядка точности}{equation.3.10}{}}
+\newlabel{convection_consequence}{{3.11}{25}{Определение порядка точности}{equation.3.11}{}}
+\newlabel{upwind_du/dt_2}{{3.12}{25}{Определение порядка точности}{equation.3.12}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Исследование устойчивости по Нейману}{26}{subsubsection.3.1.2}\protected@file@percent }
+\newlabel{upwind_neuman: eq_xi}{{3.13}{26}{Исследование устойчивости по Нейману}{equation.3.13}{}}
+\newlabel{upwind_neuman: eq_g_1}{{3.14}{26}{Исследование устойчивости по Нейману}{equation.3.14}{}}
+\newlabel{upwind_neuman: eq_g_2}{{3.15}{26}{Исследование устойчивости по Нейману}{equation.3.15}{}}
+\newlabel{upwind_neuman: eq_g_final}{{3.16}{26}{Исследование устойчивости по Нейману}{equation.3.16}{}}
+\newlabel{upwind_|g|}{{3.17}{26}{Исследование устойчивости по Нейману}{equation.3.17}{}}
+\newlabel{upwind_arg_g}{{3.18}{26}{Исследование устойчивости по Нейману}{equation.3.18}{}}
+\newlabel{upwind_|g|^2}{{3.19}{26}{Исследование устойчивости по Нейману}{equation.3.19}{}}
+\def\@LN@column{1}
+\newlabel{upwind_C<=1}{{3.21}{27}{Исследование устойчивости по Нейману}{equation.3.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{27}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:lax-wendroff_start_1}{{3.22}{27}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.22}{}}
+\newlabel{eq:lax-wendroff_start_2}{{3.23}{27}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.23}{}}
+\newlabel{eq:lax-wendroff_start_3}{{3.24}{27}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.24}{}}
+\newlabel{eq:lax-wendroff_start_4}{{3.25}{27}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.25}{}}
+\newlabel{eq:lax-wendroff_start_5}{{3.26}{27}{Схема Лакса-Вендроффа как двухшаговая схема}{equation.3.26}{}}
+\newlabel{fig:lax_wendroff_first_step_stencil}{{13a}{27}{Первый шаг}{figure.caption.14}{}}
+\newlabel{sub@fig:lax_wendroff_first_step_stencil}{{a}{27}{Первый шаг}{figure.caption.14}{}}
+\newlabel{fig:lax_wendroff_second_step_stencil.png}{{13b}{27}{Второй шаг}{figure.caption.14}{}}
+\newlabel{sub@fig:lax_wendroff_second_step_stencil.png}{{b}{27}{Второй шаг}{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Шаблоны двухшаговой схемы Лакса-Вендроффа}}{27}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:lax_wendroff_stencils}{{13}{27}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Шаблоны двухшаговой схемы Лакса-Вендроффа}{figure.caption.14}{}}
+\def\@LN@column{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Общий шаблон для двухшаговой схемы Лакса-Вендроффа}}{28}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:lax_wendroff_entire_stencil}{{14}{28}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Общий шаблон для двухшаговой схемы Лакса-Вендроффа}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Определение порядка точности}{28}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:lax_wendroff_united_accuracy}{{3.27}{28}{Определение порядка точности}{equation.3.27}{}}
+\def\@LN@column{1}
+\newlabel{lax-wendroff_accurancy}{{3.31}{29}{Определение порядка точности}{equation.3.31}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}Исследование устойчивости по Нейману}{29}{subsubsection.3.3.1}\protected@file@percent }
+\newlabel{lax-wendroff_g}{{3.34}{29}{Исследование устойчивости по Нейману}{equation.3.34}{}}
+\newlabel{lax-wendroff_|g|^2}{{3.35}{29}{Исследование устойчивости по Нейману}{equation.3.35}{}}
+\newlabel{lax-wendroff_Courant_condition}{{3.36}{29}{Исследование устойчивости по Нейману}{equation.3.36}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Анализ диссипативных и дисперсионных свойств схем}{30}{subsection.3.4}\protected@file@percent }
+\newlabel{upwind_dissipation_surface}{{15a}{30}{Явная противопоточная схема}{figure.caption.16}{}}
+\newlabel{sub@upwind_dissipation_surface}{{a}{30}{Явная противопоточная схема}{figure.caption.16}{}}
+\newlabel{lax-wendroff_dissipation_surface}{{15b}{30}{Схема Лакса-Вендроффа}{figure.caption.16}{}}
+\newlabel{sub@lax-wendroff_dissipation_surface}{{b}{30}{Схема Лакса-Вендроффа}{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces \xpg@aux {}{russian}\ignorespaces Поверхности диссипации}}{30}{figure.caption.16}\protected@file@percent }
+\newlabel{dissipation_surfaces}{{15}{30}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces Поверхности диссипации}{figure.caption.16}{}}
+\newlabel{upwind_dissipation_surface_2D}{{16a}{30}{Явная противопоточная схема}{figure.caption.17}{}}
+\newlabel{sub@upwind_dissipation_surface_2D}{{a}{30}{Явная противопоточная схема}{figure.caption.17}{}}
+\newlabel{lax-wendroff_dissipation_surface_2D}{{16b}{30}{Схема Лакса-Вендроффа}{figure.caption.17}{}}
+\newlabel{sub@lax-wendroff_dissipation_surface_2D}{{b}{30}{Схема Лакса-Вендроффа}{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces \xpg@aux {}{russian}\ignorespaces 2D-поверхности диссипации}}{30}{figure.caption.17}\protected@file@percent }
+\newlabel{dissipation_surfaces_2D}{{16}{30}{\texorpdfstring {\xpg@aux {\xpg@current@opts }{\languagename }}{}\ignorespaces 2D-поверхности диссипации}{figure.caption.17}{}}
+\def\@LN@column{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Задача переноса синусоидного сигнала}{31}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{31}{subsection.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{31}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Выводы }{31}{section.5}\protected@file@percent }
 \@setckpt{content}{
-\setcounter{page}{26}
+\setcounter{page}{32}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -182,20 +228,20 @@
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{14}
+\setcounter{figure}{16}
 \setcounter{table}{0}
 \setcounter{section@level}{0}
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
 \setcounter{Hy@AnnotLevel}{0}
-\setcounter{bookmark@seq@number}{19}
-\setcounter{caption@flags}{2}
+\setcounter{bookmark@seq@number}{25}
+\setcounter{caption@flags}{6}
 \setcounter{continuedfloat}{0}
-\setcounter{subfigure}{0}
+\setcounter{subfigure}{2}
 \setcounter{subtable}{0}
 \setcounter{FancyVerbLine}{0}
 \setcounter{linenumber}{1}
-\setcounter{LN@truepage}{25}
+\setcounter{LN@truepage}{31}
 \setcounter{FancyVerbWriteLine}{0}
 \setcounter{FancyVerbBufferLine}{0}
 \setcounter{FV@TrueTabGroupLevel}{0}
