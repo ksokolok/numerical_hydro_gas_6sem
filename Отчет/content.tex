@@ -1071,16 +1071,6 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 Получили выражение для коэффициента перехода $g$, отражающего отношение значения $\xi$ на временном слое $n+1$ к значению на слое $n$.
 
-Для явной противопоточной схемы коэффициент перехода является комплексным. Модуль $|g|$ характеризует диссипативные свойства разностной схемы, т.е. затухание амплитуды при переходе на новый временной слой. Аргумент $\text{arg }g$ характеризует дисперсионные свойства, т.е. отклонение по фазе.
-
-\begin{equation} \label{upwind_|g|}
-|g| = \sqrt{\left( 1 - C(1 - \cos{(k_m \Delta x)}) \right)^2 + (C \sin{(k_m \Delta x)})^2}
-\end{equation}
-
-\begin{equation} \label{upwind_arg_g}
-	\arg g = \arctan \dfrac{\text{Im} g}{\text{Re } g} = \arctan \left( - \dfrac{C \sin{(k_m \Delta x)}}{1 - C(1 - \cos(k_m \Delta x))} \right)
-\end{equation}
-
 Для устойчивости схемы достаточно выполнение неравенства $|g| \le 1$ ($|g|^2 \le 1$) для всех значений $k_m \Delta x$.
 
 \begin{equation} \label{upwind_|g|^2}
@@ -1104,12 +1094,6 @@ $\xi = N - D$. Поскольку разностная схема линейна
 \begin{equation} \label{upwind_C<=1}
 	|c| \dfrac{\Delta t}{\Delta x} \le 1
 \end{equation}
-
-На Рис.~\ref{fig:convection_|g|} - \ref{fig:convection_|g|_2D} представлена поверхность диссипации — зависимость модуля коэффициента усиления \eqref{upwind_|g|} от числа Куранта $C$ и фазы $k_m \Delta x$.
-
-
-
-
 
 
 
@@ -1272,7 +1256,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 
 \subsection{Анализ диссипативных и дисперсионных свойств схем}
 
-На Рис.~\ref{dissipation_surfaces} - \ref{dissipation_surfaces_2D} представлены поверхности диссипации для рассматриваемых схем, т.е. зависимости модуля коэффициента перехода от фазы $k_m \Delta x$ и числа Куранта CFL. Диссипация проявляется в области, где $|g|$ заметно меньше единицы. Видим, что диапазон гармоник, в котором схема Лакса-Вендроффа не проявляет диссипативных свойств (область, где $|g| \approx 1$), шире, чем в явной противопоточной схеме.
+На Рис.~\ref{dissipation_surfaces} - \ref{dissipation_surfaces_2D} представлены поверхности диссипации для рассматриваемых схем, т.е. зависимости модуля коэффициента перехода от фазы $k_m \Delta x$ и числа Куранта CFL. Диссипация проявляется в области, где $|g|$ заметно меньше единицы. 
 
 \begin{figure}[H]
 	\centering
@@ -1331,10 +1315,322 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	&\arg g_\text{ex} = - k_m \Delta x C
 \end{align}
 
+По отношению $\dfrac{\phi_m}{\phi_\text{ex}} = \dfrac{\arg g}{\arg g_\text{ex}}$ (относительная фазовая скорость) можно судить о дисперсионных свойствах схемы с коэффициентом перехода $g$. Отсутствие дисперсии характерно для $\dfrac{\phi_m}{\phi_\text{ex}} = 1$.
+
+Для явной противопоточной схемы:
+\begin{equation} \label{upwind_arg_g}
+	\phi_m = \arg g = \arctan \dfrac{\text{Im } g}{\text{Re } g} = \arctan \left( - \dfrac{C \sin{(k_m \Delta x)}}{1 - C(1 - \cos(k_m \Delta x))} \right)
+\end{equation}
+
+Для схемы Лакса-Вендроффа:
+\begin{equation} \label{lax-wendroff_arg_g}
+	\phi_m = \arg g = \arctan \dfrac{\text{Im } g}{\text{Re } g} =
+	\arctan \left( - \dfrac{C \sin{(k_m \Delta x)}}{1 - C^2(1 - \cos(k_m \Delta x))} \right)
+\end{equation}
+
+На Рис.~\ref{dispersion_surfaces} - \ref{dispersion_surfaces_2D} представлены поверхности дисперсии для рассматриваемых схем, т.е. зависимости $\dfrac{\phi_m}{\phi_\text{ex}}$ от фазы $k_m \Delta x$ и числа Куранта CFL. Видим, что для обоих схем длинноволновые гармоники при CFL от 0 до 0.7 испытывают значительное влияние дисперсии.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_dispersion_surface.png}
+		\caption{Явная противопоточная схема}
+		\label{upwind_dispersion_surface} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_lax-wendroff_dispersion_surface.png}
+		\caption{Схема Лакса-Вендроффа}
+		\label{lax-wendroff_dispersion_surface} 
+	\end{subfigure}
+	\caption{Поверхности дисперсии}
+	\label{dispersion_surfaces}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_dispersion_surface_2D.png}
+		\caption{Явная противопоточная схема}
+		\label{upwind_dispersion_surface_2D} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_lax-wendroff_dispersion_surface_2D.png}
+		\caption{Схема Лакса-Вендроффа}
+		\label{lax-wendroff_dispersion_surface_2D} 
+	\end{subfigure}
+	\caption{2D-поверхности дисперсии}
+	\label{dispersion_surfaces_2D}
+\end{figure}
+
+Из анализа поверхностей диссипации и дисперсии можно обнаружить, что число Куранта CFL = 1 является наиболее предпочтительным для численного решения одномерного уравнения конвекции рассматриваемыми схемами, поскольку тогда полностью отсутствуют эффекты диссипации и дисперсии.
 
 \subsection{Задача переноса синусоидного сигнала}
 
+Найдем численное решение одномерного уравнения переноса для начального профиля, имеющего форму синусоиды (Рис.~\ref{fig:convection_sin}):
+\begin{equation} \label{convection_task_sin_initial}
+	u(x, 0) = \sin{(kx)},
+\end{equation}
+где $k = m \pi / L$ — волновое число, $m=4$, $L = 1$ — длина расчетной области.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{fig/convection_sin.png}
+	\caption{Начальный профиль $\sin{(4\pi x)}$}
+	\label{fig:convection_sin}
+\end{figure}
+
+На границах области задаются условия периодичности
+\begin{equation} \label{convection_task_sin_boundaries}
+	u(0, t) = u(L, t)
+\end{equation}
+
+Точное решение уравнения, согласно \eqref{eq:convection_common_solution}, имеет вид
+\begin{equation} \label{convection_task_sin_exact}
+	u(x, t) = \sin{(k(x - ct))}
+\end{equation}
+
+Также, зная выражения для коэффициента перехода $g$ конечно-разностной задачи, можно записать оценку ее точного решения, соответствующее $N_t$ шагов по времени:
+\begin{equation}
+	u = |g|^{N_t} \sin{(kx + \phi \cdot N_t)}
+\end{equation}
+
+Численные расчеты выполняются при значении скорости переноса $c = 0.75$.
+
+На Рис.~\ref{fig:convection_upwind_C=1} представлены графики численного решения по явной противопоточной схеме при $C=1$, оценка точного решения разностного уравнения по этой схеме, а также точного решения непрерывного уравнения в моменты времени $t=2.667$ c и  $t=26.667$ с. Наблюдаем полное соответствие кривых начальному профилю и между собой.
+
+Аналогичные графики представлены на Рис.~\ref{fig:convection_Lax-Wendroff_C=1} для схемы Лакса-Вендроффа. Вновь наблюдаем полное соответствие решений.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_C=1_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_upwind_C=1_t=2.667} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_C=1_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_upwind_C=1_t=26.667} 
+	\end{subfigure}
+	\caption{Явная противопоточная схема: решение при $C=1$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_upwind_C=1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=1_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_Lax-Wendroff_C=1_t=2.667} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=1_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_Lax-Wendroff_C=1_t=26.667} 
+	\end{subfigure}
+	\caption{Схема Лакса-Вендроффа: решение при $C=1$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_Lax-Wendroff_C=1}
+\end{figure}
+
+На Рис.~\ref{fig:convection_upwind_C=0.6} - \ref{fig:convection_Lax-Wendroff_C=0.6} представлены аналогичные графики, но для числа Куранта $C=0.6$. Здесь для явной противопоточной схемы наблюдаем затухание амплитуды, т.е. проявляются эффекты диссипации. К некоторому моменту времени, синусоида полностью теряет изначальный вид и переходит в прямую линию. При этом не наблюдается какого-либо сдвига по фазе, т.е. эффекты дисперсии здесь пренебрежимо малы.
+
+У схемы Лакса-Вендроффа можно заметить как диссипативные, так и дисперсионные свойства. Последние проявляются чуть заметнее. 
+
+Для числа Куранта $C=0.2$ (Рис.~\ref{fig:convection_upwind_C=0.2} - \ref{fig:convection_Lax-Wendroff_C=0.2}) можно сделать те же выводы. Для явной противопоточной схемы диссипативные свойства проявляются даже сильнее.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_C=0.6_t=2.656.png}
+		\caption{$t=2.656$}
+		\label{fig:convection_upwind_C=0.6_t=2.656} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+			\includegraphics[width=\textwidth]{fig/convection_upwind_C=0.6_t=26.560.png}
+		\caption{$t=26.650$}
+		\label{fig:convection_upwind_C=0.6_t=26.650} 
+	\end{subfigure}
+	\caption{Явная противопоточная схема: решение при $C=0.6$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_upwind_C=0.6}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=0.6_t=2.656.png}
+		\caption{$t=2.656$}
+		\label{fig:convection_Lax-Wendroff_C=0.6_t=2.656} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=0.6_t=26.560.png}
+		\caption{$t=26.560$}
+		\label{fig:convection_Lax-Wendroff_C=0.6_t=26.560} 
+	\end{subfigure}
+	\caption{Схема Лакса-Вендроффа: решение при $C=0.6$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_Lax-Wendroff_C=0.6}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_C=0.2_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_upwind_C=0.2_t=2.667} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_upwind_C=0.2_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_upwind_C=0.2_t=26.667} 
+	\end{subfigure}
+	\caption{Явная противопоточная схема: решение при $C=0.2$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_upwind_C=0.2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=0.2_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_Lax-Wendroff_C=0.2_t=2.667} 
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_Lax-Wendroff_C=0.2_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_Lax-Wendroff_C=0.2_t=26.667} 
+	\end{subfigure}
+	\caption{Схема Лакса-Вендроффа: решение при $C=0.2$, точное решение и оценка точного разностного решения}
+	\label{fig:convection_Lax-Wendroff_C=0.2}
+\end{figure}
+
 \subsection{Задача переноса ступенчатого сигнала}
+
+Теперь рассмотрим перенос начального профиля, имеющего ступенчатый вид (Рис.~\ref{fig:convection_stepwise}):
+\begin{equation}
+u(x, 0) =
+\begin{cases}
+	0, \qquad x \in [0, 0.2) \cup [0.6, 1] \\
+	2, \qquad x \in [0.2, 0.4) \\
+	1, \qquad x \in [0.4, 0.6)
+\end{cases}
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{fig/convection_stepwise.png}
+	\caption{Ступенчатый профиль в начальный момент}
+	\label{fig:convection_stepwise}
+\end{figure}
+
+На концах расчетной области вновь задаются условия периодичности
+\begin{equation}
+	u(0, t) = u(L, t)
+\end{equation}
+
+На Рис.~\ref{fig:convection_stepwise_C=1} представлено сравнение численных решений по рассматриваемым схемам при $C=1$ и точное решение в моменты времени $t=0.267, 2.667, 26.667$ с. Как и для синусоидного сигнала, в этом случае ($C=1$) схемы в точности воспроизводят точное решение. Кажущееся отклонение от графика точного решения обусловлено использованием для схем более грубой сетки и соединением точек между ступеньками.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=1_t=0.267.png}
+		\caption{$t=0.267$}
+		\label{fig:convection_stepwise_C=1_t=0.267}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=1_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_stepwise_C=1_t=2.667}
+	\end{subfigure}
+	\vspace{1em}
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=1_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_stepwise_C=1_t=26.667}
+	\end{subfigure}
+	\caption{Численные решения для обеих схем и точное решение при $C=1$}
+	\label{fig:convection_stepwise_C=1}
+\end{figure}
+
+На Рис.~\ref{fig:convection_stepwise_C=0.6} представлены аналогичные графики для числа Куранта $C=0.6$. Явная противопоточная схема под действием эффектов диссипации сперва сглаживает углы ступенек, затем выравнивает экстремумы измененного профиля. Решение по схеме Лакса-Вендроффа под действием дисперсии испытывает осцилляции перед скачками. С течением времени решения по обеим схемам принимают вид, совершенно не похожий на начальный профиль. Те же выводы справедливы для решений при $C=0.2$ (Рис.~\ref{fig:convection_stepwise_C=0.2}), но эффекты диссипации и дисперсии проявлены чуть сильнее.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.6_t=0.264.png}
+		\caption{$t=0.264$}
+		\label{fig:convection_stepwise_C=0.6_t=0.267}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.6_t=2.640.png}
+		\caption{$t=2.640$}
+		\label{fig:convection_stepwise_C=0.6_t=2.640}
+	\end{subfigure}
+	\vspace{1em}
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.6_t=26.400.png}
+		\caption{$t=26.400$}
+		\label{fig:convection_stepwise_C=0.6_t=26.400}
+	\end{subfigure}
+	\caption{Численные решения для обеих схем и точное решение при $C=0.6$}
+	\label{fig:convection_stepwise_C=0.6}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.2_t=0.267.png}
+		\caption{$t=0.267$}
+		\label{fig:convection_stepwise_C=0.2_t=0.267}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.2_t=2.667.png}
+		\caption{$t=2.667$}
+		\label{fig:convection_stepwise_C=0.2_t=2.667}
+	\end{subfigure}
+	\vspace{1em}
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/convection_stepwise_C=0.2_t=26.667.png}
+		\caption{$t=26.667$}
+		\label{fig:convection_stepwise_C=0.2_t=26.667}
+	\end{subfigure}
+	\caption{Численные решения для обеих схем и точное решение при $C=0.2$}
+	\label{fig:convection_stepwise_C=0.2}
+\end{figure}
 
 \section{Невязкое уравнение Бюргерса}
 

@@ -1,7 +1,7 @@
-10    	! L
+1     	! L
 4    	! m      sin(m*pi/L*x)
 0.75 	! c:     du/dt + c * du/dx = 0
 0.0 1.0 ! b0 b1: b0 + b1 * sin(m*pi/L*x)
-51   	! NX
-10   	! NT
-0.75 	! CFL
+101   	! Nx
+10000   ! Nt
+0.2 	! CFL

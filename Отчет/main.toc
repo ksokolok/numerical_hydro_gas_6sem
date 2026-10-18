@@ -16,13 +16,13 @@
 \contentsline {subsection}{\numberline {3.1}Явная противопоточная схема}{24}{subsection.3.1}%
 \contentsline {subsubsection}{\numberline {3.1.1}Определение порядка точности}{25}{subsubsection.3.1.1}%
 \contentsline {subsubsection}{\numberline {3.1.2}Исследование устойчивости по Нейману}{26}{subsubsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{27}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Определение порядка точности}{28}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Исследование устойчивости по Нейману}{29}{subsubsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.4}Анализ диссипативных и дисперсионных свойств схем}{30}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.2}Схема Лакса-Вендроффа как двухшаговая схема}{26}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Определение порядка точности}{27}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Исследование устойчивости по Нейману}{28}{subsubsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.4}Анализ диссипативных и дисперсионных свойств схем}{29}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Задача переноса синусоидного сигнала}{31}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{31}{subsection.3.6}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{31}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{31}{section.5}%
-\contentsline {section}{Список литературы}{32}{section.5}%
+\contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{35}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{39}{section.4}%
+\contentsline {section}{\numberline {5}Выводы }{39}{section.5}%
+\contentsline {section}{Список литературы}{40}{section.5}%
 \contentsfinish 

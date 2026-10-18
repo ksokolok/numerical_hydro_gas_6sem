@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  17 OCT 2026 16:37
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  18 OCT 2026 14:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2136,23 +2136,15 @@ File: fig/upwind_c_gt_0_stencil.png Graphic file (type bmp)
 <fig/upwind_c_gt_0_stencil.png>
 File: fig/upwind_c_lt_0_stencil.png Graphic file (type bmp)
 <fig/upwind_c_lt_0_stencil.png>
- [24] [25]
-
-LaTeX Warning: Reference `fig:convection_|g|' on page 26 undefined on input lin
-e 1108.
-
-
-LaTeX Warning: Reference `fig:convection_|g|_2D' on page 26 undefined on input 
-line 1108.
-
-[26]
+ [24] [25] [26]
 File: fig/lax_wendroff_first_step_stencil.png Graphic file (type bmp)
 <fig/lax_wendroff_first_step_stencil.png>
 File: fig/lax_wendroff_second_step_stencil.png Graphic file (type bmp)
 <fig/lax_wendroff_second_step_stencil.png>
 File: fig/lax_wendroff_entire_stencil.png Graphic file (type bmp)
 <fig/lax_wendroff_entire_stencil.png>
- [27] [28] [29]
+
+[27] [28]
 File: fig/convection_upwind_dissipation_surface.png Graphic file (type bmp)
 <fig/convection_upwind_dissipation_surface.png>
 File: fig/convection_lax-wendroff_dissipation_surface.png Graphic file (type bm
@@ -2163,15 +2155,86 @@ File: fig/convection_upwind_dissipation_surface_2D.png Graphic file (type bmp)
 File: fig/convection_lax-wendroff_dissipation_surface_2D.png Graphic file (type
  bmp)
 <fig/convection_lax-wendroff_dissipation_surface_2D.png>
- [30]) [31]
+ [29]
+File: fig/convection_upwind_dispersion_surface.png Graphic file (type bmp)
+<fig/convection_upwind_dispersion_surface.png>
+File: fig/convection_lax-wendroff_dispersion_surface.png Graphic file (type bmp
+)
+<fig/convection_lax-wendroff_dispersion_surface.png>
+ [30]
+File: fig/convection_upwind_dispersion_surface_2D.png Graphic file (type bmp)
+<fig/convection_upwind_dispersion_surface_2D.png>
+File: fig/convection_lax-wendroff_dispersion_surface_2D.png Graphic file (type 
+bmp)
+<fig/convection_lax-wendroff_dispersion_surface_2D.png>
+File: fig/convection_sin.png Graphic file (type bmp)
+<fig/convection_sin.png>
+ [31]
+File: fig/convection_upwind_C=1_t=2.667.png Graphic file (type bmp)
+<fig/convection_upwind_C=1_t=2.667.png>
+File: fig/convection_upwind_C=1_t=26.667.png Graphic file (type bmp)
+<fig/convection_upwind_C=1_t=26.667.png>
+ [32]
+File: fig/convection_Lax-Wendroff_C=1_t=2.667.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=1_t=2.667.png>
+File: fig/convection_Lax-Wendroff_C=1_t=26.667.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=1_t=26.667.png>
+File: fig/convection_upwind_C=0.6_t=2.656.png Graphic file (type bmp)
+<fig/convection_upwind_C=0.6_t=2.656.png>
+File: fig/convection_upwind_C=0.6_t=26.560.png Graphic file (type bmp)
+<fig/convection_upwind_C=0.6_t=26.560.png>
+ [33]
+File: fig/convection_Lax-Wendroff_C=0.6_t=2.656.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=0.6_t=2.656.png>
+File: fig/convection_Lax-Wendroff_C=0.6_t=26.560.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=0.6_t=26.560.png>
+File: fig/convection_upwind_C=0.2_t=2.667.png Graphic file (type bmp)
+<fig/convection_upwind_C=0.2_t=2.667.png>
+File: fig/convection_upwind_C=0.2_t=26.667.png Graphic file (type bmp)
+<fig/convection_upwind_C=0.2_t=26.667.png>
+ [34]
+File: fig/convection_Lax-Wendroff_C=0.2_t=2.667.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=0.2_t=2.667.png>
+File: fig/convection_Lax-Wendroff_C=0.2_t=26.667.png Graphic file (type bmp)
+<fig/convection_Lax-Wendroff_C=0.2_t=26.667.png>
+
+Overfull \hbox (9.0125pt too wide) in paragraph at lines 1531--1532
+[]\TU/CMUSerif(2)/m/n/12 Теперь рассмотрим перенос начального профиля, имеющего
+ ступенчатый вид (Рис. [][]26[][]): 
+ []
+
+File: fig/convection_stepwise.png Graphic file (type bmp)
+<fig/convection_stepwise.png>
+[35]
+File: fig/convection_stepwise_C=1_t=0.267.png Graphic file (type bmp)
+<fig/convection_stepwise_C=1_t=0.267.png>
+File: fig/convection_stepwise_C=1_t=2.667.png Graphic file (type bmp)
+<fig/convection_stepwise_C=1_t=2.667.png>
+File: fig/convection_stepwise_C=1_t=26.667.png Graphic file (type bmp)
+<fig/convection_stepwise_C=1_t=26.667.png>
+ [36]
+File: fig/convection_stepwise_C=0.6_t=0.264.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.6_t=0.264.png>
+File: fig/convection_stepwise_C=0.6_t=2.640.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.6_t=2.640.png>
+File: fig/convection_stepwise_C=0.6_t=26.400.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.6_t=26.400.png>
+ [37]
+File: fig/convection_stepwise_C=0.2_t=0.267.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.2_t=0.267.png>
+File: fig/convection_stepwise_C=0.2_t=2.667.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.2_t=2.667.png>
+File: fig/convection_stepwise_C=0.2_t=26.667.png Graphic file (type bmp)
+<fig/convection_stepwise_C=0.2_t=26.667.png>
+ [38]) [39]
 \openout2 = `templates/bibpage.aux'.
 
- (./templates/bibpage.tex) [32
+ (./templates/bibpage.tex) [40
 
 
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20261017163721 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20261018145328 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
  (./main.aux
@@ -2186,9 +2249,6 @@ L3 programming layer <2026-01-19>
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 2.0pt have occurred.
 
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: F33CEF221F12349D1C6752A72A9F1608;7543.
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -2196,12 +2256,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 49429 strings out of 468167
- 1013565 string characters out of 5436503
- 2282766 words of memory out of 5000000
- 77402 multiletter control sequences out of 15000+600000
+ 49736 strings out of 468167
+ 1027178 string characters out of 5436503
+ 2290705 words of memory out of 5000000
+ 77682 multiletter control sequences out of 15000+600000
  633448 words of font info for 119 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  91i,19n,109p,693b,5040s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (32 pages).
+Output written on main.pdf (40 pages).
