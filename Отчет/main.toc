@@ -23,6 +23,6 @@
 \contentsline {subsection}{\numberline {3.5}Задача переноса синусоидного сигнала}{31}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{35}{subsection.3.6}%
 \contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{39}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{39}{section.5}%
-\contentsline {section}{Список литературы}{40}{section.5}%
+\contentsline {section}{\numberline {5}Выводы }{40}{section.5}%
+\contentsline {section}{Список литературы}{41}{section.5}%
 \contentsfinish 
