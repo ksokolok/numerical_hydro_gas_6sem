@@ -22,7 +22,9 @@
 \contentsline {subsection}{\numberline {3.4}Анализ диссипативных и дисперсионных свойств схем}{29}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Задача переноса синусоидного сигнала}{31}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Задача переноса ступенчатого сигнала}{35}{subsection.3.6}%
-\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{39}{section.4}%
-\contentsline {section}{\numberline {5}Выводы }{40}{section.5}%
-\contentsline {section}{Список литературы}{41}{section.5}%
+\contentsline {section}{\numberline {4}Невязкое уравнение Бюргерса}{40}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Задача переноса синусоидного сигнала}{40}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Задача переноса ступенчатого сигнала}{45}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Выводы}{50}{section.5}%
+\contentsline {section}{Список литературы}{51}{section.5}%
 \contentsfinish 

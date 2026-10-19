@@ -36,4 +36,13 @@ call Output(trim(filename), x, u)
 call Lax_Wendroff(x, u, Nx, Nt, CFL, m, L, b0, b1, 2)
 write(filename, '(A, I3, A)') 'Burgers_Lax-Wendroff_Stepwise_', 10, '.plt'
 call Output(trim(filename), x, u)
+
+! Расчет точного решения (ступенчатая функция 10)
+h = L / (Nx - 1)
+dt = CFL * h / 3.d0
+Time = dt * Nt
+call Exact_Solution_Stepwise10(x, u, Time, Nx)
+write(filename, '(A, I3, A)') 'Burgers_Exact_Solution_t_lt_0.2_Stepwise_', 10, '.plt'
+call Output(trim(filename), x, u)
+
 end program

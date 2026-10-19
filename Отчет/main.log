@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  19 OCT 2026 03:22
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.14)  20 OCT 2026 00:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2039,7 +2039,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Font Warning: Font shape `TU/FiraCode-Regular.otf(0)/m/n' in size <12> no
 t available
-(Font)              size <10> substituted on input line 3.
+(Font)              size <10> substituted on input line 6.
 
 
 Package fontspec Info: 
@@ -2059,14 +2059,7 @@ guage=dflt;+calt;"
 
 LaTeX Font Warning: Font shape `TU/FiraCode-Regular.otf(2)/m/n' in size <12> no
 t available
-(Font)              size <10> substituted on input line 3.
-
-
-Overfull \hbox (13.31978pt too wide) in paragraph at lines 3--4
-\TU/CMUSerif(2)/m/n/12 Обработка результатов проводится с использованием библио
-тек \TU/FiraCode-Regular.otf(2)/m/n/10 numpy \TU/CMUSerif(2)/m/n/12 и \TU/FiraC
-ode-Regular.otf(2)/m/n/10 matplotlib.pyplot
- []
+(Font)              size <10> substituted on input line 6.
 
 File: fig/Шаблон_ВВЦП.jpeg Graphic file (type bmp)
 <fig/Шаблон_ВВЦП.jpeg>
@@ -2075,7 +2068,7 @@ File: fig/Шаблон_ВВЦП.jpeg Graphic file (type bmp)
 
 
 ] [4]
-Overfull \hbox (9.20316pt too wide) in paragraph at lines 145--146
+Overfull \hbox (9.20316pt too wide) in paragraph at lines 149--150
 []\TU/CMUSerif(2)/m/n/12 Из линейности вычислительного алгоритма следует достат
 очность рассмотрения ошиб-
  []
@@ -2088,7 +2081,7 @@ File: fig/Шаблон_Алена-Чена_Корректор2.jpg Graphic file 
 File: fig/Общий_Шаблон_Алена-Чена.jpeg Graphic file (type bmp)
 <fig/Общий_Шаблон_Алена-Чена.jpeg>
  [7] [8] [9] [10] [11]
-Overfull \hbox (15.24016pt too wide) detected at line 514
+Overfull \hbox (15.24016pt too wide) detected at line 518
 []
  []
 
@@ -2099,13 +2092,13 @@ File: fig/diffusion_Stability_Large_Rainbow.png Graphic file (type bmp)
 File: fig/diffusion_Stability_j=100_Large_Rainbow.png Graphic file (type bmp)
 <fig/diffusion_Stability_j=100_Large_Rainbow.png>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95116pt on input line 589.
+(Font)              scaled to size 10.95116pt on input line 593.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00085pt on input line 589.
+(Font)              scaled to size 8.00085pt on input line 593.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 589.
+(Font)              scaled to size 10.94882pt on input line 593.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 589.
+(Font)              scaled to size 7.99915pt on input line 593.
 File: fig/diffusion_Stability_j=1000_Large_Rainbow.png Graphic file (type bmp)
 <fig/diffusion_Stability_j=1000_Large_Rainbow.png>
  [14] [15]
@@ -2198,7 +2191,7 @@ File: fig/convection_Lax-Wendroff_C=0.2_t=2.667.png Graphic file (type bmp)
 File: fig/convection_Lax-Wendroff_C=0.2_t=26.667.png Graphic file (type bmp)
 <fig/convection_Lax-Wendroff_C=0.2_t=26.667.png>
 
-Overfull \hbox (9.0125pt too wide) in paragraph at lines 1531--1532
+Overfull \hbox (9.0125pt too wide) in paragraph at lines 1535--1536
 []\TU/CMUSerif(2)/m/n/12 Теперь рассмотрим перенос начального профиля, имеющего
  ступенчатый вид (Рис. [][]26[][]): 
  []
@@ -2226,20 +2219,89 @@ File: fig/convection_stepwise_C=0.2_t=2.667.png Graphic file (type bmp)
 <fig/convection_stepwise_C=0.2_t=2.667.png>
 File: fig/convection_stepwise_C=0.2_t=26.667.png Graphic file (type bmp)
 <fig/convection_stepwise_C=0.2_t=26.667.png>
- [38] [39]) [40]
+ [38] [39]
+File: fig/burgers_sin_t=0.png Graphic file (type bmp)
+<fig/burgers_sin_t=0.png>
+ [40]
+File: fig/burgers_sin_C=1.0_t=0.050.png Graphic file (type bmp)
+<fig/burgers_sin_C=1.0_t=0.050.png>
+File: fig/burgers_sin_C=1.0_t=0.1.png Graphic file (type bmp)
+<fig/burgers_sin_C=1.0_t=0.1.png>
+File: fig/burgers_sin_C=1.0_t=0.2.png Graphic file (type bmp)
+<fig/burgers_sin_C=1.0_t=0.2.png>
+File: fig/burgers_sin_C=1.0_t=0.801.png Graphic file (type bmp)
+<fig/burgers_sin_C=1.0_t=0.801.png>
+File: fig/burgers_sin_C=1.0_t=2.133.png Graphic file (type bmp)
+<fig/burgers_sin_C=1.0_t=2.133.png>
+File: fig/burgers_sin_C=0.6_t=0.051.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.6_t=0.051.png>
+File: fig/burgers_sin_C=0.6_t=0.102.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.6_t=0.102.png>
+File: fig/burgers_sin_C=0.6_t=0.204.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.6_t=0.204.png>
+File: fig/burgers_sin_C=0.6_t=0.799.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.6_t=0.799.png>
+File: fig/burgers_sin_C=0.6_t=2.132.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.6_t=2.132.png>
+
+
+LaTeX Warning: Float too large for page by 11.69644pt on input line 1789.
+
+File: fig/burgers_sin_C=0.2_t=0.050.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.2_t=0.050.png>
+File: fig/burgers_sin_C=0.2_t=0.1.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.2_t=0.1.png>
+File: fig/burgers_sin_C=0.2_t=0.2.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.2_t=0.2.png>
+File: fig/burgers_sin_C=0.2_t=0.801.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.2_t=0.801.png>
+File: fig/burgers_sin_C=0.2_t=2.132.png Graphic file (type bmp)
+<fig/burgers_sin_C=0.2_t=2.132.png>
+
+LaTeX Warning: Float too large for page by 11.69644pt on input line 1836.
+
+[41] [42] [43] [44]
+File: fig/burgers_stepwise_t=0.png Graphic file (type bmp)
+<fig/burgers_stepwise_t=0.png>
+ [45]
+File: fig/burgers_stepwise_C=1.0_t=0.1.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=1.0_t=0.1.png>
+File: fig/burgers_stepwise_C=1.0_t=0.2.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=1.0_t=0.2.png>
+File: fig/burgers_stepwise_C=1.0_t=0.667.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=1.0_t=0.667.png>
+File: fig/burgers_stepwise_C=1.0_t=2.0.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=1.0_t=2.0.png>
+File: fig/burgers_stepwise_C=0.6_t=0.1.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.6_t=0.1.png>
+File: fig/burgers_stepwise_C=0.6_t=0.2.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.6_t=0.2.png>
+File: fig/burgers_stepwise_C=0.6_t=0.666.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.6_t=0.666.png>
+File: fig/burgers_stepwise_C=0.6_t=2.0.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.6_t=2.0.png>
+File: fig/burgers_stepwise_C=0.2_t=0.1.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.2_t=0.1.png>
+File: fig/burgers_stepwise_C=0.2_t=0.2.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.2_t=0.2.png>
+File: fig/burgers_stepwise_C=0.2_t=0.667.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.2_t=0.667.png>
+File: fig/burgers_stepwise_C=0.2_t=2.0.png Graphic file (type bmp)
+<fig/burgers_stepwise_C=0.2_t=2.0.png>
+ [46] [47] [48] [49]) [50]
 \openout2 = `templates/bibpage.aux'.
 
- (./templates/bibpage.tex) [41
+ (./templates/bibpage.tex)
+[51
 
 
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20261019032233 FAD58DE7366495DB465
+runsystem(latexminted cleantemp  --timestamp 20261020000603 FAD58DE7366495DB465
 0CFEFAC2FCD61)...executed safely (allowed).
 
- (./main.aux
-(./templates/titlepage.aux) (./templates/tocpage.aux) (./content.aux)
-(./templates/bibpage.aux))
+ (./main.aux (./templates/titlepage.aux) (./templates/tocpage.aux)
+(./content.aux) (./templates/bibpage.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -2250,18 +2312,18 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 2.0pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: F33CEF221F12349D1C6752A72A9F1608;7543.
+(rerunfilecheck)             Checksum: 0464189BA02B492002911D61749AE0CC;8227.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 49740 strings out of 468167
- 1027257 string characters out of 5436503
- 2290928 words of memory out of 5000000
- 77686 multiletter control sequences out of 15000+600000
+ 50073 strings out of 468167
+ 1039556 string characters out of 5436503
+ 2295357 words of memory out of 5000000
+ 77990 multiletter control sequences out of 15000+600000
  633448 words of font info for 119 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 91i,19n,109p,693b,5040s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,19n,109p,964b,5040s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (41 pages).
+Output written on main.pdf (51 pages).

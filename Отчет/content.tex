@@ -1,6 +1,10 @@
 \section{Формулировка задания}
 
-Реализация всех алгоритмов осуществляется на языке программирования \texttt{Fortran}. Обработка результатов проводится с использованием библиотек \texttt{numpy} и \texttt{matplotlib.pyplot} для языка программирования \texttt{Python}.
+В ходе расчетного задания необходимо с использованием метода конечных разностей численно решить одномерное уравнение диффузии, одномерное уравнением переноса и невязкое уравнение Бюргерса. 
+Рассматриваемые конечно-разностные схемы требуется исследовать на порядок точности по времени и пространству, на устойчивость и обнаружить характерные свойства численных решений по этим схемам.
+
+Реализация всех алгоритмов осуществляется на языке программирования \texttt{Fortran}. Исходный программный код содержится в репозитории по ссылке \url{https://github.com/ksokolok/numerical_hydro_gas_6sem}.
+Графическая обработка результатов проводится в \texttt{Tecplot 360 EX 2025 R2}.
 
 \section{Одномерное уравнение диффузии}
 
@@ -577,7 +581,7 @@ $\xi = N - D$. Поскольку разностная схема линейна
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{fig/diffusion_Stability_Large_Rainbow.png}
-	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ в узле $j=2$}
+	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ при $\dfrac{\Delta r}{r_j} = \dfrac{1}{2}$}
 	\label{fig:alen-chen_j=2_g}
 \end{figure}
 
@@ -586,17 +590,17 @@ $\xi = N - D$. Поскольку разностная схема линейна
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{fig/diffusion_Stability_j=100_Large_Rainbow.png}
-		\caption{$j=100$}
+		\caption{$\dfrac{\Delta r}{r_j} = 0.001$}
 		\label{fig:alen-chen_j=100_g}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{fig/diffusion_Stability_j=1000_Large_Rainbow.png}
-		\caption{$j=1000$}
+		\caption{$\dfrac{\Delta r}{r_j} = 0.01$}
 		\label{fig:alen-chen_j=1000_g}
 	\end{subfigure}
-	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ в узлах $j=100$ и $j=1000$}
+	\caption{Модуль коэффициента перехода $|g|(k_m\Delta r, s)$ при $\dfrac{\Delta r}{r_j} = 0.01, 0.001$}
 	\label{fig:alen-chen_j=100,1000}
 \end{figure}
 
@@ -1632,6 +1636,8 @@ u(x, 0) =
 	\label{fig:convection_stepwise_C=0.2}
 \end{figure}
 
+
+\newpage
 \section{Невязкое уравнение Бюргерса}
 
 Невязкое уравнение Бюргерса в дивергентной форме имеет вид
@@ -1659,8 +1665,365 @@ u(x, 0) =
 Аппроксимация уравнения по двухшаговой схеме Лакса-Вендроффа запишется как
 \begin{equation} \label{burgers_lax-wendroff}
 \begin{split}
-	u_{j+1/2}^{n+1/2} = \dfrac{1}{2} 
+	&u_{j+1/2}^{n+1/2} = \dfrac{1}{2} (u_{j+1}^n + u_j^n) - \dfrac{\Delta t}{4 \Delta x} \biggl( (u_{j+1})^2 - (u_j^n)^2 \biggr) \\
+	&u_j^{n+1} = u_j^n - \dfrac{\Delta t}{2 \Delta x} \biggl( (u_{j+1/2}^{n+1/2})^2 - (u_{j-1/2}^{n+1/2})^2 \biggr)
 \end{split}
 \end{equation}
 
-\section{Выводы }
+Поскольку скорость переноса сигнала является переменной величиной, то, строго говоря, число Куранта $C$ может быть определено только локально. Однако, если предположить, что численное решение не возрастает с течением времени, то число Куранта $C$, необходимое для вычисления шага по времени, можно определить через максимальную скорость в начальном профиле $|u_j^0|$:
+\begin{equation} \label{burgers_Courant}
+	C = \max_j |u_j^0| \cdot \dfrac{\Delta t}{\Delta x}
+\end{equation}
+
+\subsection{Задача переноса синусоидного сигнала}
+
+Найдем численное решение невязкого уравнения Бюргерса для начального профиля, имеющего форму синусоиды (Рис.~\ref{fig:burgers_sin_t=0}):
+
+\begin{equation} \label{burgers_sin_t=0}
+	u(x, 0) = 1 + \sin{(kx)},
+\end{equation}
+где $k = m \pi / L$ — волновое число, $m=4$, $L = 1$ — длина расчетной области. Смещение профиля вверх по оси ординат производится для того, чтобы обеспечить только неотрицательные значения. Тогда $\max_j |u_j^0| = 2$.
+
+На границах области задается условие периодичности
+\begin{equation} \label{burgers_sin_boundaries}
+	u(0, t) = u(L, t)
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{fig/burgers_sin_t=0.png}
+	\caption{Начальный профиль синусоиды}
+	\label{fig:burgers_sin_t=0}
+\end{figure}
+
+На Рис.~\ref{fig:burgers_sin_C=1.0} представлены численные решения по явной противопоточной схеме и схеме Лакса-Вендроффа в разные моменты времени при $C = 1$. Видим, что начальный профиль синусоиды постепенно приобретает пилообразную форму, после чего асимптотически затухает до среднего значения $u = 1$. Схема Лакса-Вендроффа испытывает сильные осцилляции в окрестности максимумов, что является проявлением эффектов дисперсии. Явная противопоточная схема проявляет диссипативные эффекты путем разглаживания решения в окрестности экстремумов. Уменьшение числа Куранта $C$, как видно из аналогичных Рис.~\ref{fig:burgers_sin_C=0.6} - \ref{fig:burgers_sin_C=0.2} для $C=0.6$ и $C=0.2$, приводит к более проявленной дисперсии для схемы Лакса-Вендроффа. 
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=1.0_t=0.050.png}
+		\caption{$t=0.05$ с}
+		\label{fig:burgers_sin_C=1.0_t=0.050}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=1.0_t=0.1.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_sin_C=1.0_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=1.0_t=0.2.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_sin_C=1.0_t=0.2}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=1.0_t=0.801.png}
+		\caption{$t=0.8$ с}
+		\label{fig:burgers_sin_C=1.0_t=0.801}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=1.0_t=2.133.png}
+		\caption{$t=2.133$ с}
+		\label{fig:burgers_sin_C=1.0_t=2.133}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=1$}
+	\label{fig:burgers_sin_C=1.0}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.6_t=0.051.png}
+		\caption{$t=0.05$ с}
+		\label{fig:burgers_sin_C=0.6_t=0.051}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.6_t=0.102.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_sin_C=0.6_t=0.102}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.6_t=0.204.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_sin_C=0.6_t=0.204}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.6_t=0.799.png}
+		\caption{$t=0.8$ с}
+		\label{fig:burgers_sin_C=0.6_t=0.799}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.6_t=2.132.png}
+		\caption{$t=2.132$ с}
+		\label{fig:burgers_sin_C=0.6_t=2.132}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=0.6$}
+	\label{fig:burgers_sin_C=0.6}
+\end{figure}
+
+
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.2_t=0.050.png}
+		\caption{$t=0.05$ с}
+		\label{fig:burgers_sin_C=0.2_t=0.050}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.2_t=0.1.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_sin_C=0.2_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.2_t=0.2.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_sin_C=0.2_t=0.2}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.2_t=0.801.png}
+		\caption{$t=0.8$ с}
+		\label{fig:burgers_sin_C=0.2_t=0.801}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_sin_C=0.2_t=2.132.png}
+		\caption{$t=2.132$ с}
+		\label{fig:burgers_sin_C=0.2_t=2.132}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=0.2$}
+	\label{fig:burgers_sin_C=0.2}
+\end{figure}
+
+\newpage
+\subsection{Задача переноса ступенчатого сигнала}
+
+Найдем численное решение невязкого уравнения Бюргерса для начального профиля, имеющего ступенчатую форму (Рис.~\ref{fig:burgers_stepwise_t=0}):
+
+\begin{equation} \label{burgers_stepwise_t=0}
+	u(x, 0) =
+	\begin{cases}
+		1, \qquad x \in [0, 0.2) \cup [0.6, 1] \\
+		3, \qquad x \in [0.2, 0.4) \\
+		2, \qquad x \in [0.4, 0.6)
+	\end{cases}
+\end{equation}
+
+На границах области задается условие периодичности
+\begin{equation} \label{burgers_stepwise_boundaries}
+	u(0, t) = u(L, t)
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{fig/burgers_stepwise_t=0.png}
+	\caption{Начальный ступенчатый профиль}
+	\label{fig:burgers_stepwise_t=0}
+\end{figure}
+
+Для данной задачи можно вывести аналитическое решение, рассмотрев решение задачи Римана для невязкого уравнения Бюргерса. Согласно ей, начальный профиль задается в виде
+\begin{equation} \label{riemann_initial}
+	u(x, 0) = 
+	\begin{cases}
+		u_L, \qquad x<0 \\
+		u_R, \qquad x\ge 0,
+	\end{cases}
+\end{equation}
+где $u_L$ и $u_R$ — постоянные значения слева и справа от разрыва в начальный момент. Решение зависит от соотношения $u_L$ и $u_R$. При $u_L > u_R$ возникает ударная волна, движущаяся со скоростью
+\begin{equation} \label{riemann_s}
+	s = \dfrac{u_L + u_R}{2},
+\end{equation}
+а решение выражается в виде
+\begin{equation}
+	u(x, t) = 
+	\begin{cases}
+		u_L, \qquad x < st \\
+		u_R, \qquad x\ge st,
+	\end{cases}
+\end{equation}
+
+При $u_L \le u_R$ формируется гладкое решение (веер разряжения):
+\begin{equation}
+	\begin{cases}
+		u_L, \qquad x \le u_L t \\
+		\dfrac{x}{t}, \qquad u_L t < x < u_R t \\
+		u_R, \qquad x \ge u_R t
+	\end{cases}
+\end{equation}
+
+Таким образом, для рассматриваемого ступенчатого профиля \eqref{burgers_stepwise_t=0} можем записать
+
+\begin{equation} \label{burgers_stepwise_t<0.2}
+	u(x,t) =
+	\begin{cases}
+		1, & x < 0.2 + t \\
+		\dfrac{x - 0.2}{t}, & 0.2 + t \le x \le 0.2 + 3t \\
+		3, & 0.2 + 3t < x < 0.4 + 2.5t \\
+		2, & 0.4 + 2.5t < x < 0.6 + 1.5t \\
+		1, & x > 0.6 + 1.5t
+	\end{cases}
+\end{equation}
+
+Анализируя переменные пределы для $x$, можно заметить, что в момент $t=0.2$ ударная волна 1 ($u_L = 3$, $u_R = 2$) догонит ударную волну 2 ($u_L = 2$, $u_R = 1$), поскольку тогда $0.4 + 2.5t = 0.6 + 1.5t$. Поэтому точное решение \eqref{burgers_stepwise_t<0.2} справедливо только для моментов времени $t<0.2$.
+
+На Рис.~\ref{fig:burgers_stepwise_C=1.0} представлены численные решения по явной противопоточной схеме и схеме Лакса-Вендроффа в разные моменты времени при числе Куранта $C=1$. Для $t=0.1$ и $t=0.2$ представлено также точное решение. Видим, что схемы достаточно точно его воспроизводят. Отклонения наблюдаются только на разрывах: явная противопоточная схема разглаживает решение из-за эффектов диссипации, схема Лакса-Вендроффа испытывает осцилляции, обусловленные дисперсией. Что касается физической стороны задачи, то исходный ступенчатый профиль постепенно превращается в одну ударную волну с постепенно уменьшающейся скоростью и следующий за ней веер разрежения. Понижение числа Куранта, как видно из Рис.~\ref{fig:burgers_stepwise_C=0.6} - \ref{fig:burgers_stepwise_C=0.2}, заметно усиливает проявление диссипативных свойств явной противопоточной схемы и дисперсионных свойств у схемы Лакса-Вендроффа.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=1.0_t=0.1.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_stepwise_C=1.0_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=1.0_t=0.2.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_stepwise_C=1.0_t=0.2}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=1.0_t=0.667.png}
+		\caption{$t=0.667$ с}
+		\label{fig:burgers_stepwise_C=1.0_t=0.667}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=1.0_t=2.0.png}
+		\caption{$t=2.0$ с}
+		\label{fig:burgers_stepwise_C=1.0_t=2.0}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=1$}
+	\label{fig:burgers_stepwise_C=1.0}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.6_t=0.1.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_stepwise_C=0.6_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.6_t=0.2.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_stepwise_C=0.6_t=0.2}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.6_t=0.666.png}
+		\caption{$t=0.666$ с}
+		\label{fig:burgers_stepwise_C=0.6_t=0.666}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.6_t=2.0.png}
+		\caption{$t=2.0$ с}
+		\label{fig:burgers_stepwise_C=0.6_t=2.0}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=0.6$}
+	\label{fig:burgers_stepwise_C=0.6}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.2_t=0.1.png}
+		\caption{$t=0.1$ с}
+		\label{fig:burgers_stepwise_C=0.2_t=0.1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.2_t=0.2.png}
+		\caption{$t=0.2$ с}
+		\label{fig:burgers_stepwise_C=0.2_t=0.2}
+	\end{subfigure}
+	
+	\vspace{1em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.2_t=0.667.png}
+		\caption{$t=0.667$ с}
+		\label{fig:burgers_stepwise_C=0.2_t=0.667}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{fig/burgers_stepwise_C=0.2_t=2.0.png}
+		\caption{$t=2.0$ с}
+		\label{fig:burgers_stepwise_C=0.2_t=2.0}
+	\end{subfigure}
+	
+	\caption{Решения в разные моменты времени по рассматриваемым схемам при $C=0.2$}
+	\label{fig:burgers_stepwise_C=0.2}
+\end{figure}
+
+\newpage
+
+\section{Выводы}
+
+В ходе выполнения расчетного задания были получены начальные навыки численного моделирования уравнений гидродинамики на примере одномерных модельных уравнений: диффузии, конвекции и невязкого уравнения Бюргерса — с использованием метода конечных разностей.
+
+В ходе работы над одномерным уравнением диффузии были исследованы разностные схемы: ВВЦП и двухшаговая схема Алена-Чена. Проведены исследования порядка точности схем по времени и пространству, а также условий устойчивости по Нейману. Для схемы Алена-Чена была обнаружена безусловная устойчивость, однако на согласованность схемы с исходным уравнением обнаружилось строгое условие. В ходе решения задачи о разгоне жидкости в цилиндрической трубе было продемонстрировано влияние шага по времени (и шага по пространству) на получаемое решение.
+
+В ходе работы над одномерным уравнением переноса использовались разностные схемы: явная противопоточная и схема Лакса-Вендроффа. Проведены исследования порядка точности схем по времени и пространству, а также условий устойчивости по Нейману. Также подробно изучены диссипативные и дисперсионные свойства схем. На примере задач о переносе сигналов в форме синусоиды и в ступенчатой форме обнаружилось преобладание для явной противопоточной схемы диссипативных эффектов, а для схемы Лакса-Вендроффа — дисперсионных. При числе Куранта $C=1$ обе схемы воспроизводят точное решение. Понижение числа Куранта усугубляет отклонения численных решений, вызванные диссипацией и дисперсией. С течением времени профили полностью теряют исходный вид.
+
+В ходе работы над невязким уравнением Бюргерса использованы те же схемы и начальные профили, что и для предыдущей части. Характер решений, свойственных рассматриваемым схемам, сохраняется и здесь: явная противопоточная схема разглаживает решение в области разрывов под действием диссипации, а дисперсия, свойственная схеме Лакса-Вендроффа, является причиной возникновения нефизичных осцилляций. При решении нелинейных уравнений, таких как невязкое уравнение Бюргерса, стоит внимательно выбирать масштаб скорости, входящий в выражение числа Куранта для корректного вычисления шага по времени. Как и для одномерного уравнения переноса, решение, наиболее приближенное к точному, получено при $C=1$.

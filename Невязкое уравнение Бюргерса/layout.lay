@@ -7,6 +7,8 @@ $!VarSet |LFDSFN3| = '"Burgers_Upwind_Stepwise_ 10.plt"'
 $!VarSet |LFDSVL3| = '"x" "u"'
 $!VarSet |LFDSFN4| = '"Burgers_Lax-Wendroff_Stepwise_ 10.plt"'
 $!VarSet |LFDSVL4| = '"x" "u"'
+$!VarSet |LFDSFN5| = '"Burgers_Exact_Solution_t_lt_0.2_Stepwise_ 10.plt"'
+$!VarSet |LFDSVL5| = '"x" "u"'
 $!SetStyleBase Factory
 $!GlobalPaper 
   PaperSizeInfo
@@ -86,6 +88,17 @@ $!ReadDataSet  '|LFDSFN4|'
   VarNameList = '|LFDSVL4|'
 $!RemoveVar |LFDSVL4|
 $!RemoveVar |LFDSFN4|
+$!ReadDataSet  '|LFDSFN5|'
+  InitialPlotType = XYLine
+  IncludeText = No
+  IncludeGeom = No
+  ReadDataOption = Append
+  ResetStyle = No
+  AssignStrandIDs = Yes
+  VarLoadMode = ByName
+  VarNameList = '|LFDSVL5|'
+$!RemoveVar |LFDSVL5|
+$!RemoveVar |LFDSFN5|
 $!FrameLayout 
   ShowBorder = No
   ShowHeader = No
@@ -116,7 +129,7 @@ $!GlobalLinePlot
     Show = Yes
     TextShape
       {
-      Height = 2
+      Height = 1.5
       }
     Box
       {
@@ -124,8 +137,8 @@ $!GlobalLinePlot
       }
     XYPos
       {
-      X = 78.71
-      Y = 78.305
+      X = 38.879
+      Y = 73.539
       }
     }
 $!LineMap  [1]
@@ -236,14 +249,43 @@ $!LineMap  [4]
     {
     Color = Green
     }
+$!LineMap  [5]
+  Name = 'Exact Solution'
+  Assign
+    {
+    Zone = 5
+    XAxisVar = 1
+    YAxisVar = 2
+    }
+  Lines
+    {
+    Color = Blue
+    LinePattern = Dashed
+    PatternLength = 0.5
+    LineThickness = 0.4
+    }
+  Symbols
+    {
+    Color = Custom3
+    FillColor = Custom3
+    }
+  BarCharts
+    {
+    Color = Custom3
+    FillColor = Custom3
+    }
+  ErrorBars
+    {
+    Color = Custom3
+    }
 $!XYLineAxis 
   DepXToYRatio = 1
 $!XYLineAxis 
   XDetail 1
     {
     CoordScale = Linear
-    RangeMin = -0.20000000000000017764
-    RangeMax = 1.1999999999999977351
+    RangeMin = -0.092991093534212143634
+    RangeMax = 1.0621777702448209624
     GRSpacing = 0.2
     Gridlines
       {
@@ -258,8 +300,8 @@ $!XYLineAxis
   YDetail 1
     {
     CoordScale = Linear
-    RangeMin = 0.5
-    RangeMax = 4
+    RangeMin = 0.75925247826909814108
+    RangeMax = 3.2967973720289704964
     GRSpacing = 0.5
     Gridlines
       {
